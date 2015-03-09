@@ -1,0 +1,308 @@
+body {
+  background: #343468 url( 'titleBackground.png' ) repeat-x;
+  padding: 10px;
+  color: #333;
+  font-family: Arial;
+  font-size: 10pt;
+  margin: 0px;
+  line-height: 120%;
+}
+
+h1 {
+  margin: 0px 0px 20px 0px;
+}
+
+h2 {
+  margin: 20px 0px 10px 0px;
+  border-bottom: 1px solid #666;
+}
+
+
+a {
+  color: #69c;
+  text-decoration: none;
+  font-weight: bold;
+}
+a:hover {
+  color: #369;
+}
+
+/* No borders around images */
+a img { border: 0px; }
+
+.clear {
+  clear: both;
+}
+
+.center {
+  text-align: center;
+}
+
+.right {
+  float: right;
+}
+
+/* Page layout */
+#pageLayout {
+  width: 100%;
+}
+
+#navigationCell {
+  width: 180px;
+  vertical-align: top;
+  padding: 0px 30px 20px 0px;
+}
+
+#contentCell {
+  vertical-align: top;
+}
+
+.heading {
+  color: #eef;
+  padding-left: 2em;
+}
+
+.heading h1 {
+  margin: 0px;
+  padding: 10px;
+  font-size: 16pt;
+  font-style: italic;
+}
+
+.footer {
+  text-align: center;
+}
+
+/* Used by the documentation pages to list tag attributes in a table. */
+table.attributes {
+  width: 95%;
+  margin-left: 4%;
+  background-color: #333;
+  border-spacing: 1px;
+}
+table.attributes tr th {
+  vertical-align: top;
+  text-align: left;
+  background: #363 url(titleBackground.png) repeat-x;
+  color: #fff;
+  padding: 6px 10px 6px 10px;
+}
+table.attributes tr td {
+  vertical-align: top;
+  background-color: #eee;
+  padding: 3px 10px 3px 10px;
+}
+
+
+/* Used by the documentaion pages to show examples */
+table.examples {
+  margin-left: 4%;
+  vertical-align: top;
+}
+
+/*
+  padding: 1px 10px 16px 10px;
+*/
+table.examples tr td {
+  vertical-align: top;
+}
+
+
+
+/* Used by the documentation pages to show jsp code */
+.code {
+  background-color: #eee;
+  border: 1px dotted #036;
+  font-family: courier, courier new, monospace;
+  font-size: 14px;
+  white-space: pre;
+  overflow: scroll;
+  margin: 0px 10px 0px 20px;
+  padding: 4px;
+  max-width: 500px;
+}
+
+/* Used on the install page, to show which files are not mandatory */
+.optional {
+  color: #777;
+}
+
+
+/* *** mainbox *** */
+
+.mainbox {
+  background-color: #eec;
+  border: 1px solid #333;
+  padding: 4px;
+  margin-bottom: 1em;
+}
+
+.mainbox .ww_boxHeading {
+  font-weight: bold;
+  background: #363 url(titleBackground.png) repeat-x;
+  color: #cec;
+  font-size: 14pt;
+  padding: 4px 16px 2px 16px;
+  border-top: 1px solid #aa8;
+  border-bottom: 1px solid #442;
+}
+
+.mainbox .ww_innerBox .ww_boxHeading {
+  background-color: #886;
+}
+
+.mainbox .ww_boxHeading a {
+  color: #fff;
+}
+.mainbox .ww_boxHeading a:hover {
+  color: #cbe;
+}
+
+.mainbox .ww_boxContent {
+  padding: 12px;
+}
+
+
+
+/* *** navigation - the box on the left hand side *** */
+
+.navigationBox {
+  text-align: center;
+  background-color: #343468;
+  border: 1px solid #333;
+  padding: 4px;
+  margin-bottom: 1em;
+}
+
+.navigationBox .ww_boxHeading {
+  font-weight: bold;
+  background: #ccf;
+  color: #343468;
+  font-size: 14pt;
+  padding: 4px;
+  border-top: 1px solid #aa8;
+  border-bottom: 1px solid #442;
+}
+
+.navigationBox .ww_boxContent {
+  padding: 8px 4px 4px 4px;
+}
+
+.navigationBox a {
+  padding: 3px;
+  display: block;
+}
+
+.navigationBox a:hover {
+  color: #333;
+  background: #ccf;
+}
+
+
+/* *** navigation2 - the box on the right hand side *** */
+
+.navigationBox2 {
+  text-align: center;
+  background-color: #ccf;
+  border: 1px solid #333;
+  padding: 4px;
+  margin-bottom: 1em;
+}
+
+.navigationBox2 .ww_boxHeading {
+  font-weight: bold;
+  background: #343468;
+  color: #ddd;
+  font-size: 14pt;
+  padding: 4px;
+  border-top: 1px solid #aa8;
+  border-bottom: 1px solid #442;
+}
+
+.navigationBox2 .ww_boxContent {
+  padding: 8px 4px 4px 4px;
+}
+
+.navigationBox2 a {
+  padding: 3px;
+  display: block;
+}
+
+.navigationBox2 a:hover {
+  color: #ddd;
+  background: #343468;
+}
+
+.tools {
+  float: right;
+}
+
+.help {
+  margin: 20px 0px 20px 0px;
+  border: 1px dotted #080;
+  padding: 10px;
+  color : #080;
+}
+
+.notes {
+  margin: 20px 0px 20px 0px;
+  border: 1px dotted #330;
+  padding: 10px;
+  background-color : #ccf;
+}
+
+pre {
+  margin: 20px 0px 20px 0px;
+  border: 1px dotted #330;
+  padding: 10px;
+  background-color : #ccc;
+}
+
+a.button:hover {
+  color: #5c3385;
+  background: #fff;
+}
+
+a.button {
+  color: #ffe;
+  background: #5c3385;
+  border: solid 1px #5c3385;
+  padding: 2px 8px 2px 8px;
+  line-height: 3em;
+}
+
+.content {
+  width: 550px;
+}
+
+table.ww_table {
+  background-color: #333;
+  border-spacing: 1px;
+}
+table.ww_table tr th {
+  vertical-align: top;
+  text-align: left;
+  background: #363 url(titleBackground.png) repeat-x;
+  color: #fff;
+  padding: 6px 10px 6px 10px;
+}
+table.ww_table tr td {
+  vertical-align: top;
+  background-color: #eee;
+  padding: 3px 10px 3px 10px;
+}
+
+
+#shortcut_status {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: red;
+  width: 3em;
+  height: 3em;
+  line-height: 3em;
+  text-align: center;
+  font-size: 12pt;
+  font-weight: bold;
+}
+

@@ -1,0 +1,16 @@
+Rewrite
+=======
+Get all documentation working
+
+New Features
+============
+
+Update the documentation's look and feel.
+  More space, rounded corners etc
+
+treeNodeContent should not need the "last" attribute - have it figure it out.
+  This may mean that the rendering is defered, because it can't know if it is last till after the closing tag.
+
+
+
+

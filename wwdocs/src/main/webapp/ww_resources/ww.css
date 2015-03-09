@@ -1,0 +1,81 @@
+/* This file contains styles that should probabyly NOT be changed by application writers */
+/* See also the example.css for styles which SHOULD be changed by application writer */
+
+
+/* {{{ Expandable tree */
+.ww_treeNodeButton {
+  float: left;
+}
+.ww_treeNodeButton a img {
+  vertical-align: baseline;
+}
+.ww_tree .ww_treeNodeLabel {
+  font-weight: bold;
+  margin-left: 20px;
+  padding: 1px 0px 3px 0px;
+}
+.ww_tree .ww_treeNodeContent,
+.ww_tree .ww_treeNodeLastContent {
+  padding: 2px 0px 4px 20px;
+}
+.ww_tree .ww_treeNodeContent {
+  background: repeat-y 6px 0px url(ww_verticalDots.png);
+}
+/* }}} */
+
+/* {{{ A tables who's only purpose is to help layout a page */
+table.ww_layout,
+table.ww_layout tr td {
+  padding: 0px;
+  border-spacing: 0px;
+  background: inherit;
+  font-size: inherit;
+}
+/* }}} */
+
+/* {{{ Minimizable - usually with the aid of min/max/close icons */
+.ww_closed { display: none; }
+.ww_maximized .ww_maxButton, .ww_minimized .ww_minButton { display: none }
+.ww_minimized .ww_maxButton { display: inline; }
+.ww_minimized .ww_minimizable { display :none; }
+/* }}} */
+
+/* {{{ Default box styles */
+.ww_boxTitle {
+  font-weight: bold;
+  white-space: nowrap;
+}
+.ww_boxIcon {
+  text-align: right;
+}
+
+.ww_boxIcon a img {
+  border: 0px;
+}
+/* }}} */
+
+/* {{{ edge tag */
+.ww_edges {
+  position: relative;
+}
+
+.ww_edges .ww_top, .ww_edges .ww_bottom {
+  position: absolute;
+  width: 100%;
+}
+
+.ww_edges .ww_middle .ww_center {
+  position: relative;
+  z-index: 10;
+}
+
+.ww_enforceMargins {
+  height: 1px;
+  margin-top: -1px;
+  font-size: 0px; /* for ie */
+}
+
+/* }}} */
+
+
+
