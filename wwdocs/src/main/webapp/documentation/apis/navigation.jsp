@@ -1,4 +1,4 @@
-<%@ taglib uri="/WEB-INF/webwidgets.tld" prefix="ww" %>
+<%@ taglib uri="http://nickthecoder.co.uk/webwidgets" prefix="ww" %>
 
 <ww:box className="navigationBox">
   <ww:boxTitle title="Tag APIs"/>

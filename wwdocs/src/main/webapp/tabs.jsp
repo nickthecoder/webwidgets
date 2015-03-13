@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="/WEB-INF/webwidgets.tld" prefix="ww" %>
+<%@ taglib uri="http://nickthecoder.co.uk/webwidgets" prefix="ww" %>
 
 <ww:tabs>
 

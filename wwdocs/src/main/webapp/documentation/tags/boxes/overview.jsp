@@ -1,4 +1,4 @@
-<%@ taglib uri="/WEB-INF/webwidgets.tld" prefix="ww" %>
+<%@ taglib uri="http://nickthecoder.co.uk/webwidgets" prefix="ww" %>
 
 <p>
   Create pretty boxes which can (optionally) be minimized/maximized.

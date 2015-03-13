@@ -2,7 +2,7 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
-<%@ taglib uri="/WEB-INF/webwidgets.tld" prefix="ww" %>
+<%@ taglib uri="http://nickthecoder.co.uk/webwidgets" prefix="ww" %>
 
 <html lang="en-GB">
 

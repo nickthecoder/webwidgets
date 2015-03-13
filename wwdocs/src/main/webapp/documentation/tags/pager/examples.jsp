@@ -1,4 +1,4 @@
-<%@ taglib uri="/WEB-INF/webwidgets.tld" prefix="ww" %>
+<%@ taglib uri="http://nickthecoder.co.uk/webwidgets" prefix="ww" %>
 
     <p>
       I've not done anything fancy in these examples - a simple improvement
