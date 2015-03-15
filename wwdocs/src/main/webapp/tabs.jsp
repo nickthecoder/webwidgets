@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://nickthecoder.co.uk/webwidgets" prefix="ww" %>
 
-<ww:tabs>
+<ww:tabs className="ww_tabs">
 
   <ww:tab local="true" pattern="/index.jsp"><ww:link href="/">Home</ww:link></ww:tab>
   <ww:tab local="true" pattern="/installing.jsp"><ww:link href="/installing.jsp">Installing</ww:link></ww:tab>

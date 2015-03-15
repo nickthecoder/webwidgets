@@ -101,52 +101,12 @@ table.ww_layout td.ww_boxIcon {
 
 /* }}} */
 
-/* {{{ ww_tabs is the DEFAULT css class for the ww:tabs tag.*/
 
-.ww_tabs {
-  text-align: center;
-  background: repeat-x bottom url(blackHorizontal.png);
-}
-
-.ww_tabs td {
-  vertical-align: bottom;
-}
-
-.ww_tabs .ww_on, .ww_tabs .ww_off {
-  border: 1px solid #000;
-  margin-left: 4px;
-  margin-right: 4px;
-}
-
-.ww_tabs .ww_on {
-  border-bottom: 1px solid #eef;
-}
-
-.ww_tabs .ww_on a, .ww_tabs .ww_off a {
-  display: block;
-  padding: 4px 8px 4px 8px;
-}
-
-.ww_tabs .ww_on a {
-  background: #eef;
-}
-
-.ww_tabs .ww_off a {
-  background: #ccc;
-}
-
-.ww_tabs a:hover {
-  background: #fff;
-}
-
-.ww_tabsContent {
-  border-bottom: 1px solid #000;
-  border-left: 1px solid #000;
-  border-right: 1px solid #000;
-  padding: 30px 8px 8px 8px;
-  background: #eef;
-}
-
+.ww_tabs { margin-top: 20px; }
+.ww_tab { float: left; border: 1px solid #000; margin: 0 4px; background: #ccc; padding: 8px 16px; }
+.ww_tabSelected { background: #eef; border-bottom: 1px solid #eef; }
+.ww_tabSelected a:hover { background: #fff; }
+.ww_tabsContent { background: #eef; border-left: 1px solid #000; border-right: 1px solid #000; border-bottom: 1px solid #000; }
 
 .ww_crumb {
   padding: 0em 1em 0em 1em;
@@ -170,8 +130,6 @@ table.ww_layout td.ww_boxIcon {
   white-space:nowrap;
   width: 1px;
 }
-
-/* tabs }}} */
 
 
 /* {{{ rounded */

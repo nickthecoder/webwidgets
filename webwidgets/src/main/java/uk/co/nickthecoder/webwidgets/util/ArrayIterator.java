@@ -1,69 +1,45 @@
-// ----------------------------------------------------------------------
-//
-// Author        : Nick Robinson (nick)
-// Creation Date : 2006-02-22
-//
-// ----------------------------------------------------------------------
-// History
-// 2003-03-18 : nick : Initial Development
-//
-// ----------------------------------------------------------------------
+/*
+ * Copyright (c) Nick Robinson All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the GNU Public License v3.0 which accompanies this distribution, and
+ * is available at http://www.gnu.org/licenses/gpl.html
+ */
 
 package uk.co.nickthecoder.webwidgets.util;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
-/**
-  @MORE@ Add javadoc comments here
-*/
-public class ArrayIterator
-  implements Iterator
+public class ArrayIterator implements Iterator
 
 {
-  // -------------------- [[Static Attributes]] --------------------
 
-  // -------------------- [[Attributes]] --------------------
+    private Object[] _array;
 
-  private Object[] _array;
+    private int _index;
 
-  private int _index;
-
-  // -------------------- [[Static Methods]] --------------------
-
-  // -------------------- [[Constructors]] --------------------
-
-  /**
-    @MORE@ Add Constructor javadocs comments here
-  */
-  public ArrayIterator( Object[] array )
-  {
-    _array = array;
-    _index = 0;
-  }
-
-  // -------------------- [[Methods]] --------------------
-
-  public boolean hasNext()
-  {
-    return _index < _array.length;
-  }
-
-  public Object next()
-  {
-    if ( _index >= _array.length ) {
-      throw new NoSuchElementException( "Beyond the bounds of the array length : " + _array.length );
+    public ArrayIterator( Object[] array )
+    {
+        _array = array;
+        _index = 0;
     }
 
-    return _array[ _index ++ ];
-  }
+    public boolean hasNext()
+    {
+        return _index < _array.length;
+    }
 
-  public void remove()
-  {
-    throw new UnsupportedOperationException( "ArrayIterator does not support remove" );
-  }
+    public Object next()
+    {
+        if (_index >= _array.length) {
+            throw new NoSuchElementException("Beyond the bounds of the array length : " + _array.length);
+        }
 
-  // -------------------- [[Test / Debug]] --------------------
+        return _array[_index++];
+    }
+
+    public void remove()
+    {
+        throw new UnsupportedOperationException("ArrayIterator does not support remove");
+    }
 
 }
-// ---------- End Of Class ArrayIterator ----------
-

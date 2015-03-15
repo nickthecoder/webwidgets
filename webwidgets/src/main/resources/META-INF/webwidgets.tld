@@ -1,0 +1,1321 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE taglib
+  PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN"
+	"http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+
+<taglib>
+  <tlibversion>1.0</tlibversion>
+  <jspversion>1.1</jspversion>
+  <shortname>webwidgets</shortname>
+  <uri>http://nickthecoder.co.uk/webwidgets</uri>
+
+  <!-- {{{ contextPath -->
+  <tag>
+    <name>contextPath</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.ContextPathTag</tagclass>
+    <info>
+      Returns the portion of a url specific to the current webapp.
+    </info>
+
+  </tag>
+  <!-- }}} -->
+
+  <!-- {{{ referrer -->
+  <tag>
+    <name>referrer</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.ReferrerTag</tagclass>
+    <info>
+      Renders the 'referrer' request paramater, and if that is null,
+      then it renders the 'referrer' http header.
+    </info>
+
+  </tag>
+  <!-- }}} -->
+
+  <!-- {{{ noEval -->
+  <tag>
+    <name>noEval</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.NoEvalTag</tagclass>
+    <bodycontent>tagdependent</bodycontent>
+    <info>
+      Currently under development.
+    </info>
+
+    <attribute>
+      <name>escape</name>
+      <type>boolean</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+  <!-- }}} -->
+
+  <!-- {{{ standardButton -->
+  <tag>
+    <name>standardButton</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.StandardButtonTag</tagclass>
+    <info>
+      Currently under development.
+    </info>
+
+    <attribute>
+      <name>type</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>image</name>
+      <type>boolean</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+  <!-- end standardButton }}} -->
+
+  <!-- {{{ quote -->
+  <tag>
+    <name>quote</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.QuoteTag</tagclass>
+
+    <info>
+    </info>
+
+    <attribute>
+      <name>type</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>styleClass</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+  <!-- end quote }}} -->
+
+  <!-- {{{ imageRollover -->
+  <tag>
+    <name>imageRollover</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.ImageRolloverTag</tagclass>
+    <bodycontent>none</bodycontent>
+
+    <info>
+    </info>
+
+    <attribute>
+      <name>styleClass</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>src</name>
+      <required>true</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>rollover</name>
+      <required>true</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>alt</name>
+      <required>true</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>useContextPath</name>
+      <required>false</required>
+      <type>boolean</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+  <!-- end imageRollover }}} -->
+
+  <!-- {{{ styleSheet -->
+  <tag>
+    <name>styleSheet</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.StyleSheetTag</tagclass>
+    <bodycontent>none</bodycontent>
+
+    <info>
+    </info>
+
+    <attribute>
+      <name>href</name>
+      <required>true</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>useContextPath</name>
+      <required>false</required>
+      <type>boolean</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>encodeSessionId</name>
+      <required>false</required>
+      <type>boolean</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+  <!-- end styleSheet }}} -->
+
+  <!-- {{{ script -->
+  <tag>
+    <name>script</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.ScriptTag</tagclass>
+    <bodycontent>none</bodycontent>
+
+    <info>
+    </info>
+
+    <attribute>
+      <name>src</name>
+      <required>true</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>language</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>type</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>useContextPath</name>
+      <required>false</required>
+      <type>boolean</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+  <!-- end script }}} -->
+
+  <!-- {{{ icon -->
+  <tag>
+    <name>icon</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.IconTag</tagclass>
+    <bodycontent>none</bodycontent>
+
+    <info>
+    </info>
+
+    <attribute>
+      <name>href</name>
+      <required>true</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>type</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>useContextPath</name>
+      <required>false</required>
+      <type>boolean</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>encodeSessionId</name>
+      <required>false</required>
+      <type>boolean</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+  <!-- end icon }}} -->
+
+  <!-- {{{ pathToUrl -->
+  <tag>
+    <name>pathToUrl</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.PathToUrlTag</tagclass>
+    <bodycontent>none</bodycontent>
+
+    <info>
+    </info>
+
+    <attribute>
+      <name>path</name>
+      <required>true</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>notFoundPath</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>full</name>
+      <required>false</required>
+      <type>boolean</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+  <!-- end pathToUrl }}} -->
+
+  <!-- {{{ tilesAttributes -->
+  <tag>
+    <name>tilesAttributes</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.TilesAttributesTag</tagclass>
+    <bodycontent>none</bodycontent>
+
+    <info>
+    </info>
+
+    <attribute>
+      <name>var</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+
+  </tag>
+  <!-- end tilesAttributes }}} -->
+
+  <!-- {{{ multipart -->
+  <tag>
+    <name>multipart</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.MultipartTag</tagclass>
+
+    <info>
+      Reads multipart form submissions, including uploading of files to a given directory.
+    </info>
+
+    <attribute>
+      <name>paramVar</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>paramListVar</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>filesVar</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>outputDirectory</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+  <!-- end multipart }}} -->
+
+  <!-- {{{ sort -->
+  <tag>
+    <name>sort</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.SortTag</tagclass>
+    <bodycontent>none</bodycontent>
+
+    <info>
+    </info>
+
+    <attribute>
+      <name>items</name>
+      <required>true</required>
+      <type>java.lang.Object</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>var</name>
+      <required>true</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>comparator</name>
+      <required>false</required>
+      <type>java.util.Comparator</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>field</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>reverse</name>
+      <required>false</required>
+      <type>boolean</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+  <!-- end sort }}} -->
+
+  <!-- {{{ filter -->
+  <tag>
+    <name>filter</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.FilterTag</tagclass>
+    <bodycontent>none</bodycontent>
+
+    <info>
+    </info>
+
+    <attribute>
+      <name>items</name>
+      <required>true</required>
+      <type>java.lang.Object</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>var</name>
+      <required>true</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>test</name>
+      <required>true</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>itemName</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>resultType</name> <!-- either "iterator" or "list" -->
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+  <!-- end filter }}} -->
+
+  <!-- {{{ local -->
+  <tag>
+    <name>local</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.LocalTag</tagclass>
+
+    <info>
+    </info>
+
+    <attribute>
+      <name>var</name>
+      <required>true</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+  <!-- end local }}} -->
+
+  <!-- {{{ browser -->
+  <tag>
+    <name>browser</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.BrowserTag</tagclass>
+    <bodycontent>tagdependent</bodycontent>
+    <info>
+      Detects information about the browser using the userAgent header.
+    </info>
+
+    <attribute>
+      <name>isIe</name>
+      <type>string</type>
+    </attribute>
+
+     <attribute>
+      <name>supportsPng</name>
+      <type>string</type>
+    </attribute>
+
+     <attribute>
+      <name>isMobile</name>
+      <type>string</type>
+    </attribute>
+
+     <attribute>
+      <name>version</name>
+      <type>string</type>
+    </attribute>
+
+  </tag>
+  <!-- }}} -->
+
+  <!-- {{{ groupByInitial -->
+  <tag>
+    <name>groupByInitial</name>
+
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.GroupByInitialTag</tagclass>
+
+    <info>
+      Groups a set of items by their first letters.
+    </info>
+
+    <attribute>
+      <name>items</name>
+      <required>true</required>
+      <type>java.lang.Object</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>var</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>expression</name>
+      <rtexprvalue>false</rtexprvalue>
+      <type>java.lang.String</type>
+    </attribute>
+
+  </tag>
+  <!-- End groupByInitial }}} -->
+
+  <!-- {{{ portion -->
+  <tag>
+    <name>portion</name>
+
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.PortionTag</tagclass>
+
+    <info>
+      Splits one iterator into a 2D structure, which
+      allows a single list of things to be displayed in a grid layout.
+    </info>
+
+    <attribute>
+      <name>items</name>
+      <required>true</required>
+      <type>java.lang.Object</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>var</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>portions</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>int</type>
+    </attribute>
+
+    <attribute>
+      <name>portionSize</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>int</type>
+    </attribute>
+
+   <attribute>
+      <name>transpose</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>boolean</type>
+    </attribute>
+
+   <attribute>
+      <name>pad</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+    </attribute>
+
+   <attribute>
+      <name>padding</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.Object</type>
+    </attribute>
+
+  </tag>
+  <!-- end portion }}} -->
+
+  <!-- {{{ begin redirect -->
+  <tag>
+    <name>redirect</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.RedirectTag</tagclass>
+
+    <attribute>
+      <name>url</name>
+      <required>true</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>useContextPath</name>
+      <required>false</required>
+      <type>boolean</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>parameterName</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>parameterValue</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+  <!-- end redirect }}} -->
+
+  <!-- {{{ breadcrumb -->
+  <tag>
+    <name>breadcrumb</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.BreadcrumbTag</tagclass>
+
+    <attribute>
+      <name>url</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>label</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+  <!-- end breadcrumb }}} -->
+
+  <!-- {{{ breadcrumbs -->
+  <tag>
+    <name>breadcrumbs</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.BreadcrumbsTag</tagclass>
+
+    <attribute>
+      <name>separator</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>backwards</name>
+      <required>false</required>
+      <type>boolean</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+  <!-- end breadcrumbs }}} -->
+
+
+  <!-- ******* BEGIN TABS RELATED TAGS ******* -->
+
+  <!-- {{{ tabs -->
+  <tag>
+    <name>tabs</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.TabsTag</tagclass>
+    <bodycontent>jsp</bodycontent>
+    <info>
+      Currently under development.
+    </info>
+
+    <attribute>
+      <name>id</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>className</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+  <!-- end tabs }}} -->
+
+  <!-- {{{ tab -->
+  <tag>
+    <name>tab</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.TabTag</tagclass>
+    <bodycontent>jsp</bodycontent>
+    <info>
+      Currently under development.
+    </info>
+
+    <attribute>
+      <name>id</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>className</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    
+    <attribute>
+      <name>pattern</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>local</name>
+      <rtexprvalue>true</rtexprvalue>
+      <type>boolean</type>
+    </attribute>
+
+    <attribute>
+      <name>test</name>
+      <type>java.lang.Boolean</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+  <!-- end tab }}} -->
+
+  <!-- ******* END TABS RELATED TAGS ******* -->
+
+
+
+  <!-- ****** BEGIN BOX RELATED TAGS ****** -->
+
+  <!-- {{{ edges -->
+  <tag>
+    <name>edges</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.EdgesTag</tagclass>
+    <bodycontent>jsp</bodycontent>
+    <info>
+      Currently under development.
+    </info>
+
+    <attribute>
+      <name>className</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>width</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+  <!-- end edges }}} -->
+
+  <!-- {{{ box -->
+  <tag>
+    <name>box</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.BoxTag</tagclass>
+    <bodycontent>jsp</bodycontent>
+    <info>
+      Currently under development.
+    </info>
+
+    <attribute>
+      <name>className</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>width</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+     <attribute>
+      <name>minimized</name>
+      <type>boolean</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+  <!-- end box }}} -->
+
+  <!-- {{{ boxContent -->
+  <tag>
+    <name>boxContent</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.BoxContentTag</tagclass>
+    <bodycontent>jsp</bodycontent>
+    <info>
+      Currently under development.
+    </info>
+
+  </tag>
+  <!-- end boxContent }}} -->
+
+  <!-- {{{ boxIcon -->
+  <tag>
+    <name>boxIcon</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.BoxIconTag</tagclass>
+    <bodycontent>jsp</bodycontent>
+    <info>
+      Currently under development.
+    </info>
+
+  </tag>
+  <!-- end boxIcon }}} -->
+
+  <!-- {{{ boxTitle -->
+  <tag>
+    <name>boxTitle</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.BoxTitleTag</tagclass>
+    <bodycontent>jsp</bodycontent>
+    <info>
+      Currently under development.
+    </info>
+
+    <attribute>
+      <name>title</name>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>clickable</name>
+      <type>boolean</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+  <!-- end boxTitle }}} -->
+
+  <!-- {{{ innerBox -->
+  <tag>
+    <name>innerBox</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.InnerBoxTag</tagclass>
+    <bodycontent>jsp</bodycontent>
+    <info>
+      Currently under development.
+    </info>
+
+    <attribute>
+      <name>minimized</name>
+      <type>boolean</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+  <!-- end innerBox }}} -->
+
+  <!-- ****** END BOX RELATED TAGS ****** -->
+
+
+
+  <!-- ****** BEGIN TREE RELATED TAGS ****** -->
+
+  <!-- {{{ treeNode -->
+  <tag>
+    <name>treeNode</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.TreeNodeTag</tagclass>
+    <bodycontent>jsp</bodycontent>
+    <info>
+      Currently under development.
+    </info>
+
+    <attribute>
+      <name>expandable</name>
+      <type>boolean</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>minimized</name>
+      <type>boolean</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+  <!-- }}} -->
+
+  <!-- {{{ treeNodeLabel -->
+  <tag>
+    <name>treeNodeLabel</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.TreeNodeLabelTag</tagclass>
+    <bodycontent>jsp</bodycontent>
+    <info>
+      Currently under development.
+    </info>
+
+  </tag>
+  <!-- }}} -->
+
+  <!-- {{{ treeNodeContent -->
+  <tag>
+    <name>treeNodeContent</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.TreeNodeContentTag</tagclass>
+    <bodycontent>jsp</bodycontent>
+    <info>
+      Currently under development.
+    </info>
+
+    <attribute>
+      <name>last</name>
+      <type>boolean</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+  <!-- end treeNodeTag }}} -->
+
+  <!-- ****** END TREE RELATED TAGS ****** -->
+
+
+
+  <!-- ****** BEGIN MAP RELATED TAGS ****** -->
+
+  <!-- {{{ map -->
+  <tag>
+    <name>map</name>
+
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.MapTag</tagclass>
+
+    <info>
+      Create an a tag for a map (either streetmap or multimap)
+    </info>
+
+    <attribute>
+      <name>provider</name>
+      <required>true</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>longitude</name>
+      <required>true</required>
+      <type>double</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>latitude</name>
+      <required>true</required>
+      <type>double</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>render</name>
+      <required>false</required>
+      <type>boolean</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+  <!-- end map }}} -->
+
+  <!-- {{{ mapDetails -->
+  <tag>
+    <name>mapDetails</name>
+
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.MapDetailsTag</tagclass>
+
+    <info>
+      Set information about a map, which is then used by the inner mapLink tag
+    </info>
+
+    <attribute>
+      <name>longitude</name>
+      <required>true</required>
+      <type>double</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>latitude</name>
+      <required>true</required>
+      <type>double</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+  <!-- end mapDetails }}} -->
+
+  <!-- {{{ mapLink -->
+  <tag>
+    <name>mapLink</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.MapLinkTag</tagclass>
+
+    <info>
+      Renders a link to a map
+    </info>
+
+    <attribute>
+      <name>provider</name>
+      <required>true</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>render</name>
+      <required>false</required>
+      <type>boolean</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+  <!-- end mapLink }}} -->
+
+  <!-- ****** END MAP RELATED TAGS ****** -->
+
+
+  <!-- ****** BEGIN LINK RELATED TAGS ****** -->
+
+  <!-- {{{ linkInfo -->
+  <tag>
+    <name>linkInfo</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.LinkInfoTag</tagclass>
+
+    <attribute>
+      <name>href</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>hash</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>useContextPath</name>
+      <required>false</required>
+      <type>boolean</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>parameters</name>
+      <required>false</required>
+      <type>java.util.Map</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+  <!-- end linkInfo }}} -->
+
+  <!-- {{{ samePageLinkInfo -->
+  <tag>
+    <name>samePageLinkInfo</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.SamePageLinkInfoTag</tagclass>
+  </tag>
+  <!-- end samePageLinkInfo }}} -->
+
+  <!-- {{{ linkParameter -->
+  <tag>
+    <name>linkParameter</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.LinkParameterTag</tagclass>
+
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>value</name>
+      <required>true</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+  <!-- end linkInfo }}} -->
+
+  <!-- {{{ link -->
+  <tag>
+    <name>link</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.LinkTag</tagclass>
+
+    <info>
+      Renders a html A tag.
+    </info>
+
+    <attribute>
+      <name>href</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>id</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>useContextPath</name>
+      <required>false</required>
+      <type>boolean</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>styleClass</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>title</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>onclick</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+  <!-- end link }}} -->
+
+  <!-- {{{ popup -->
+  <tag>
+    <name>popup</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.PopupTag</tagclass>
+
+    <info>
+      Renders an a tag, which will popup a new window when clicked,
+      using javascipt window.open method from the a tags onclick event.
+    </info>
+
+    <attribute>
+      <name>href</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>useContextPath</name>
+      <required>false</required>
+      <type>boolean</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>styleClass</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>windowName</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>width</name>
+      <required>false</required>
+      <type>int</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>height</name>
+      <required>false</required>
+      <type>int</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>left</name>
+      <required>false</required>
+      <type>int</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>top</name>
+      <required>false</required>
+      <type>int</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+  <!-- end popup }}} -->
+
+  <!-- ****** END LINK RELATED TAGS ****** -->
+
+
+
+  <!-- ****** BEGIN PAGER RELATED TAGS ****** -->
+
+  <!-- {{{ pager -->
+  <tag>
+    <name>pager</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.PagerTag</tagclass>
+
+    <info>
+    </info>
+
+    <attribute>
+      <name>pages</name>
+      <required>false</required>
+      <type>int</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>page</name>
+      <required>false</required>
+      <type>int</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>nextPages</name>
+      <required>false</required>
+      <type>int</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>previousPages</name>
+      <required>false</required>
+      <type>int</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>pageAttributeName</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>pageParameterName</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>items</name>
+      <required>false</required>
+      <type>java.lang.Object</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>itemsPerPage</name>
+      <required>false</required>
+      <type>int</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>subsetVar</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>pagerVar</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>currentItem</name>
+      <required>false</required>
+      <type>java.lang.Object</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+  <!-- end pager }}} -->
+
+  <!-- {{{ pagerLinks -->
+  <tag>
+    <name>pagerLinks</name>
+    <tagclass>uk.co.nickthecoder.webwidgets.tags.PagerLinksTag</tagclass>
+
+    <info>
+    </info>
+
+    <attribute>
+      <name>type</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+  <!-- end pagerLinks }}} -->
+
+  <!-- ****** END PAGER RELATED TAGS ****** -->
+
+
+</taglib>
+

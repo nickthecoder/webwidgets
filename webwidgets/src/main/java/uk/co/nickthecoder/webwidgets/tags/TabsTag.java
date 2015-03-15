@@ -1,119 +1,103 @@
-// ----------------------------------------------------------------------
-//
-// Author        : Nick Robinson (nick)
-// Creation Date : 2003-03-18
-//
-// ----------------------------------------------------------------------
-// History
-// 2003-03-18 : nick : Initial Development
-//
-// ----------------------------------------------------------------------
+/*
+ * Copyright (c) Nick Robinson All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the GNU Public License v3.0 which accompanies this distribution, and
+ * is available at http://www.gnu.org/licenses/gpl.html
+ */
 
 package uk.co.nickthecoder.webwidgets.tags;
 
+import java.io.IOException;
 
-import java.util.*;
-import java.io.*;
-import javax.servlet.jsp.*;
-import javax.servlet.jsp.tagext.*;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.tagext.BodyTagSupport;
 
-/**
-  @MORE@ Add javadoc comments here
-*/
-public class TabsTag
-  extends BodyTagSupport
+import uk.co.nickthecoder.webwidgets.util.TagUtil;
+
+public class TabsTag extends BodyTagSupport
 {
-  // -------------------- [[Static Attributes]] --------------------
+    private static final long serialVersionUID = 7466869496795223005L;
 
-  public static final String DEFAULT_CLASS_NAME = "ww_tabs";
+    public static final String DEFAULT_CLASS_NAME = "ww_tabs";
 
-  // -------------------- [[Attributes]] --------------------
+    private String _id;
 
-  private String _className;
+    private String _className;
 
+    public TabsTag()
+    {
+        super();
 
-  // -------------------- [[Static Methods]] --------------------
-
-  // -------------------- [[Constructors]] --------------------
-
-  /**
-    @MORE@ Add Constructor javadocs comments here
-  */
-  public TabsTag()
-  {
-    super();
-
-    initialise();
-  }
-
-  public void release()
-  {
-    super.release();
-    initialise();
-  }
-
-  private void initialise()
-  {
-    _className = null;
-  }
-
-  // -------------------- [[Methods]] --------------------
-
-  public String getClassName()
-  {
-    return _className;
-  }
-
-  public void setClassName( String className )
-  {
-    _className = className;
-  }
-
-  public int doStartTag()
-    throws JspException
-  {
-    try {
-
-      JspWriter out = pageContext.getOut();
-
-      out.println( "<!-- BEGIN TABS -->" );
-
-      out.println( "<div class=\"" +
-        ( (getClassName() == null) ? DEFAULT_CLASS_NAME : getClassName() ) +
-        "\"><table class=\"ww_layout\"><tr>" );
-
-      return EVAL_BODY_INCLUDE;
-
-    } catch (IOException e) {
-      // @MORE@
-      e.printStackTrace();
-      throw new JspException( "Unexpected IO Exception." );
+        initialise();
     }
 
-  }
-
-
-  public int doEndTag()
-    throws JspException
-  {
-    try {
-
-      JspWriter out = pageContext.getOut();
-
-      out.println( "</tr></table></div>" );
-      out.println( "<!-- END TABS -->" );
-
-      return EVAL_PAGE;
-
-    } catch (IOException e) {
-      // @MORE@
-      e.printStackTrace();
-      throw new JspException( "Unexpected IO Exception." );
+    public void release()
+    {
+        super.release();
+        initialise();
     }
-  }
 
+    private void initialise()
+    {
+        _id = null;
+        _className = null;
+    }
 
-  // -------------------- [[Test / Debug]] --------------------
+    public String getId()
+    {
+        return _id;
+    }
+
+    public void setId( String id )
+    {
+        _id = id;
+    }
+
+    public String getClassName()
+    {
+        return _className;
+    }
+
+    public void setClassName( String className )
+    {
+        _className = className;
+    }
+
+    public int doStartTag() throws JspException
+    {
+        try {
+
+            JspWriter out = pageContext.getOut();
+
+            out.print("<div");
+            TagUtil.printSafeAttribute(out, "class", getClassName());
+            TagUtil.printSafeAttribute(out, "id", getId());
+            out.println(">");
+            return EVAL_BODY_INCLUDE;
+
+        } catch (IOException e) {
+            // @MORE@
+            e.printStackTrace();
+            throw new JspException("Unexpected IO Exception.");
+        }
+
+    }
+
+    public int doEndTag() throws JspException
+    {
+        try {
+
+            JspWriter out = pageContext.getOut();
+
+            out.println("</div>");
+
+            return EVAL_PAGE;
+
+        } catch (IOException e) {
+            // @MORE@
+            e.printStackTrace();
+            throw new JspException("Unexpected IO Exception.");
+        }
+    }
 
 }
-// ---------- End Of Class TabsTag ----------

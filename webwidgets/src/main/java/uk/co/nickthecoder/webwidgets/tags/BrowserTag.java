@@ -1,268 +1,220 @@
 /*
-----------------------------------------------------------------------
-
- Author        :  (nick)
- Creation Date : 2006-08-29
-
-----------------------------------------------------------------------
-
- History
- 2006-08-29 : nick : Initial Development
-
-----------------------------------------------------------------------
-
- This program is free software; you can redistribute it and/or
- modify it under the terms of the GNU General Public License
- as published by the Free Software Foundation; either version 2
- of the License, or (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-
-----------------------------------------------------------------------
-*/
+ * Copyright (c) Nick Robinson All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the GNU Public License v3.0 which accompanies this distribution, and
+ * is available at http://www.gnu.org/licenses/gpl.html
+ */
 
 package uk.co.nickthecoder.webwidgets.tags;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import java.util.*;
-import java.util.regex.*;
-
-import javax.servlet.jsp.PageContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.*;
-import javax.servlet.jsp.tagext.*;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
+import javax.servlet.jsp.tagext.TagSupport;
 
 import org.apache.log4j.Logger;
-
-import uk.co.nickthecoder.webwidgets.util.TagUtil;
-
 
 /**
 
 */
 
-public class BrowserTag
-  extends TagSupport
+public class BrowserTag extends TagSupport
 {
+    private static final long serialVersionUID = 1125159996123483821L;
 
-  // -------------------- [[Static Attributes]] --------------------
+    private static final String[] _mobilePatternStrings = { "ipod", "iphone", "android" };
 
-  private static final String[] _mobilePatternStrings = { "ipod", "iphone", "android" };
+    private static List _mobilePatterns; /* of Pattern objects */
 
-  private static List _mobilePatterns; /* of Pattern objects */
+    protected static Logger _logger = Logger.getLogger(BrowserTag.class);
 
-  protected static Logger _logger = Logger.getLogger( BrowserTag.class );
+    private static final String[] _versionPrefixes = { "msie", "firefox/" };
 
-  private static final String[] _versionPrefixes = { "msie", "firefox/" };
-  
-  // -------------------- [[Attributes]] --------------------
+    private String _supportsPng;
 
-  private String _supportsPng;
+    private String _isIe;
 
-  private String _isIe;
+    private String _isMobile;
 
-  private String _isMobile;
+    private String _version;
 
-  private String _version;
-  
-  // -------------------- [[Static Methods]] --------------------
+    public static float checkVersion( PageContext pageContext )
+    {
+        HttpServletRequest request = ((HttpServletRequest) pageContext.getRequest());
+        String userAgent = request.getHeader("User-Agent").toLowerCase();
 
-  public static float checkVersion( PageContext pageContext )
-  {
-    HttpServletRequest request = ((HttpServletRequest) pageContext.getRequest());
-    String userAgent = request.getHeader("User-Agent").toLowerCase();
+        // System.out.println("UserAgent " + userAgent );
 
-    // System.out.println("UserAgent " + userAgent );
+        for (int i = 0; i < _versionPrefixes.length; i++) {
 
-    for (int i = 0; i < _versionPrefixes.length; i ++ ) {
-      
-      //System.out.println("Checking " + _versionPrefixes[i] );
-      
-      int index = userAgent.indexOf( _versionPrefixes[i] );
-      if ( index >= 0 ) {
-        
-        //System.out.println("Found prefix " + _versionPrefixes[i] );
+            // System.out.println("Checking " + _versionPrefixes[i] );
 
-        int start = index + _versionPrefixes[i].length();
-        int j;
-        for ( j = start; j < userAgent.length(); j ++ ) {
-          char c = userAgent.charAt( j );
-          if ( Character.isWhitespace( c ) || Character.isDigit( c ) || c == '.' ) {
-          } else {
-            break;
-          }
-          
-          //System.out.println("start,j " + start + "," + j  );
-          
-          String ver = userAgent.substring( start, j ).trim();
-          //System.out.println("ver" + ver );
-          try {
-            float result = Float.parseFloat( ver );
-            return result;
-          } catch (Exception e) {
-          }
+            int index = userAgent.indexOf(_versionPrefixes[i]);
+            if (index >= 0) {
+
+                // System.out.println("Found prefix " + _versionPrefixes[i] );
+
+                int start = index + _versionPrefixes[i].length();
+                int j;
+                for (j = start; j < userAgent.length(); j++) {
+                    char c = userAgent.charAt(j);
+                    if (Character.isWhitespace(c) || Character.isDigit(c) || c == '.') {
+                    } else {
+                        break;
+                    }
+
+                    // System.out.println("start,j " + start + "," + j );
+
+                    String ver = userAgent.substring(start, j).trim();
+                    // System.out.println("ver" + ver );
+                    try {
+                        float result = Float.parseFloat(ver);
+                        return result;
+                    } catch (Exception e) {
+                    }
+                }
+            }
         }
-      }
+
+        return 0.0f;
     }
 
-    return 0.0f;
-  }
-  
-  public static boolean checkIsIe( PageContext pageContext )
-  {
-    HttpServletRequest request = ((HttpServletRequest) pageContext.getRequest());
-    String userAgent = request.getHeader("User-Agent").toLowerCase();
+    public static boolean checkIsIe( PageContext pageContext )
+    {
+        HttpServletRequest request = ((HttpServletRequest) pageContext.getRequest());
+        String userAgent = request.getHeader("User-Agent").toLowerCase();
 
-    if (userAgent.indexOf("msie") != -1) {
-      return true;
+        if (userAgent.indexOf("msie") != -1) {
+            return true;
+        }
+
+        return false;
     }
 
-    return false;
-  }
+    public static boolean checkSupportsPng( PageContext pageContext )
+    {
+        HttpServletRequest request = ((HttpServletRequest) pageContext.getRequest());
+        String userAgent = request.getHeader("User-Agent").toLowerCase();
 
-  public static boolean checkSupportsPng( PageContext pageContext )
-  {
-    HttpServletRequest request = ((HttpServletRequest) pageContext.getRequest());
-    String userAgent = request.getHeader("User-Agent").toLowerCase();
+        if (userAgent.indexOf("msie") != -1) {
+            return false;
+        }
 
-    if (userAgent.indexOf("msie") != -1) {
-      return false;
-    }
-
-    return true;
-  }
-
-  public static boolean checkMobile( PageContext pageContext )
-  {
-    HttpServletRequest request = ((HttpServletRequest) pageContext.getRequest());
-    String userAgent = request.getHeader("User-Agent").toLowerCase();
-
-    for ( Iterator i = getMobilePatterns().iterator(); i.hasNext(); ) {
-      Pattern pattern = (Pattern) (i.next());
-      Matcher matcher = pattern.matcher( userAgent );
-      if ( matcher.find() ) {
         return true;
-      }
     }
 
-    return false;
-  }
+    public static boolean checkMobile( PageContext pageContext )
+    {
+        HttpServletRequest request = ((HttpServletRequest) pageContext.getRequest());
+        String userAgent = request.getHeader("User-Agent").toLowerCase();
 
-  public static List getMobilePatterns()
-  {
-    if ( _mobilePatterns == null ) {
-      _mobilePatterns = new ArrayList( _mobilePatternStrings.length );
-      for ( int i = 0; i < _mobilePatternStrings.length; i ++ ) {
-        _mobilePatterns.add( Pattern.compile( _mobilePatternStrings[ i ] ) );
-      }
+        for (Iterator i = getMobilePatterns().iterator(); i.hasNext();) {
+            Pattern pattern = (Pattern) (i.next());
+            Matcher matcher = pattern.matcher(userAgent);
+            if (matcher.find()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    return _mobilePatterns;
-  }
+    public static List getMobilePatterns()
+    {
+        if (_mobilePatterns == null) {
+            _mobilePatterns = new ArrayList(_mobilePatternStrings.length);
+            for (int i = 0; i < _mobilePatternStrings.length; i++) {
+                _mobilePatterns.add(Pattern.compile(_mobilePatternStrings[i]));
+            }
+        }
 
-  // -------------------- [[Constructors]] --------------------
-
-  /**
-  */
-  public BrowserTag()
-  {
-    super();
-    initialise();
-  }
-
-  private void initialise()
-  {
-    _supportsPng = null;
-    _isIe = null;
-    _version = null;
-  }
-
-  public void release()
-  {
-    super.release();
-    initialise();
-  }
-
-  // -------------------- [[Methods]] --------------------
-
-
-  public String getIsIe()
-  {
-    return _isIe;
-  }
-
-  public void setIsIe( String value )
-  {
-    _isIe = value;
-  }
-
-  public String getVersion()
-  {
-    return _version;
-  }
-
-  public void setVersion( String value )
-  {
-    _version = value;
-  }
-
-
-  public String getSupportsPng()
-  {
-    return _supportsPng;
-  }
-
-  public void setSupportsPng( String value )
-  {
-    _supportsPng = value;
-  }
-
-
-  public String getIsMobile()
-  {
-    return _isMobile;
-  }
-
-  public void setIsMobile( String value )
-  {
-    _isMobile = value;
-  }
-
-
-  public int doEndTag()
-    throws JspException
-  {
- 
-    if ( _supportsPng != null ) {
-      pageContext.getRequest().setAttribute( _supportsPng, new Boolean( checkSupportsPng( pageContext ) ) );
+        return _mobilePatterns;
     }
 
-    if ( _isIe != null ) {
-      pageContext.getRequest().setAttribute( _isIe, new Boolean( checkIsIe( pageContext ) ) );
+    public BrowserTag()
+    {
+        super();
+        initialise();
     }
 
-    if ( _isMobile != null ) {
-      pageContext.getRequest().setAttribute( _isMobile, checkMobile( pageContext ) );
+    private void initialise()
+    {
+        _supportsPng = null;
+        _isIe = null;
+        _version = null;
     }
 
-    if ( _version != null ) {
-      pageContext.getRequest().setAttribute( _version, checkVersion( pageContext ) );
+    public void release()
+    {
+        super.release();
+        initialise();
     }
 
-    return EVAL_PAGE;
-  }
+    public String getIsIe()
+    {
+        return _isIe;
+    }
 
-  // -------------------- [[Test / Debug]] --------------------
+    public void setIsIe( String value )
+    {
+        _isIe = value;
+    }
+
+    public String getVersion()
+    {
+        return _version;
+    }
+
+    public void setVersion( String value )
+    {
+        _version = value;
+    }
+
+    public String getSupportsPng()
+    {
+        return _supportsPng;
+    }
+
+    public void setSupportsPng( String value )
+    {
+        _supportsPng = value;
+    }
+
+    public String getIsMobile()
+    {
+        return _isMobile;
+    }
+
+    public void setIsMobile( String value )
+    {
+        _isMobile = value;
+    }
+
+    public int doEndTag() throws JspException
+    {
+
+        if (_supportsPng != null) {
+            pageContext.getRequest().setAttribute(_supportsPng, new Boolean(checkSupportsPng(pageContext)));
+        }
+
+        if (_isIe != null) {
+            pageContext.getRequest().setAttribute(_isIe, new Boolean(checkIsIe(pageContext)));
+        }
+
+        if (_isMobile != null) {
+            pageContext.getRequest().setAttribute(_isMobile, checkMobile(pageContext));
+        }
+
+        if (_version != null) {
+            pageContext.getRequest().setAttribute(_version, checkVersion(pageContext));
+        }
+
+        return EVAL_PAGE;
+    }
 
 }
-
-// ---------- End Of Class BrowserTag ----------
-

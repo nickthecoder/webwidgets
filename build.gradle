@@ -1,6 +1,8 @@
 
 version = '1.1'
 
+apply plugin: 'eclipse'
+    
 subprojects {
 
     group = 'nickthecoder.co.uk.webwidgets'
@@ -15,6 +17,8 @@ subprojects {
 project(':webwidgets') {
 
     apply plugin: 'java'
+    apply plugin: 'eclipse'
+
     sourceCompatibility = 1.7
     targetCompatibility = 1.7
 
@@ -31,9 +35,11 @@ project(':webwidgets') {
 
 
 project(':wwdocs') {
+
     apply plugin: 'war'
     apply plugin: 'jetty'
-    
+    apply plugin: 'eclipse'
+        
     dependencies {
         compile project(':webwidgets')
     }

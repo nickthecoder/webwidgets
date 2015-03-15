@@ -1,94 +1,63 @@
 /*
- This program is free software; you can redistribute it and/or
- modify it under the terms of the GNU General Public License
- as published by the Free Software Foundation; either version 2
- of the License, or (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-*/
+ * Copyright (c) Nick Robinson All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the GNU Public License v3.0 which accompanies this distribution, and
+ * is available at http://www.gnu.org/licenses/gpl.html
+ */
 
 package uk.co.nickthecoder.webwidgets.tags;
 
+import java.io.IOException;
 
-import java.util.*;
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.jsp.*;
-import javax.servlet.jsp.tagext.*;
-
-
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.tagext.TagSupport;
 
 /**
-  Renders the value of the referrer http header, however, if referrer is given as
-  a url parameter (or post parameter), then that value is used.
+ * Renders the value of the referrer http header, however, if referrer is given as
+ * a url parameter (or post parameter), then that value is used.
+ * 
+ * NOTE. The http spec got the spelling wrong, and I was unsure whether to continue
+ * this bad spelling. I chose to spell referrer correctly, and I apologise for half
+ * of you that are totally confused. The only place I spell referrer incorrectly, is
+ * when I read the http headers (i.e. where I NEED to spell it wrong).
+ */
 
-  NOTE. The http spec got the spelling wrong, and I was unsure whether to continue
-  this bad spelling. I chose to spell referrer correctly, and I appologise for half
-  of you that are totally confused. The only place I spell referrer incorrectly, is
-  when I read the http headers (i.e. where I NEED to spell it wrong).
-*/
-
-public class ReferrerTag
-  extends TagSupport
+public class ReferrerTag extends TagSupport
 {
+    private static final long serialVersionUID = 4451503771388464929L;
 
-  // -------------------- [[Static Attributes]] --------------------
-
-  // -------------------- [[Attributes]] --------------------
-
-  // -------------------- [[Static Methods]] --------------------
-
-  // -------------------- [[Constructors]] --------------------
-
-  /**
-  */
-  public ReferrerTag()
-  {
-  }
-
-  // -------------------- [[Methods]] --------------------
-
-
-  public int doStartTag()
-    throws JspException
-  {
-    try {
-
-      JspWriter out = pageContext.getOut();
-      HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
-
-      String referrer;
-      if ( request.getParameter( "referrer" ) != null ) {
-        referrer = request.getParameter( "referrer" );
-      } else {
-        referrer = request.getHeader( "referer" ); // Note the spelling is wrong in HTTP spec!
-      }
-
-      if ( referrer != null ) {
-        out.print( referrer );
-      }
-
-      return SKIP_BODY;
-
-    } catch (IOException e) {
-      // @MORE@
-      e.printStackTrace();
-      throw new JspException( "Unexpected IO Exception." );
+    public ReferrerTag()
+    {
     }
 
-  }
+    public int doStartTag() throws JspException
+    {
+        try {
 
-  // -------------------- [[Test / Debug]] --------------------
+            JspWriter out = pageContext.getOut();
+            HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
 
+            String referrer;
+            if (request.getParameter("referrer") != null) {
+                referrer = request.getParameter("referrer"); // Note the spelling is correct.
+            } else {
+                referrer = request.getHeader("referer"); // Note the spelling is wrong in HTTP spec!
+            }
+
+            if (referrer != null) {
+                out.print(referrer);
+            }
+
+            return SKIP_BODY;
+
+        } catch (IOException e) {
+            // @MORE@
+            e.printStackTrace();
+            throw new JspException("Unexpected IO Exception.");
+        }
+
+    }
+    
 }
-
-// ---------- End Of Class ReferrerTag ----------
 

@@ -1,125 +1,96 @@
-// ----------------------------------------------------------------------
-//
-// Author        : Nick Robinson (nick)
-// Creation Date : 2003-03-18
-//
-// ----------------------------------------------------------------------
-// History
-// 2003-03-18 : nick : Initial Development
-//
-// ----------------------------------------------------------------------
+/*
+ * Copyright (c) Nick Robinson All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the GNU Public License v3.0 which accompanies this distribution, and
+ * is available at http://www.gnu.org/licenses/gpl.html
+ */
 
 package uk.co.nickthecoder.webwidgets.tags;
 
+import java.io.IOException;
 
-import java.util.*;
-import java.io.*;
-import javax.servlet.jsp.*;
-import javax.servlet.jsp.tagext.*;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.tagext.BodyTagSupport;
 
-/**
-  @MORE@ Add javadoc comments here
-*/
-public class InnerBoxTag
-  extends BodyTagSupport
+public class InnerBoxTag extends BodyTagSupport
 {
-  // -------------------- [[Static Attributes]] --------------------
+    private static final long serialVersionUID = -7751528261535892575L;
 
-  // -------------------- [[Attributes]] --------------------
+    public boolean _minimized;
 
-  public boolean _minimized;
-
-  // -------------------- [[Static Methods]] --------------------
-
-  // -------------------- [[Constructors]] --------------------
-
-  /**
-    @MORE@ Add Constructor javadocs comments here
-  */
-  public InnerBoxTag()
-  {
-    super();
-    initialise();
-  }
-
-  public void release()
-  {
-    super.release();
-    initialise();
-  }
-
-  private void initialise()
-  {
-    _minimized = false;
-  }
-
-  // -------------------- [[Methods]] --------------------
-
-  public boolean getMinimized()
-  {
-    return _minimized;
-  }
-
-  public void setMinimized( boolean value )
-  {
-    _minimized = value;
-  }
-
-
-  public int doStartTag()
-    throws JspException
-  {
-    try {
-
-      JspWriter out = pageContext.getOut();
-
-      out.println( "<!--BEGIN InnerBox-->" );
-
-      if( getMinimized() ) {
-        out.println( "<div class=\"ww_minimized\">" );
-      } else {
-        out.println( "<div class=\"ww_maximized\">" );
-      }
-
-      out.println( "<div class=\"ww_innerBox\">" );
-      return EVAL_BODY_INCLUDE;
-
-    } catch (IOException e) {
-      // @MORE@
-      e.printStackTrace();
-      throw new JspException( "Unexpected IO Exception." );
+    public InnerBoxTag()
+    {
+        super();
+        initialise();
     }
 
-  }
-
-
-  public int doEndTag()
-    throws JspException
-  {
-    try {
-
-      JspWriter out = pageContext.getOut();
-
-      // This closes the BoxTitleTags "minimizable" div.
-      // See BoxTitleTag for details - this is bad design :-(
-      out.println( "</div> <!-- innerbox end minimizable -->" ); // End <div class="ww_minimizable">
-
-
-      out.println( "</div>" ); // End <div class="innerBox">
-      out.println( "</div>" ); // End <div class="ww_maximized">
-      out.println( "<!--END InnerBox-->" );
-
-      return EVAL_PAGE;
-
-    } catch (IOException e) {
-      // @MORE@
-      e.printStackTrace();
-      throw new JspException( "Unexpected IO Exception." );
+    public void release()
+    {
+        super.release();
+        initialise();
     }
-  }
 
+    private void initialise()
+    {
+        _minimized = false;
+    }
 
-  // -------------------- [[Test / Debug]] --------------------
+    public boolean getMinimized()
+    {
+        return _minimized;
+    }
+
+    public void setMinimized( boolean value )
+    {
+        _minimized = value;
+    }
+
+    public int doStartTag() throws JspException
+    {
+        try {
+
+            JspWriter out = pageContext.getOut();
+
+            out.println("<!--BEGIN InnerBox-->");
+
+            if (getMinimized()) {
+                out.println("<div class=\"ww_minimized\">");
+            } else {
+                out.println("<div class=\"ww_maximized\">");
+            }
+
+            out.println("<div class=\"ww_innerBox\">");
+            return EVAL_BODY_INCLUDE;
+
+        } catch (IOException e) {
+            // @MORE@
+            e.printStackTrace();
+            throw new JspException("Unexpected IO Exception.");
+        }
+
+    }
+
+    public int doEndTag() throws JspException
+    {
+        try {
+
+            JspWriter out = pageContext.getOut();
+
+            // This closes the BoxTitleTags "minimizable" div.
+            // See BoxTitleTag for details - this is bad design :-(
+            out.println("</div> <!-- innerbox end minimizable -->"); // End <div class="ww_minimizable">
+
+            out.println("</div>"); // End <div class="innerBox">
+            out.println("</div>"); // End <div class="ww_maximized">
+            out.println("<!--END InnerBox-->");
+
+            return EVAL_PAGE;
+
+        } catch (IOException e) {
+            // @MORE@
+            e.printStackTrace();
+            throw new JspException("Unexpected IO Exception.");
+        }
+    }
 
 }
-// ---------- End Of Class InnerBoxTag ----------

@@ -1,26 +1,20 @@
-// ----------------------------------------------------------------------
-//
-// Author        : Nick Robinson (nick)
-// Creation Date : 2003-03-18
-//
-// ----------------------------------------------------------------------
-// History
-// 2003-03-18 : nick : Initial Development
-//
-// ----------------------------------------------------------------------
-
+/*
+ * Copyright (c) Nick Robinson All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the GNU Public License v3.0 which accompanies this distribution, and
+ * is available at http://www.gnu.org/licenses/gpl.html
+ */
 package uk.co.nickthecoder.webwidgets.tags;
 
 
-import java.util.*;
-import java.io.*;
-import javax.servlet.http.*;
-import javax.servlet.jsp.*;
-import javax.servlet.jsp.tagext.*;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
-
-import javax.servlet.jsp.el.VariableResolver;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.el.ELException;
+import javax.servlet.jsp.el.VariableResolver;
+import javax.servlet.jsp.tagext.TagSupport;
 
 import uk.co.nickthecoder.webwidgets.util.FilteredIterator;
 import uk.co.nickthecoder.webwidgets.util.TagUtil;
@@ -33,11 +27,10 @@ public class FilterTag
   extends TagSupport
 {
 
-  // -------------------- [[Static Attributes]] --------------------
+    private static final long serialVersionUID = -4090957767104464663L;
+
 
   public static final String DEFAULT_ITEM_NAME = "item";
-
-  // -------------------- [[Attributes]] --------------------
 
   private Object _items;
 
@@ -55,9 +48,6 @@ public class FilterTag
 
   private String _resultType;
 
-  // -------------------- [[Static Methods]] --------------------
-
-  // -------------------- [[Constructors]] --------------------
 
   public FilterTag()
   {
@@ -84,7 +74,6 @@ public class FilterTag
     initialise();
   }
 
-  // -------------------- [[Methods]] --------------------
 
 
   /**
@@ -229,8 +218,5 @@ public class FilterTag
   }
 
 
-  // -------------------- [[Test / Debug]] --------------------
 
 }
-
-// ---------- End Of Class FilterTag ----------

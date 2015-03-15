@@ -1,194 +1,142 @@
 /*
-----------------------------------------------------------------------
-
- Author        :  (nick)
- Creation Date : 2005-04-18
-
-----------------------------------------------------------------------
-
- History
- 2005-04-18 : nick : Initial Development
-
-----------------------------------------------------------------------
-
- This program is free software; you can redistribute it and/or
- modify it under the terms of the GNU General Public License
- as published by the Free Software Foundation; either version 2
- of the License, or (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-
-----------------------------------------------------------------------
-*/
+ * Copyright (c) Nick Robinson All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the GNU Public License v3.0 which accompanies this distribution, and
+ * is available at http://www.gnu.org/licenses/gpl.html
+ */
 
 package uk.co.nickthecoder.webwidgets.tags;
 
-
-import java.util.*;
-import java.io.*;
-import javax.servlet.jsp.*;
-import javax.servlet.jsp.tagext.*;
+import javax.servlet.jsp.JspException;
 
 /**
-  Iterator tag, which creates a HTML  A tag for the set of pages before or after the current page.
-*/
+ * Iterator tag, which creates a HTML A tag for the set of pages before or after the current page.
+ */
 
-public class PagerLinksTag
-  extends PagerChildTag
+public class PagerLinksTag extends PagerChildTag
 
-  implements HasLinkHref
+implements HasLinkHref
 {
 
-  // -------------------- [[Static Attributes]] --------------------
+    private static final long serialVersionUID = -3817351325330163433L;
 
-  public static final String TYPE_PREVIOUS = "previous";
+    public static final String TYPE_PREVIOUS = "previous";
 
-  public static final String TYPE_BEFORE = "before";
+    public static final String TYPE_BEFORE = "before";
 
-  public static final String TYPE_CURRENT = "current";
+    public static final String TYPE_CURRENT = "current";
 
-  public static final String TYPE_AFTER = "after";
+    public static final String TYPE_AFTER = "after";
 
-  public static final String TYPE_NEXT = "next";
+    public static final String TYPE_NEXT = "next";
 
+    private String _type;
 
-  // -------------------- [[Attributes]] --------------------
+    public PagerLinksTag()
+    {
+        super();
 
-  private String _type;
+        initialise();
+    }
 
+    private void initialise()
+    {
+        _type = null;
+    }
 
-  // -------------------- [[Static Methods]] --------------------
+    public String getType()
+    {
+        return _type;
+    }
 
-  // -------------------- [[Constructors]] --------------------
+    public void setType( String type )
+    {
+        _type = type;
+    }
 
-  /**
-  */
-  public PagerLinksTag()
-  {
-    super();
+    public String getLinkHref() throws JspException
+    {
+        // @MORE@ Add the parameters and the page number.
+        // String url = LinkInfoTag.getAncestorLinkHref( this );
+        LinkInfo linkInfo = LinkInfoTag.getAncestorLinkInfo(this);
+        linkInfo.addParameter(getPagerTag().getPageParameterName(), getPagerTag().getPageNumber());
 
-    initialise();
-  }
+        return linkInfo.getLinkHref();
 
-  private void initialise()
-  {
-    _type = null;
-  }
+        // System.out.println( "parent url : " + url );
+        /*
+            return PlainLinkInfo.completeUrl(
+              url,
+              getPagerTag().getPageParameterName(),
+              Integer.toString(getPagerTag().getPageNumber()) );
+              */
+    }
 
-  // -------------------- [[Methods]] --------------------
+    public int doStartTag() throws JspException
+    {
+        PagerTag pagerTag = getPagerTag();
 
-  public String getType()
-  {
-    return _type;
-  }
-  public void setType( String type )
-  {
-    _type = type;
-  }
+        if (TYPE_BEFORE.equals(getType())) {
 
+            if (pagerTag.getPage() <= 1) {
+                return SKIP_BODY;
+            } else {
+                if (pagerTag.getPage() > pagerTag.getPreviousPages()) {
+                    pagerTag.setPageNumber(pagerTag.getPage() - pagerTag.getPreviousPages());
+                } else {
+                    pagerTag.setPageNumber(1);
+                }
+                return EVAL_BODY_INCLUDE;
+            }
 
-  public String getLinkHref()
-    throws JspException
-  {
-    // @MORE@ Add the parameters and the page number.
-    //String url = LinkInfoTag.getAncestorLinkHref( this );
-    LinkInfo linkInfo = LinkInfoTag.getAncestorLinkInfo( this );
-    linkInfo.addParameter( getPagerTag().getPageParameterName(), getPagerTag().getPageNumber() );
+        } else if (TYPE_PREVIOUS.equals(getType())) {
+            if (pagerTag.getPage() <= 1) {
+                return SKIP_BODY;
+            } else {
+                pagerTag.setPageNumber(pagerTag.getPage() - 1);
+                return EVAL_BODY_INCLUDE;
+            }
 
-    return linkInfo.getLinkHref();
+        } else if (TYPE_CURRENT.equals(getType())) {
 
-    // System.out.println( "parent url : " + url );
-/*
-    return PlainLinkInfo.completeUrl(
-      url,
-      getPagerTag().getPageParameterName(),
-      Integer.toString(getPagerTag().getPageNumber()) );
-      */
-  }
+            if (pagerTag.getPages() > 1) {
+                getPagerTag().setPageNumber(getPagerTag().getPage());
+                return EVAL_BODY_INCLUDE;
+            } else {
+                return SKIP_BODY;
+            }
 
-  public int doStartTag()
-    throws JspException
-  {
-    PagerTag pagerTag = getPagerTag();
+        } else if ((TYPE_AFTER.equals(getType())) || (TYPE_NEXT.equals(getType()))) {
 
-    if ( TYPE_BEFORE.equals( getType() ) ) {
+            if (pagerTag.getPage() >= pagerTag.getPages()) {
+                return SKIP_BODY;
+            } else {
+                pagerTag.setPageNumber(pagerTag.getPage() + 1);
+                return EVAL_BODY_INCLUDE;
+            }
 
-      if ( pagerTag.getPage() <= 1 ) {
-        return SKIP_BODY;
-      } else {
-        if ( pagerTag.getPage() > pagerTag.getPreviousPages() ) {
-          pagerTag.setPageNumber( pagerTag.getPage() - pagerTag.getPreviousPages() );
         } else {
-          pagerTag.setPageNumber( 1 );
-        }
-        return EVAL_BODY_INCLUDE;
-      }
-
-    } else if ( TYPE_PREVIOUS.equals( getType() ) ) {
-      if ( pagerTag.getPage() <= 1 ) {
-        return SKIP_BODY;
-      } else {
-        pagerTag.setPageNumber( pagerTag.getPage() - 1 );
-        return EVAL_BODY_INCLUDE;
-      }
-
-    } else if ( TYPE_CURRENT.equals( getType() )  ) {
-
-        if ( pagerTag.getPages() > 1 ) {
-            getPagerTag().setPageNumber( getPagerTag().getPage() );
-            return EVAL_BODY_INCLUDE;
-        } else {
-            return SKIP_BODY;
+            throw new JspException("Unknown type : " + getType());
         }
 
-    } else if ( (TYPE_AFTER.equals( getType() )) || (TYPE_NEXT.equals( getType() )) ) {
+    }
 
-      if ( pagerTag.getPage() >= pagerTag.getPages() ) {
+    public int doAfterBody() throws JspException
+    {
+        PagerTag pagerTag = getPagerTag();
+
+        pagerTag.setPageNumber(pagerTag.getPageNumber() + 1);
+
+        if ((TYPE_BEFORE.equals(getType())) && (pagerTag.getPageNumber() < pagerTag.getPage())) {
+            return EVAL_BODY_AGAIN;
+        }
+
+        if ((TYPE_AFTER.equals(getType())) && (pagerTag.getPageNumber() <= pagerTag.getPages()) &&
+            (pagerTag.getPageNumber() <= pagerTag.getPage() + pagerTag.getNextPages())) {
+
+            return EVAL_BODY_AGAIN;
+        }
+
         return SKIP_BODY;
-      } else {
-        pagerTag.setPageNumber( pagerTag.getPage() + 1 );
-        return EVAL_BODY_INCLUDE;
-      }
-
-    } else {
-      throw new JspException( "Unknown type : " + getType() );
     }
-
-
-  }
-
-
-  public int doAfterBody()
-    throws JspException
-  {
-    PagerTag pagerTag = getPagerTag();
-
-    pagerTag.setPageNumber( pagerTag.getPageNumber() + 1 );
-
-    if ( (TYPE_BEFORE.equals( getType() )) && (pagerTag.getPageNumber() < pagerTag.getPage()) ) {
-      return EVAL_BODY_AGAIN;
-    }
-
-    if ( (TYPE_AFTER.equals( getType() )) &&
-      (pagerTag.getPageNumber() <= pagerTag.getPages()) &&
-      (pagerTag.getPageNumber() <= pagerTag.getPage() + pagerTag.getNextPages()) ) {
-
-      return EVAL_BODY_AGAIN;
-    }
-
-    return SKIP_BODY;
-  }
-
-  // -------------------- [[Test / Debug]] --------------------
 
 }
-
-// ---------- End Of Class PagerLinksTag ----------
-

@@ -1,75 +1,52 @@
-// ----------------------------------------------------------------------
-//
-// Author        : Nick Robinson (nick)
-// Creation Date : 2003-03-18
-//
-// ----------------------------------------------------------------------
-// History
-// 2003-03-18 : nick : Initial Development
-//
-// ----------------------------------------------------------------------
+/*
+ * Copyright (c) Nick Robinson All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the GNU Public License v3.0 which accompanies this distribution, and
+ * is available at http://www.gnu.org/licenses/gpl.html
+ */
 
 package uk.co.nickthecoder.webwidgets.tags;
 
-
-import java.util.*;
-import java.io.*;
-import javax.servlet.jsp.PageContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.*;
-import javax.servlet.jsp.tagext.*;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.TagSupport;
 
-import uk.co.nickthecoder.webwidgets.util.*;
+import uk.co.nickthecoder.webwidgets.util.TagUtil;
+
 /**
-  Sets a variable with a boolean - true if the request is from a local ipv4 address.
-*/
-public class LocalTag
-  extends TagSupport
+ * Sets a variable with a boolean - true if the request is from a local ipv4 address.
+ */
+public class LocalTag extends TagSupport
 {
-  // -------------------- [[Static Attributes]] --------------------
+    private static final long serialVersionUID = -2936791420071562384L;
 
-  // -------------------- [[Attributes]] --------------------
+    private String _var = "isLocal";
 
-  private String _var = "isLocal";
-
-  // -------------------- [[Static Methods]] --------------------
-
-  // -------------------- [[Constructors]] --------------------
-
-  /**
+    /**
   */
-  public LocalTag()
-  {
-    super();
-  }
+    public LocalTag()
+    {
+        super();
+    }
 
-  // -------------------- [[Methods]] --------------------
+    public void setVar( String var )
+    {
+        _var = var;
+    }
 
-  public void setVar( String var )
-  {
-    _var = var;
-  }
+    public String getVar()
+    {
+        return _var;
+    }
 
-  public String getVar()
-  {
-    return _var;
-  }
+    public int doEndTag() throws JspException
+    {
 
-  public int doEndTag()
-    throws JspException
-  {
+        HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
+        boolean isLocal = TagUtil.isLocal(request);
 
-    HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
-    boolean isLocal = TagUtil.isLocal( request );
-  
-    request.setAttribute( getVar(), isLocal ? Boolean.TRUE : Boolean.FALSE );
-    return EVAL_PAGE;
+        request.setAttribute(getVar(), isLocal ? Boolean.TRUE : Boolean.FALSE);
+        return EVAL_PAGE;
 
-  }
-
-
-  // -------------------- [[Test / Debug]] --------------------
+    }
 
 }
-// ---------- End Of Class ----------
-

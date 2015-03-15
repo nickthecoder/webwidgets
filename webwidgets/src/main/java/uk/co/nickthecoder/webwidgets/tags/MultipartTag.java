@@ -1,274 +1,233 @@
 /*
-----------------------------------------------------------------------
-
- Author        :  (nick)
- Creation Date : 2005-04-18
-
-----------------------------------------------------------------------
-
- History
- 2005-04-18 : nick : Initial Development
-
-----------------------------------------------------------------------
-
- This program is free software; you can redistribute it and/or
- modify it under the terms of the GNU General Public License
- as published by the Free Software Foundation; either version 2
- of the License, or (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-
-----------------------------------------------------------------------
-*/
+ * Copyright (c) Nick Robinson All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the GNU Public License v3.0 which accompanies this distribution, and
+ * is available at http://www.gnu.org/licenses/gpl.html
+ */
 
 package uk.co.nickthecoder.webwidgets.tags;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.Map;
 
-import java.util.*;
-import java.io.*;
-import javax.servlet.jsp.*;
-import javax.servlet.jsp.tagext.*;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.TagSupport;
 
-import uk.co.nickthecoder.webwidgets.util.*;
+import uk.co.nickthecoder.webwidgets.util.MultipartHelper;
 
 /**
-  Lets the user navigate from one page to another, often used for search results.
-  This tag can work in two ways. Either you give it the set of items, and the number
-  of items per page, or you give it the total number of pages.
-*/
+ * Lets the user navigate from one page to another, often used for search results.
+ * This tag can work in two ways. Either you give it the set of items, and the number
+ * of items per page, or you give it the total number of pages.
+ */
 
-public class MultipartTag
-  extends TagSupport
+public class MultipartTag extends TagSupport
 {
 
-  // -------------------- [[Static Attributes]] --------------------
+    private static final long serialVersionUID = -9027810356868120241L;
 
+    /**
+     * Deletes all uploaded files once the body of the tag has been completed.
+     */
+    private boolean _autoDelete;
 
-  // -------------------- [[Attributes]] --------------------
+    /**
+     * The name of the directory where files are uploaded to
+     */
+    private String _outputDirectory;
 
-  /**
-    Deletes all uploaded files once the body of the tag has been completed.
-  */
-  private boolean _autoDelete;
+    /**
+     * The name of the attribute to contain the map of name, MultipartTag.FileInfo pairs
+     */
+    private String _filesVar;
 
-  /**
-    The name of the directory where files are uploaded to
-  */
-  private String _outputDirectory;
+    /**
+     * The name of the attribute to hold the map of name, value list
+     */
+    private String _paramListVar;
 
-  /**
-    The name of the attribute to contain the map of name, MultipartTag.FileInfo pairs
-  */
-  private String _filesVar;
+    /**
+     * The name of the request attribute to hold the Map of parameter name value pairs
+     */
+    private String _paramVar;
 
-  /**
-    The name of the attribute to hold the map of name, value list
-  */
-  private String _paramListVar;
+    public MultipartTag()
+    {
+        super();
+        initialise();
+    }
 
-  /**
-    The name of the request attribute to hold the Map of parameter name value pairs
-  */
-  private String _paramVar;
+    private void initialise()
+    {
+        _filesVar = null;
+        _paramVar = null;
+        _paramListVar = null;
+        _autoDelete = true;
+    }
 
-  // -------------------- [[Static Methods]] --------------------
+    public void release()
+    {
+        super.release();
+        initialise();
+    }
 
-  // -------------------- [[Constructors]] --------------------
+    /**
+     * Get method for attribute {@link #_autoDelete}.
+     * Deletes all uploaded files once the body of the tag has been completed.
+     */
+    public boolean getAutoDelete()
+    {
+        return _autoDelete;
+    }
 
-  /**
-  */
-  public MultipartTag()
-  {
-    super();
-    initialise();
-  }
+    /**
+     * Set method for attribute {@link #_autoDelete}.
+     * Deletes all uploaded files once the body of the tag has been completed.
+     */
+    public void setAutoDelete( boolean value )
+    {
+        _autoDelete = value;
+    }
 
-  private void initialise()
-  {
-    _filesVar = null;
-    _paramVar = null;
-    _paramListVar = null;
-    _autoDelete = true;
-  }
+    /**
+     * Get method for attribute {@link #_outputDirectory}.
+     * The name of the directory where files are uploaded to
+     */
+    public String getOutputDirectory()
+    {
+        return _outputDirectory;
+    }
 
-  public void release()
-  {
-    super.release();
-    initialise();
-  }
+    /**
+     * Set method for attribute {@link #_outputDirectory}.
+     * The name of the directory where files are uploaded to
+     */
+    public void setOutputDirectory( String value )
+    {
+        _outputDirectory = value;
+    }
 
-  // -------------------- [[Methods]] --------------------
+    /**
+     * Get method for attribute {@link #_filesVar}.
+     * The name of the attribute to contain the map of name, MultipartTag.FileInfo pairs
+     */
+    public String getFilesVar()
+    {
+        return _filesVar;
+    }
 
-  /**
-    Get method for attribute {@link #_autoDelete}.
-    Deletes all uploaded files once the body of the tag has been completed.
-  */
-  public boolean getAutoDelete()
-  {
-    return _autoDelete;
-  }
+    /**
+     * Set method for attribute {@link #_filesVar}.
+     * The name of the attribute to contain the map of name, MultipartTag.FileInfo pairs
+     */
+    public void setFilesVar( String value )
+    {
+        _filesVar = value;
+    }
 
-  /**
-    Set method for attribute {@link #_autoDelete}.
-    Deletes all uploaded files once the body of the tag has been completed.
-  */
-  public void setAutoDelete( boolean value )
-  {
-    _autoDelete = value;
-  }
+    /**
+     * Get method for attribute {@link #_paramListVar}.
+     * The name of the attribute to hold the map of name, value list
+     */
+    public String getParamListVar()
+    {
+        return _paramListVar;
+    }
 
-  /**
-    Get method for attribute {@link #_outputDirectory}.
-    The name of the directory where files are uploaded to
-  */
-  public String getOutputDirectory()
-  {
-    return _outputDirectory;
-  }
+    /**
+     * Set method for attribute {@link #_paramListVar}.
+     * The name of the attribute to hold the map of name, value list
+     */
+    public void setParamListVar( String value )
+    {
+        _paramListVar = value;
+    }
 
-  /**
-    Set method for attribute {@link #_outputDirectory}.
-    The name of the directory where files are uploaded to
-  */
-  public void setOutputDirectory( String value )
-  {
-    _outputDirectory = value;
-  }
+    /**
+     * Get method for attribute {@link #_paramVar}.
+     * The name of the request attribute to hold the Map of parameter name value pairs
+     */
+    public String getParamVar()
+    {
+        return _paramVar;
+    }
 
-  /**
-    Get method for attribute {@link #_filesVar}.
-    The name of the attribute to contain the map of name, MultipartTag.FileInfo pairs
-  */
-  public String getFilesVar()
-  {
-    return _filesVar;
-  }
+    /**
+     * Set method for attribute {@link #_paramVar}.
+     * The name of the request attribute to hold the Map of parameter name value pairs
+     */
+    public void setParamVar( String value )
+    {
+        _paramVar = value;
+    }
 
-  /**
-    Set method for attribute {@link #_filesVar}.
-    The name of the attribute to contain the map of name, MultipartTag.FileInfo pairs
-  */
-  public void setFilesVar( String value )
-  {
-    _filesVar = value;
-  }
+    public int doStartTag() throws JspException
+    {
+        try {
 
-  /**
-    Get method for attribute {@link #_paramListVar}.
-    The name of the attribute to hold the map of name, value list
-  */
-  public String getParamListVar()
-  {
-    return _paramListVar;
-  }
+            MultipartHelper multipart = new MultipartHelper();
 
-  /**
-    Set method for attribute {@link #_paramListVar}.
-    The name of the attribute to hold the map of name, value list
-  */
-  public void setParamListVar( String value )
-  {
-    _paramListVar = value;
-  }
+            // multipart.setDebug( new PrintWriter( System.out ) );
 
-  /**
-    Get method for attribute {@link #_paramVar}.
-    The name of the request attribute to hold the Map of parameter name value pairs
-  */
-  public String getParamVar()
-  {
-    return _paramVar;
-  }
+            if (getOutputDirectory() != null) {
+                multipart.setOutputDirectory(new File(getOutputDirectory()));
+            }
 
-  /**
-    Set method for attribute {@link #_paramVar}.
-    The name of the request attribute to hold the Map of parameter name value pairs
-  */
-  public void setParamVar( String value )
-  {
-    _paramVar = value;
-  }
+            multipart.go(pageContext.getRequest());
 
-  public int doStartTag()
-    throws JspException
-  {
-    try {
+            if (getParamVar() != null) {
+                // System.out.println( "setting param " + getParamVar() + " to : " + multipart.getSingleParameterMap() );
+                pageContext.getRequest().setAttribute(getParamVar(), multipart.getSingleParameterMap());
+            }
 
-      MultipartHelper multipart = new MultipartHelper();
+            if (getParamListVar() != null) {
+                // System.out.println( "setting param list " + getParamListVar() + " to : " + multipart.getParameterMap() );
+                pageContext.getRequest().setAttribute(getParamListVar(), multipart.getParameterMap());
+            }
 
-      // multipart.setDebug( new PrintWriter( System.out ) );
+            if (getFilesVar() != null) {
+                // System.out.println( "setting files " + getFilesVar() + " to : " + multipart.getFiles() );
+                pageContext.getRequest().setAttribute(getFilesVar(), multipart.getFiles());
+            } else {
+                // We won't be able to delete the files in the end tag, and the body
+                // won't be able to access the files, so lets delete them now.
+                if (getAutoDelete()) {
+                    deleteFiles(multipart.getFiles());
+                }
+            }
 
-      if ( getOutputDirectory() != null ) {
-        multipart.setOutputDirectory( new File( getOutputDirectory() ) );
-      }
-
-      multipart.go( pageContext.getRequest() );
-
-      if ( getParamVar() != null ) {
-        // System.out.println( "setting param " + getParamVar() + " to : " + multipart.getSingleParameterMap() );
-        pageContext.getRequest().setAttribute( getParamVar(), multipart.getSingleParameterMap() );
-      }
-
-      if ( getParamListVar() != null ) {
-        // System.out.println( "setting param list " + getParamListVar() + " to : " + multipart.getParameterMap() );
-        pageContext.getRequest().setAttribute( getParamListVar(), multipart.getParameterMap() );
-      }
-
-      if ( getFilesVar() != null ) {
-        // System.out.println( "setting files " + getFilesVar() + " to : " + multipart.getFiles() );
-        pageContext.getRequest().setAttribute( getFilesVar(), multipart.getFiles() );
-      } else {
-        // We won't be able to delete the files in the end tag, and the body
-        // won't be able to access the files, so lets delete them now.
-        if ( getAutoDelete() ) {
-          deleteFiles( multipart.getFiles() );
+        } catch (IOException e) {
+            throw new JspException(e);
         }
-      }
 
-    } catch ( IOException e ) {
-      throw new JspException( e );
+        return EVAL_BODY_INCLUDE;
+
     }
 
-    return EVAL_BODY_INCLUDE;
-
-  }
-
-  public int doEndTag()
-    throws JspException
-  {
-    if ( getAutoDelete() ) {
-      if ( getFilesVar() != null ) {
-        Map files = (Map) pageContext.getRequest().getAttribute( getFilesVar() );
-        if ( files != null ) {
-          deleteFiles( files );
+    public int doEndTag() throws JspException
+    {
+        if (getAutoDelete()) {
+            if (getFilesVar() != null) {
+                Map files = (Map) pageContext.getRequest().getAttribute(getFilesVar());
+                if (files != null) {
+                    deleteFiles(files);
+                }
+            }
         }
-      }
+
+        return EVAL_PAGE;
     }
 
-    return EVAL_PAGE;
-  }
+    protected void deleteFiles( Map files )
+    {
+        for (Iterator i = files.values().iterator(); i.hasNext();) {
+            MultipartHelper.FileInfo fileInfo = (MultipartHelper.FileInfo) i.next();
 
-  protected void deleteFiles( Map files )
-  {
-    for (Iterator i = files.values().iterator(); i.hasNext(); ) {
-      MultipartHelper.FileInfo fileInfo = (MultipartHelper.FileInfo) i.next();
-
-      if ( fileInfo.getFile() != null ) {
-        fileInfo.getFile().delete();
-      }
+            if (fileInfo.getFile() != null) {
+                fileInfo.getFile().delete();
+            }
+        }
     }
-  }
-
-  // -------------------- [[Test / Debug]] --------------------
 
 }
-
-// ---------- End Of Class MultipartTag ----------
-

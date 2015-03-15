@@ -1,6 +1,30 @@
 Rewrite
 =======
+
+Import into Eclipse, then format each file using GPL license at the top
+
 Get all documentation working
+
+QA each tag. Some are outdated (e.g. use tables rather than CSS to format items).
+
+QA and then merge the javascript into a single file
+
+
+
+Each tag to inherit from a base tag with an ID and css class attributes where applicable.
+
+Documentation for Tab renders badly because style sheets asume it still uses a table to format itself.
+
+
+Uses Raw Types :
+	BreadcrumbsTag
+	BreadcrumbTag
+	BrowserTag
+	FilterTag
+	
+Uses Deprecated :
+	FilterTag
+	GroupByInitialTag
 
 New Features
 ============
