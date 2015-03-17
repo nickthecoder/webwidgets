@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.ServletRequest;
 
@@ -46,15 +47,15 @@ public class MultipartHelper
     private File _outputDirectory;
 
     /**
-     * A hashmap of all of the files uploaded keyed on parameter name(String) value is FileInfo.
+     * A map of all of the files uploaded keyed on parameter name(String) value is FileInfo.
      */
-    private HashMap _files;
+    private Map<String,MultipartHelper.FileInfo> _files;
 
     /**
      * This is a replacement for the normal servletrequests parameters.
      * key is the parameter name, value is a List of the values
      */
-    private Map _parameterMap;
+    private Map<String,List<String>> _parameterMap;
 
     /**
      * If not null, then debugging is enabled, and goes to the print writer.
@@ -79,8 +80,8 @@ public class MultipartHelper
     public MultipartHelper()
     {
         _characterEncoding = DEFAULT_CHARACTER_ENCODING;
-        _parameterMap = new HashMap();
-        _files = new HashMap();
+        _parameterMap = new HashMap<String,List<String>>();
+        _files = new HashMap<String,MultipartHelper.FileInfo>();
         _maximumContentLength = DEFAULT_MAXIMUM_CONTENT_LENGTH;
     }
 
@@ -113,7 +114,7 @@ public class MultipartHelper
 
     /**
      * Set method for attribute {@link #_outputDirectory}.
-     * The direectory where the uploaded files are put
+     * The directory where the uploaded files are put
      */
     public void setOutputDirectory( File value ) throws IOException
     {
@@ -127,18 +128,18 @@ public class MultipartHelper
 
     /**
      * Get method for attribute {@link #_files}.
-     * A hashmap of all of the files uploaded.
+     * A map of all of the files uploaded.
      */
-    public HashMap getFiles()
+    public Map<String,MultipartHelper.FileInfo> getFiles()
     {
         return _files;
     }
 
     /**
      * Set method for attribute {@link #_files}.
-     * A hashmap of all of the files uploaded.
+     * A map of all of the files uploaded.
      */
-    public void setFiles( HashMap value )
+    public void setFiles( Map<String,MultipartHelper.FileInfo> value )
     {
         _files = value;
     }
@@ -147,7 +148,7 @@ public class MultipartHelper
      * Get method for attribute {@link #_parameterMap}.
      * This is a replacement for the normal servletrequests parameters.
      */
-    public Map getParameterMap()
+    public Map<String,List<String>> getParameterMap()
     {
         return _parameterMap;
     }
@@ -156,7 +157,7 @@ public class MultipartHelper
      * Set method for attribute {@link #_parameterMap}.
      * This is a replacement for the normal servletrequests parameters.
      */
-    public void setParameterMap( Map value )
+    public void setParameterMap( Map<String,List<String>> value )
     {
         _parameterMap = value;
     }
@@ -743,10 +744,10 @@ public class MultipartHelper
 
     protected void addParameter( String name, String value )
     {
-        List values = (List) _parameterMap.get(name);
+        List<String> values = _parameterMap.get(name);
 
         if (values == null) {
-            values = new ArrayList();
+            values = new ArrayList<String>();
             _parameterMap.put(name, values);
         }
         values.add(value);
@@ -774,37 +775,37 @@ public class MultipartHelper
         return (FileInfo) _files.get(name);
     }
 
-    public Iterator getParameterNames()
+    public Iterator<String> getParameterNames()
     {
         return _parameterMap.keySet().iterator();
     }
 
-    public List getParameterValues( String name )
+    public List<String> getParameterValues( String name )
     {
-        return (List) _parameterMap.get(name);
+        return _parameterMap.get(name);
     }
 
     public String getParameter( String name )
     {
-        List list = getParameterValues(name);
+        List<String> list = getParameterValues(name);
         if ((list == null) || (list.size() == 0)) {
             return null;
         }
-        return (String) list.get(0);
+        return list.get(0);
     }
 
     /**
-     * Return a HashMap keyed on the parameter names, and the values are the first
-     * parameter value in the list of paramaters of that name.
-     * You wil most likely want to use this if one or more parameters are expected to
+     * Return a Map keyed on the parameter names, and the values are the first
+     * parameter value in the list of parameters of that name.
+     * You will most likely want to use this if one or more parameters are expected to
      * only have one value.
      */
-    public Map getSingleParameterMap()
+    public Map<String,String> getSingleParameterMap()
     {
-        HashMap result = new HashMap();
-        for (Iterator i = _parameterMap.entrySet().iterator(); i.hasNext();) {
-            Map.Entry entry = (Map.Entry) i.next();
-            List values = (List) entry.getValue();
+        Map<String,String> result = new HashMap<String,String>();
+        for (Iterator<Entry<String, List<String>>> i = _parameterMap.entrySet().iterator(); i.hasNext();) {
+            Map.Entry<String,List<String>> entry = i.next();
+            List<String> values = entry.getValue();
             result.put(entry.getKey(), values.get(0));
         }
 

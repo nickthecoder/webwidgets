@@ -6,7 +6,6 @@
 
 package uk.co.nickthecoder.webwidgets.tags;
 
-// {{{ imports
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,8 +14,6 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import uk.co.nickthecoder.webwidgets.util.TagUtil;
-
-// }}}
 
 /**
  * Adds a breadcrumb to the List held in the session.
@@ -67,7 +64,7 @@ public class BreadcrumbTag extends TagSupport
 
             HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
 
-            List list = BreadcrumbsTag.getBreadcrumbs(pageContext);
+            List<Crumb> list = BreadcrumbsTag.getBreadcrumbs(pageContext);
 
             String url = getUrl();
             if (url == null) {
@@ -86,10 +83,10 @@ public class BreadcrumbTag extends TagSupport
         }
     }
 
-    protected void addCrumb( List list, Crumb crumb )
+    protected void addCrumb( List<Crumb> list, Crumb crumb )
     {
 
-        for (Iterator i = list.iterator(); i.hasNext();) {
+        for (Iterator<Crumb> i = list.iterator(); i.hasNext();) {
             Crumb existing = (Crumb) i.next();
             if (existing.getUrl().equals(crumb.getUrl())) {
                 i.remove();

@@ -48,11 +48,6 @@ public class LinkTag extends TagSupport
      */
     private boolean _useContextPath;
 
-    /**
-     * Add request.getContextPath() to the front to form the a tag's href.
-     */
-    private String _page;
-
     private String _onclick;
 
     public static LinkInfo getHrefTag( TagSupport innerTag ) throws JspException
@@ -75,7 +70,6 @@ public class LinkTag extends TagSupport
     private void initialise()
     {
         _href = null;
-        _page = null;
         _styleClass = null;
         _useContextPath = true;
         _title = null;

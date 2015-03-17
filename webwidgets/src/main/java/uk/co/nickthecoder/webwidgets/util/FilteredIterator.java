@@ -8,14 +8,14 @@ package uk.co.nickthecoder.webwidgets.util;
 
 import java.util.Iterator;
 
-public abstract class FilteredIterator
+public abstract class FilteredIterator<T> implements Iterator<T>
 {
 
-    private Iterator _source;
+    private Iterator<T> _source;
 
-    private Object _currentItem;
+    private T _currentItem;
 
-    public FilteredIterator( Iterator source )
+    public FilteredIterator( Iterator<T> source )
     {
         _source = source;
     }
@@ -28,9 +28,9 @@ public abstract class FilteredIterator
         return _currentItem != null;
     }
 
-    public Object next()
+    public T next()
     {
-        Object result = _currentItem;
+        T result = _currentItem;
         lookAhead();
 
         return result;

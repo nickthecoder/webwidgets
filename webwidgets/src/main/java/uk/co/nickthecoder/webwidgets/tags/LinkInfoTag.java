@@ -114,7 +114,7 @@ public class LinkInfoTag extends TagSupport implements HasLinkInfo
         _linkInfo.setHash(value);
     }
 
-    public void setParameters( Map parameters )
+    public void setParameters( Map<String,String> parameters )
     {
         _linkInfo.setParameters(parameters);
     }

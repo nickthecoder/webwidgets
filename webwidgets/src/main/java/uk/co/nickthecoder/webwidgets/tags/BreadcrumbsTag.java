@@ -24,28 +24,18 @@ import uk.co.nickthecoder.webwidgets.util.TagUtil;
  * Displays the set of breadcrumb objects that are held in a session object,
  * put there by the BreadcrumbTag.
  */
-
 public class BreadcrumbsTag extends TagSupport
 {
 
-    // -------------------- [[Static Attributes]] --------------------
-
-    /**
-     * 
-     */
     private static final long serialVersionUID = -444770582412639701L;
 
     private static int _numberVisible = 10;
 
     private static final String SESSION_ATTRIBUTE = "BreadcrumbsTag";
 
-    // -------------------- [[Attributes]] --------------------
-
     private boolean _backwards;
 
     private String _separator;
-
-    // -------------------- [[Static Methods]] --------------------
 
     public static int getNumberVisible()
     {
@@ -57,24 +47,21 @@ public class BreadcrumbsTag extends TagSupport
         _numberVisible = value;
     }
 
-    public static List getBreadcrumbs( PageContext pageContext )
+    public static List<Crumb> getBreadcrumbs( PageContext pageContext )
     {
         HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
         HttpSession session = request.getSession();
 
-        List list = (List) session.getAttribute(SESSION_ATTRIBUTE);
+        @SuppressWarnings("unchecked")
+        List<Crumb> list = (List<Crumb>) session.getAttribute(SESSION_ATTRIBUTE);
         if (list == null) {
-            list = new LinkedList();
+            list = new LinkedList<Crumb>();
             session.setAttribute(SESSION_ATTRIBUTE, list);
         }
 
         return list;
     }
 
-    // -------------------- [[Constructors]] --------------------
-
-    /**
-  */
     public BreadcrumbsTag()
     {
         _backwards = false;
@@ -84,8 +71,6 @@ public class BreadcrumbsTag extends TagSupport
     public void release()
     {
     }
-
-    // -------------------- [[Methods]] --------------------
 
     public boolean getBackwards()
     {
@@ -113,11 +98,11 @@ public class BreadcrumbsTag extends TagSupport
 
             JspWriter out = pageContext.getOut();
 
-            List list = getBreadcrumbs(pageContext);
+            List<Crumb> list = getBreadcrumbs(pageContext);
 
             boolean first = true;
 
-            for (Iterator i = ReverseListIterator.getListIterator(list, getBackwards()); i.hasNext();) {
+            for (Iterator<Crumb> i = ReverseListIterator.getListIterator(list, getBackwards()); i.hasNext();) {
                 Crumb crumb = (Crumb) i.next();
 
                 out.print("<a class=\"ww_crumb");
@@ -154,4 +139,3 @@ public class BreadcrumbsTag extends TagSupport
     }
 
 }
-

@@ -18,16 +18,16 @@ public class LinkInfo
     /**
      * The parameters set within the tag itself
      */
-    private Map _parameters;
+    private Map<String,String> _parameters;
 
     /**
      * The paramters set within the tag itself, plus any extra parameters added using the
      * addParameter method.
-     * These need to be held seperately, because the servlet container is free to REUSE an
+     * These need to be held separately, because the servlet container is free to REUSE an
      * instance of LinkInfo, and so if we don't have these two maps, then if LinkParameter
      * tag is used, then one instance of this tag could interfere with another.
      */
-    private Map _allParameters;
+    private Map<String,String> _allParameters;
 
     /**
      * The url without the parameters added
@@ -41,7 +41,7 @@ public class LinkInfo
 
     private String _contextPath;
 
-    static String completeUrl( String contextPath, String url, Map parameters )
+    static String completeUrl( String contextPath, String url, Map<String,String> parameters )
     {
         if (url.startsWith("/") && (contextPath != null)) {
             url = contextPath + url;
@@ -78,7 +78,7 @@ public class LinkInfo
         }
     }
 
-    static String buildParameterString( Map parameters )
+    static String buildParameterString( Map<String,String> parameters )
     {
         if (parameters.isEmpty()) {
             return "";
@@ -86,11 +86,11 @@ public class LinkInfo
 
         StringBuffer result = new StringBuffer();
 
-        for (Iterator i = parameters.keySet().iterator(); i.hasNext();) {
-            Object key = i.next();
-            Object value = parameters.get(key);
+        for (Iterator<String> i = parameters.keySet().iterator(); i.hasNext();) {
+            String key = i.next();
+            String value = parameters.get(key);
 
-            result.append("&amp;").append(key).append("=").append(TagUtil.encodeUrl(value.toString()));
+            result.append("&amp;").append(key).append("=").append(TagUtil.encodeUrl(value));
         }
 
         return result.substring(5); // remove the first &amp;
@@ -98,7 +98,7 @@ public class LinkInfo
 
     public LinkInfo()
     {
-        _parameters = new HashMap();
+        _parameters = new HashMap<String,String>();
         _allParameters = _parameters;
         _url = "";
         _hash = null;
@@ -106,7 +106,7 @@ public class LinkInfo
 
     public LinkInfo( String url )
     {
-        _parameters = new HashMap();
+        _parameters = new HashMap<String,String>();
         _allParameters = _parameters;
         _url = url;
     }
@@ -115,7 +115,7 @@ public class LinkInfo
      * Get method for attribute {@link #_parameters}.
      * The set of parameters to add to the url
      */
-    public Map getParameters()
+    public Map<String,String> getParameters()
     {
         return _allParameters;
     }
@@ -124,7 +124,7 @@ public class LinkInfo
      * Set method for attribute {@link #_parameters}.
      * The set of parameters to add to the url
      */
-    public void setParameters( Map map )
+    public void setParameters( Map<String,String> map )
     {
         _parameters.clear();
         _parameters.putAll(map);
@@ -156,7 +156,7 @@ public class LinkInfo
 
     public void addParameter( String name, int value )
     {
-        _allParameters.put(name, new Integer(value));
+        _allParameters.put(name, Integer.toString(value));
     }
 
     public void addParameter( String name, Object value )
@@ -168,7 +168,7 @@ public class LinkInfo
         }
     }
 
-    public void addParameters( Map map )
+    public void addParameters( Map<String,String> map )
     {
         _parameters.putAll(map);
     }
@@ -205,7 +205,7 @@ public class LinkInfo
 
     public void begin()
     {
-        _allParameters = new HashMap(_parameters);
+        _allParameters = new HashMap<String,String>(_parameters);
     }
 
     public void end()

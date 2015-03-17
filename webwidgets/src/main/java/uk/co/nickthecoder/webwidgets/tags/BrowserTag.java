@@ -29,7 +29,7 @@ public class BrowserTag extends TagSupport
 
     private static final String[] _mobilePatternStrings = { "ipod", "iphone", "android" };
 
-    private static List _mobilePatterns; /* of Pattern objects */
+    private static List<Pattern> _mobilePatterns;
 
     protected static Logger _logger = Logger.getLogger(BrowserTag.class);
 
@@ -113,7 +113,7 @@ public class BrowserTag extends TagSupport
         HttpServletRequest request = ((HttpServletRequest) pageContext.getRequest());
         String userAgent = request.getHeader("User-Agent").toLowerCase();
 
-        for (Iterator i = getMobilePatterns().iterator(); i.hasNext();) {
+        for (Iterator<Pattern> i = getMobilePatterns().iterator(); i.hasNext();) {
             Pattern pattern = (Pattern) (i.next());
             Matcher matcher = pattern.matcher(userAgent);
             if (matcher.find()) {
@@ -124,10 +124,10 @@ public class BrowserTag extends TagSupport
         return false;
     }
 
-    public static List getMobilePatterns()
+    public static List<Pattern> getMobilePatterns()
     {
         if (_mobilePatterns == null) {
-            _mobilePatterns = new ArrayList(_mobilePatternStrings.length);
+            _mobilePatterns = new ArrayList<Pattern>(_mobilePatternStrings.length);
             for (int i = 0; i < _mobilePatternStrings.length; i++) {
                 _mobilePatterns.add(Pattern.compile(_mobilePatternStrings[i]));
             }

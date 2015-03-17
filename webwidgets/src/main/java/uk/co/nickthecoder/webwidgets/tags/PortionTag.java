@@ -60,7 +60,7 @@ public class PortionTag extends TagSupport
     /**
      * The same data as _items, but as type Collection
      */
-    private Collection _collection;
+    private Collection<?> _collection;
 
     /**
      * The name of the variable, which will be an iterator of portions.
@@ -213,7 +213,7 @@ public class PortionTag extends TagSupport
         _items = value;
     }
 
-    private Iterator getIterator()
+    private Iterator<?> getIterator()
     {
         return _collection.iterator();
     }
@@ -281,7 +281,7 @@ public class PortionTag extends TagSupport
             portionSize = (getItemCount() - 1) / portions + 1;
         }
 
-        ArrayList portionArray;
+        List<List<Object>> portionArray;
 
         if (getItemCount() == 0) {
             if ((PAD_NEVER.equals(getPad())) || (PAD_NOT_EMPTY.equals(getPad()))) {
@@ -312,10 +312,10 @@ public class PortionTag extends TagSupport
 
     }
 
-    protected ArrayList singleRow( int portionSize )
+    protected List<List<Object>> singleRow( int portionSize )
     {
-        ArrayList portionArray = new ArrayList(1);
-        ArrayList row = new ArrayList(portionSize);
+        List<List<Object>> portionArray = new ArrayList<List<Object>>(1);
+        List<Object> row = new ArrayList<Object>(portionSize);
 
         for (int i = 0; i < portionSize; i++) {
             row.add(_padding);
@@ -325,38 +325,38 @@ public class PortionTag extends TagSupport
         return portionArray;
     }
 
-    protected ArrayList arrange( int portionSize, int portions )
+    protected List<List<Object>> arrange( int portionSize, int portions )
     {
-        ArrayList portionArray = new ArrayList(portions);
+        List<List<Object>> portionArray = new ArrayList<List<Object>>(portions);
         for (int i = 0; i < portions; i++) {
-            portionArray.add(i, new LinkedList());
+            portionArray.add(i, new LinkedList<Object>());
         }
 
         if (_transpose) {
-            Iterator i = getIterator();
+            Iterator<?> i = getIterator();
             for (int x = 0; x < portionSize; x++) {
                 for (int y = 0; y < portions; y++) {
                     if (i.hasNext()) {
-                        ((List) portionArray.get(y)).add(i.next());
+                        portionArray.get(y).add(i.next());
                     } else {
                         if ((!PAD_NEVER.equals(getPad())) || (getPadding() != null)) {
                             if ((!PAD_NORMAL.equals(getPad())) || (portions > 1)) {
-                                ((List) portionArray.get(y)).add(getPadding());
+                                portionArray.get(y).add(getPadding());
                             }
                         }
                     }
                 }
             }
         } else {
-            Iterator i = getIterator();
+            Iterator<?> i = getIterator();
             for (int y = 0; y < portions; y++) {
                 for (int x = 0; x < portionSize; x++) {
                     if (i.hasNext()) {
-                        ((List) portionArray.get(y)).add(i.next());
+                        portionArray.get(y).add(i.next());
                     } else {
                         if ((!PAD_NEVER.equals(getPad())) || (getPadding() != null)) {
                             if ((!PAD_NORMAL.equals(getPad())) || (portions > 1)) {
-                                ((List) portionArray.get(y)).add(getPadding());
+                                portionArray.get(y).add(getPadding());
                             }
                         }
                     }

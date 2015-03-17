@@ -136,9 +136,10 @@ public class ScriptTag extends TagSupport
 
     protected boolean includedOnPage( String url )
     {
-        Set includedSet = (Set) pageContext.getAttribute(INCLUDED_SET_NAME);
+        @SuppressWarnings("unchecked")
+        Set<String> includedSet = (Set<String>) pageContext.getAttribute(INCLUDED_SET_NAME);
         if (includedSet == null) {
-            includedSet = new TreeSet();
+            includedSet = new TreeSet<String>();
             pageContext.setAttribute(INCLUDED_SET_NAME, includedSet);
         }
 

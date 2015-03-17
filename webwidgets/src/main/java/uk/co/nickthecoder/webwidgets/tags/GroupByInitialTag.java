@@ -12,10 +12,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
 
+import javax.el.ELContext;
+import javax.el.ExpressionFactory;
+import javax.el.ValueExpression;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.el.ELException;
-import javax.servlet.jsp.el.VariableResolver;
+import javax.servlet.jsp.JspFactory;
+import javax.el.ELException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import uk.co.nickthecoder.webwidgets.util.TagUtil;
@@ -26,7 +29,7 @@ import uk.co.nickthecoder.webwidgets.util.TagUtil;
  * on "D" to jump to the items beginning with "D".
  */
 
-public class GroupByInitialTag extends TagSupport implements VariableResolver
+public class GroupByInitialTag extends TagSupport
 {
 
     private static final long serialVersionUID = -7702614003539678256L;
@@ -131,13 +134,13 @@ public class GroupByInitialTag extends TagSupport implements VariableResolver
     {
         HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
 
-        TreeMap letterMap = new TreeMap();
+        TreeMap<Character, LetterEntry> letterMap = new TreeMap<Character, LetterEntry>();
         for (char letter1 = 'A'; letter1 <= 'Z'; letter1++) {
             LetterEntry letterEntry = new LetterEntry(letter1);
             letterMap.put(new Character(letter1), letterEntry);
         }
 
-        for (Iterator i = TagUtil.iterator(getItems(), "items"); i.hasNext();) {
+        for (Iterator<?> i = TagUtil.iterator(getItems(), "items"); i.hasNext();) {
             Object item = i.next();
 
             LetterEntry letterEntry;
@@ -176,8 +179,13 @@ public class GroupByInitialTag extends TagSupport implements VariableResolver
         String expression = "${item." + getExpression() + "}";
         try {
 
-            _currentItem = item;
-            return pageContext.getExpressionEvaluator().evaluate(expression, Object.class, this, null);
+            pageContext.setAttribute("__groupByItem", item);
+            ExpressionFactory ef = JspFactory.getDefaultFactory().getJspApplicationContext(pageContext.getServletContext())
+                .getExpressionFactory();
+            ELContext elContext = pageContext.getELContext();
+            ValueExpression expr = ef.createValueExpression(pageContext.getELContext(), _expression, Boolean.class);
+
+            return expr.getValue(elContext);
 
         } catch (ELException e) {
             throw new JspException("Failed to evalate : " + expression);
@@ -218,12 +226,12 @@ public class GroupByInitialTag extends TagSupport implements VariableResolver
     {
         private Character _letter;
 
-        private List _items;
+        private List<Object> _items;
 
         public LetterEntry( Character letter )
         {
             _letter = letter;
-            _items = new LinkedList();
+            _items = new LinkedList<Object>();
         }
 
         public LetterEntry( char letter )
@@ -236,12 +244,12 @@ public class GroupByInitialTag extends TagSupport implements VariableResolver
             return _letter;
         }
 
-        public Collection getItems()
+        public Collection<Object> getItems()
         {
             return _items;
         }
 
-        public Iterator iterator()
+        public Iterator<Object> iterator()
         {
             return _items.iterator();
         }

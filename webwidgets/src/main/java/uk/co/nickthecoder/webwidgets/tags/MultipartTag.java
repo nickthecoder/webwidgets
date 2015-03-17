@@ -209,7 +209,8 @@ public class MultipartTag extends TagSupport
     {
         if (getAutoDelete()) {
             if (getFilesVar() != null) {
-                Map files = (Map) pageContext.getRequest().getAttribute(getFilesVar());
+                @SuppressWarnings("unchecked")
+                Map<String,MultipartHelper.FileInfo> files = (Map<String,MultipartHelper.FileInfo>) pageContext.getRequest().getAttribute(getFilesVar());
                 if (files != null) {
                     deleteFiles(files);
                 }
@@ -219,10 +220,10 @@ public class MultipartTag extends TagSupport
         return EVAL_PAGE;
     }
 
-    protected void deleteFiles( Map files )
+    protected void deleteFiles( Map<String,MultipartHelper.FileInfo> files )
     {
-        for (Iterator i = files.values().iterator(); i.hasNext();) {
-            MultipartHelper.FileInfo fileInfo = (MultipartHelper.FileInfo) i.next();
+        for (Iterator<MultipartHelper.FileInfo> i = files.values().iterator(); i.hasNext();) {
+            MultipartHelper.FileInfo fileInfo = i.next();
 
             if (fileInfo.getFile() != null) {
                 fileInfo.getFile().delete();

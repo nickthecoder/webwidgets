@@ -36,7 +36,6 @@ public class TempFile
 
         String extension = (suffix == null) ? "tmp" : suffix;
         synchronized (tmpFileLock) {
-            SecurityManager sm = System.getSecurityManager();
             File f;
             while (true) {
                 f = generateFile(prefix, extension, directory);

@@ -10,9 +10,12 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Map;
 
+import javax.el.ELContext;
+import javax.el.ELException;
+import javax.el.ExpressionFactory;
+import javax.el.ValueExpression;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.el.ELException;
-import javax.servlet.jsp.el.VariableResolver;
+import javax.servlet.jsp.JspFactory;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import uk.co.nickthecoder.webwidgets.util.TagUtil;
@@ -29,7 +32,7 @@ public class SortTag extends TagSupport
     private static final long serialVersionUID = 4730792300525642721L;
 
     /**
-     * The collection of iterator of items to Sort.
+     * The collection or iterator of items to Sort.
      */
     private Object _items;
 
@@ -42,7 +45,7 @@ public class SortTag extends TagSupport
      * The comparator used to Sort the items in the collection. If null,
      * then the natural Sorting of the objects is used.
      */
-    private Comparator _comparator;
+    private Comparator<?> _comparator;
 
     /**
      * When comparing objects, if field is set, then instead of thing the object itself, then the object's
@@ -95,12 +98,12 @@ public class SortTag extends TagSupport
         return _items;
     }
 
-    public void setComparator( Comparator value )
+    public void setComparator( Comparator<?> value )
     {
         _comparator = value;
     }
 
-    public Comparator getComparator()
+    public Comparator<?> getComparator()
     {
         return _comparator;
     }
@@ -125,18 +128,19 @@ public class SortTag extends TagSupport
         return _field;
     }
 
+    @SuppressWarnings("unchecked")
     public int doEndTag() throws JspException
     {
 
         Object[] array = null;
 
         if (getItems() instanceof Map) {
-            array = TagUtil.array(((Map) getItems()).keySet(), "items");
+            array = TagUtil.array(((Map<?, ?>) getItems()).keySet(), "items");
         } else {
             array = TagUtil.array(getItems(), "items");
         }
 
-        Arrays.sort(array, getOverallComparator());
+        Arrays.sort(array, (Comparator<Object>) getOverallComparator());
 
         // Place the Sorted collection into the request scope
         pageContext.getRequest().setAttribute(getVar(), array);
@@ -144,9 +148,10 @@ public class SortTag extends TagSupport
         return EVAL_PAGE;
     }
 
-    private Comparator getOverallComparator()
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    private Comparator<?> getOverallComparator()
     {
-        Comparator comparator;
+        Comparator<?> comparator;
 
         if (getField() == null) {
 
@@ -168,9 +173,9 @@ public class SortTag extends TagSupport
         }
     }
 
-    private class NaturalComparator implements Comparator
+    private class NaturalComparator<T extends Comparable<T>> implements Comparator<T>
     {
-        public int compare( Object a, Object b )
+        public int compare( T a, T b )
         {
             if (a == null) {
                 if (b == null) {
@@ -179,69 +184,69 @@ public class SortTag extends TagSupport
                     return 1; // Is this right?
                 }
             } else {
-                return ((Comparable) a).compareTo(b);
+                return a.compareTo(b);
             }
 
         }
     }
 
-    private class ReverseComparator implements Comparator
+    private class ReverseComparator<T> implements Comparator<T>
     {
-        private Comparator _comparator;
+        private Comparator<T> _comparator;
 
-        public ReverseComparator( Comparator comparator )
+        public ReverseComparator( Comparator<T> comparator )
         {
             _comparator = comparator;
         }
 
-        public int compare( Object a, Object b )
+        public int compare( T a, T b )
         {
             return -_comparator.compare(a, b);
         }
     }
 
-    private class FieldComparator implements Comparator, VariableResolver
+    private class FieldComparator<T extends Comparable<T>> implements Comparator<T>
     {
-        private String _expressionA = "${itemA." + getField() + "}";
-        private String _expressionB = "${itemB." + getField() + "}";
+        private String _expressionA = "${__sortItemA." + getField() + "}";
+        private String _expressionB = "${__sortItemB." + getField() + "}";
 
-        private Object _currentItemA;
-        private Object _currentItemB;
+        private Comparator<T> _comparator;
 
-        private FieldComparator( Comparator comparator )
+        private FieldComparator( Comparator<T> comparator )
         {
             _comparator = comparator;
         }
 
-        public int compare( Object a, Object b )
+        @SuppressWarnings("unchecked")
+        public int compare( T a, T b )
         {
-            _currentItemA = a;
-            _currentItemB = b;
-
+            pageContext.setAttribute("__sortItemA", a);
+            pageContext.setAttribute("__sortItemB", b);
             try {
-                Object objectA = pageContext.getExpressionEvaluator().evaluate(_expressionA, Object.class, this, null);
-                Object objectB = pageContext.getExpressionEvaluator().evaluate(_expressionB, Object.class, this, null);
+
+                ExpressionFactory ef = JspFactory.getDefaultFactory().getJspApplicationContext(pageContext.getServletContext())
+                    .getExpressionFactory();
+                ELContext elContext = pageContext.getELContext();
+                ValueExpression exprA = ef.createValueExpression(pageContext.getELContext(), _expressionA, Object.class);
+                ValueExpression exprB = ef.createValueExpression(pageContext.getELContext(), _expressionB, Object.class);
+                T objectA = (T) exprA.getValue(elContext);
+                T objectB = (T) exprB.getValue(elContext);
 
                 return _comparator.compare(objectA, objectB);
 
             } catch (ELException e) {
+
                 System.err.println("Error evaluating sort compare");
                 e.printStackTrace();
                 return 0;
+
+            } finally {
+                pageContext.removeAttribute("__sortItemA");
+                pageContext.removeAttribute("__sortItemB");
             }
 
         }
 
-        public Object resolveVariable( String name ) throws ELException
-        {
-            if (name.equals("itemA")) {
-                return _currentItemA;
-            } else if (name.equals("itemB")) {
-                return _currentItemB;
-            } else {
-                return pageContext.getVariableResolver().resolveVariable(name);
-            }
-        }
     }
 
 }

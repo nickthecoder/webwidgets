@@ -99,7 +99,7 @@ public class PagerTag extends TagSupport
     /**
      * A list version of the items attribute
      */
-    private List _list;
+    private List<?> _list;
 
     /**
   */
@@ -335,15 +335,16 @@ public class PagerTag extends TagSupport
         setPages((size - 1) / getItemsPerPage() + 1);
     }
 
-    public List getList() throws JspException
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public List<?> getList() throws JspException
     {
         if (_list == null) {
 
             Collection collection = TagUtil.collection(getItems(), "items");
             if (collection instanceof List) {
-                _list = (List) collection;
+                _list = (List<?>) collection;
             } else {
-                _list = new ArrayList(collection);
+                _list = new ArrayList<Object>(collection);
             }
 
         }
@@ -370,7 +371,7 @@ public class PagerTag extends TagSupport
 
             // System.out.println( "creating subset" );
 
-            List subset = null;
+            List<?> subset = null;
             int fromIndex = getFromIndex();
             int toIndex = getToIndex();
 

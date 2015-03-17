@@ -1,7 +1,7 @@
 Rewrite
 =======
 
-Import into Eclipse, then format each file using GPL license at the top
+Remove all warnings (deprecated and raw types)
 
 Get all documentation working
 
@@ -15,16 +15,6 @@ Each tag to inherit from a base tag with an ID and css class attributes where ap
 
 Documentation for Tab renders badly because style sheets asume it still uses a table to format itself.
 
-
-Uses Raw Types :
-	BreadcrumbsTag
-	BreadcrumbTag
-	BrowserTag
-	FilterTag
-	
-Uses Deprecated :
-	FilterTag
-	GroupByInitialTag
 
 New Features
 ============

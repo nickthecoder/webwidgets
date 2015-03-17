@@ -12,27 +12,26 @@ import java.util.*;
  * Allows traversing through a List in reverse order, but still use the next() method
  * This allows the client code to be oblivious to the direction of travel.
  */
-public class ReverseListIterator implements ListIterator
-
+public class ReverseListIterator<T> implements ListIterator<T>
 {
 
-    private ListIterator _listIterator;
+    private ListIterator<T> _listIterator;
 
-    public static ListIterator getListIterator( List list, boolean backwards )
+    public static <TT> ListIterator<TT> getListIterator( List<TT> list, boolean backwards )
     {
         if (backwards) {
-            return new ReverseListIterator(list);
+            return new ReverseListIterator<TT>(list);
         } else {
             return list.listIterator();
         }
     }
 
-    public ReverseListIterator( ListIterator listIterator )
+    public ReverseListIterator( ListIterator<T> listIterator )
     {
         _listIterator = listIterator;
     }
 
-    public ReverseListIterator( List list )
+    public ReverseListIterator( List<T> list )
     {
         _listIterator = list.listIterator(list.size());
     }
@@ -47,12 +46,12 @@ public class ReverseListIterator implements ListIterator
         return _listIterator.hasNext();
     }
 
-    public Object next()
+    public T next()
     {
         return _listIterator.previous();
     }
 
-    public Object previous()
+    public T previous()
     {
         return _listIterator.next();
     }
@@ -62,12 +61,12 @@ public class ReverseListIterator implements ListIterator
         _listIterator.remove();
     }
 
-    public void add( Object o )
+    public void add( T o )
     {
         _listIterator.add(o);
     }
 
-    public void set( Object o )
+    public void set( T o )
     {
         _listIterator.set(o);
     }

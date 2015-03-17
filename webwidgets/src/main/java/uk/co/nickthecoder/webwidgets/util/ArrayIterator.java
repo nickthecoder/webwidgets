@@ -9,8 +9,7 @@ package uk.co.nickthecoder.webwidgets.util;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ArrayIterator implements Iterator
-
+public class ArrayIterator implements Iterator<Object>
 {
 
     private Object[] _array;

@@ -154,32 +154,32 @@ public class TagUtil
         return result;
     }
 
-    public static Iterator iterator( Object object )
+    @SuppressWarnings("unchecked")
+    public static Iterator<Object> iterator( Object object )
     {
         if (object instanceof Iterator) {
-            return (Iterator) object;
+            return (Iterator<Object>) object;
 
         } else if (object instanceof Collection) {
-            return ((Collection) object).iterator();
+            return ((Collection<Object>) object).iterator();
 
         } else if (object instanceof Object[]) {
             return new ArrayIterator((Object[]) object);
         }
 
         throw new ClassCastException("Must be a collection, an iterator or an array");
-
     }
 
-    public static Iterator iterator( Object object, String attributeName ) throws JspException
+    public static Iterator<Object> iterator( Object object, String attributeName ) throws JspException
     {
         try {
             return iterator(object);
         } catch (ClassCastException e) {
             throw new JspException("Attribute " + attributeName + " : " + e.getMessage());
         }
-
     }
 
+    @SuppressWarnings("rawtypes")
     public static Collection collection( Object object )
     {
         if (object instanceof Collection) {
@@ -188,7 +188,7 @@ public class TagUtil
 
         } else if (object instanceof Iterator) {
 
-            List result = new LinkedList();
+            List<Object> result = new LinkedList<Object>();
             for (Iterator i = (Iterator) object; i.hasNext();) {
                 result.add(i.next());
             }
@@ -203,6 +203,7 @@ public class TagUtil
         throw new ClassCastException("Must be a collection, an iterator or an array");
     }
 
+    @SuppressWarnings("rawtypes")
     public static Collection collection( Object object, String attributeName ) throws JspException
     {
         try {
@@ -213,6 +214,7 @@ public class TagUtil
 
     }
 
+    @SuppressWarnings("rawtypes")
     public static Object[] array( Object object )
     {
         if (object instanceof Object[]) {
@@ -228,7 +230,7 @@ public class TagUtil
             return ((Map) object).values().toArray();
 
         } else if (object instanceof Iterator) {
-            List result = new LinkedList();
+            List<Object> result = new LinkedList<Object>();
             for (Iterator i = (Iterator) object; i.hasNext();) {
                 result.add(i.next());
             }

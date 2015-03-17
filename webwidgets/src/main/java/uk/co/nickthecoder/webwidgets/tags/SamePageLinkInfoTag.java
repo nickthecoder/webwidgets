@@ -19,11 +19,6 @@ public class SamePageLinkInfoTag extends TagSupport implements HasLinkInfo
 
     private LinkInfo _linkInfo;
 
-    /**
-     * The href, which is the same as the current request href, but without the parameters
-     */
-    private String _href;
-
     public SamePageLinkInfoTag()
     {
         super();

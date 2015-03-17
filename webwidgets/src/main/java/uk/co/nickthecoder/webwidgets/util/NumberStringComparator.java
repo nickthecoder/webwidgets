@@ -17,12 +17,12 @@ import org.apache.log4j.Logger;
  * 
  * bob1, bob2, bob10, bob12a, bob12b
  */
-public class NumberStringComparator implements Comparator
+public class NumberStringComparator implements Comparator<String>
 {
 
     protected static Logger _logger = Logger.getLogger(NumberStringComparator.class);
 
-    public int compare( Object a, Object b )
+    public int compare( String a, String b )
     {
         if (a == null) {
             return b == null ? 0 : -1;
