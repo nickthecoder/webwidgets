@@ -1,8 +1,18 @@
 
 version = '1.1'
 
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "com.eriwen:gradle-js-plugin:1.12.1"
+    }
+}
+
 apply plugin: 'eclipse'
-    
+apply plugin: "com.eriwen.gradle.js"
+
 subprojects {
 
     group = 'nickthecoder.co.uk.webwidgets'
@@ -27,7 +37,7 @@ project(':webwidgets') {
         compile 'javax.servlet.jsp:jsp-api:2.1'
         compile 'jstl:jstl:1.2'
         compile 'taglibs:string:1.1.0'
-        compile 'commons-lang:commons-lang:2.3'       
+        compile 'commons-lang:commons-lang:2.3'
         compile 'org.apache.struts:struts-tiles:1.3.10'
         compile 'log4j:log4j:1.2.16'
     }
@@ -39,9 +49,42 @@ project(':wwdocs') {
     apply plugin: 'war'
     apply plugin: 'jetty'
     apply plugin: 'eclipse'
-        
+    apply plugin: "com.eriwen.gradle.js"
+
+    javascript.source {        
+        dev {
+            js {
+                srcDir "src/main/webapp/ww_resources"
+                include "*.js"
+                exclude "*-min.js"
+                exclude "webwidgets.js"
+            }
+        }
+        prod {
+            js {
+                srcDir "src/main/webapp/ww_resources"
+                include "*.js"
+                exclude "*-min.js"
+                exclude "webwidgets.js"
+            }
+        }
+    }
+    
+    combineJs {
+        source = javascript.source.dev.js.files
+        dest = file("src/main/webapp/ww_resources/webwidgets.js")
+    }
+    
+    minifyJs {
+        source = combineJs
+        dest = file("src/main/webapp/ww_resources/webwidgets-min.js")
+    }
+    
     dependencies {
         compile project(':webwidgets')
     }
+    
+    tasks.minifyJs.dependsOn tasks.combineJs
+    tasks.processResources.dependsOn tasks.minifyJs
 }
 

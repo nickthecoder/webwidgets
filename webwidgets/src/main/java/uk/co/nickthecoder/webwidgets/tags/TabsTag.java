@@ -22,7 +22,7 @@ public class TabsTag extends BodyTagSupport
 
     private String _id;
 
-    private String _className;
+    private String _styleClass;
 
     public TabsTag()
     {
@@ -40,7 +40,7 @@ public class TabsTag extends BodyTagSupport
     private void initialise()
     {
         _id = null;
-        _className = null;
+        _styleClass = null;
     }
 
     public String getId()
@@ -53,14 +53,14 @@ public class TabsTag extends BodyTagSupport
         _id = id;
     }
 
-    public String getClassName()
+    public String getStyleClass()
     {
-        return _className;
+        return _styleClass;
     }
 
-    public void setClassName( String className )
+    public void setStyleClass( String className )
     {
-        _className = className;
+        _styleClass = className;
     }
 
     public int doStartTag() throws JspException
@@ -70,7 +70,7 @@ public class TabsTag extends BodyTagSupport
             JspWriter out = pageContext.getOut();
 
             out.print("<div");
-            TagUtil.printSafeAttribute(out, "class", getClassName());
+            TagUtil.printSafeAttribute(out, "class", getStyleClass());
             TagUtil.printSafeAttribute(out, "id", getId());
             out.println(">");
             return EVAL_BODY_INCLUDE;

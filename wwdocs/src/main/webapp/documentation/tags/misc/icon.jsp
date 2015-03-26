@@ -46,7 +46,7 @@
         <td>no</td>
         <td>
           If set, and the client doesn't support cookies (or this is the very first hit to this webapp),
-          then the sessionid is added to the url. If your style sheet is dynaic based on a session object,
+          then the sessionid is added to the url. If your style sheet is dynamic based on a session object,
           and your client has disabled cookies, you will need this set to true.
         </td>
       </tr>
@@ -63,6 +63,21 @@
 
   </tiles:put>
 
+  <tiles:put name="examples" type="string">
+
+    <p>
+      All these pages use the following <em>icon</em> tag in the <em>head</em> section :
+    </p>
+ 
+<pre><ww:noEval>
+<ww:icon href="/style/icon.png"/>
+</ww:noEval></pre>
+
+    <p>
+      The actual icon is <ww:link href="/style/icon.png">here</ww:link>. 
+    </p>
+    
+  </tiles:put>
 
 
 </tiles:insert>

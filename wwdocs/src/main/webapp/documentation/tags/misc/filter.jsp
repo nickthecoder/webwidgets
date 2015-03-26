@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="http://nickthecoder.co.uk/webwidgets" prefix="ww" %>
 
@@ -43,9 +44,9 @@
         <td>test</td>
         <td>yes</td>
         <td>
-          The boolean expression used to filter the input. Althought this is treated just like
-          a normal EL expression, it is not, and therefore must not be with $ { ... }.
-          If it were, then it would get evalutated only once, and it need to be evalutated
+          The boolean expression used to filter the input. Although this is treated just like
+          a normal EL expression, it is not, and therefore must not be within ${'${ ... }'}.
+          If it were, then it would get evaluated only once, and it needs to be evaluated
           for each item in the input collection.
         </td>
       </tr>
@@ -67,16 +68,10 @@
 
   <tiles:put name="examples" type="string">
 
-    <table class="examples">
-
-      <tr>
-        <td colspan="2">
-
-        </td>
-      </tr>
-
-      <tr>
-        <td>
+    <h3>Example 1</h3>
+    <p>
+      Filter out one item from a list of 5 names.
+    </p>
 <%
   java.util.LinkedList names = new java.util.LinkedList();
   request.setAttribute( "names", names );
@@ -94,10 +89,8 @@
 </c:forEach>
 </ul>
 
-        </td>
-        <td>
 
-<pre class="code"><ww:noEval>
+<pre><ww:noEval>
 <%
   java.util.LinkedList names = new java.util.LinkedList();
   request.setAttribute( "names", names );
@@ -116,12 +109,26 @@
 </ul>
 </ww:noEval></pre>
 
-        </td>
-      </tr>
+    <h3>Example 2</h2>
+    <p>
+      This time, use the default variable name <em>item</em>.
+    </p>
+    
+<ww:filter items="${names}" var="filteredNames" test="item != 'Nick'"/>
+<ul>
+<c:forEach items="${filteredNames}" var="name">
+  <li><c:out value="${name}"/></li>
+</c:forEach>
+</ul>
 
-
-    </table>
-
+<pre><ww:noEval>
+<ww:filter items="${names}" var="filteredNames" test="item != 'Nick'"/>
+<ul>
+<c:forEach items="${filteredNames}" var="name">
+  <li><c:out value="${name}"/></li>
+</c:forEach>
+</ul>
+</ww:noEval></pre>
 
   </tiles:put>
 

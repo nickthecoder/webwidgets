@@ -22,7 +22,7 @@ public class EdgesTag extends BodyTagSupport
 {
     private static final long serialVersionUID = 7859666195439464756L;
 
-    private String _className;
+    private String _styleClass;
 
     private String _width;
 
@@ -41,18 +41,18 @@ public class EdgesTag extends BodyTagSupport
 
     private void initialise()
     {
-        _className = null;
+        _styleClass = null;
         _width = null;
     }
 
-    public String getClassName()
+    public String getStyleClass()
     {
-        return _className;
+        return _styleClass;
     }
 
-    public void setClassName( String className )
+    public void setStyleClass( String value )
     {
-        _className = className;
+        _styleClass = value;
     }
 
     public String getWidth()
@@ -72,8 +72,8 @@ public class EdgesTag extends BodyTagSupport
             JspWriter out = pageContext.getOut();
 
             out.print("<div");
-            if (_className != null) {
-                TagUtil.printSafeAttribute(out, "class", _className);
+            if (_styleClass != null) {
+                TagUtil.printSafeAttribute(out, "class", _styleClass);
             }
 
             if (getWidth() != null) {

@@ -5,13 +5,11 @@
 
 <tiles:insert page="/style/plain.jsp">
 
-  <tiles:put name="title" type="string" value="Installing Web Widgets" />
+  <tiles:put name="title" type="string" value="Installing" />
 
   <tiles:put name="content" type="string" >
 
     <ww:script src="/ww_resources/ww_minimizable.js" />
-
-    <h2>Installing</h2>
 
     <p>
       To use webwidgets in your own web application, copy the following file.

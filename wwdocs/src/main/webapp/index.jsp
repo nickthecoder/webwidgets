@@ -6,10 +6,9 @@
 
 <tiles:insert template="style/plain.jsp" >
 
-	<tiles:put name="title" type="string">Web Widgets Home</tiles:put>
+	<tiles:put name="title" type="string">About Webwidgets</tiles:put>
 
 	<tiles:put name="content" type="string">
-    <h2>About Web Widgets</h2>
 
     <p>
       I started creating this set of custom tags to help build my intranet and internet sites

@@ -14,29 +14,11 @@
 
   <tiles:put name="examples" type="string">
 
-    <table class="examples">
-
-      <tr>
-        <td colspan="2">
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-          <ww:contextPath/>
-        </td>
-        <td>
+<ww:contextPath/>
 
 <pre class="code"><ww:noEval>
 <ww:contextPath/>
 </ww:noEval></pre>
-
-        </td>
-      </tr>
-
-
-    </table>
-
 
   </tiles:put>
 

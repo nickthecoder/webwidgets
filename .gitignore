@@ -6,3 +6,6 @@ build
 .project
 .settings
 /webwidgets/bin
+/wwdocs/src/main/webapp/ww_resources/webwidgets.js
+/wwdocs/src/main/webapp/ww_resources/webwidgets-min.js
+

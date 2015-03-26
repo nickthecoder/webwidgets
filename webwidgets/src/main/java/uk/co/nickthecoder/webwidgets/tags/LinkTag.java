@@ -24,6 +24,11 @@ public class LinkTag extends TagSupport
     private static final long serialVersionUID = -589364267447199963L;
 
     /**
+     * The id for the a tag.
+     */
+    private String _id;
+
+    /**
      * The css style for the a tag
      */
     private String _styleClass;
@@ -33,10 +38,6 @@ public class LinkTag extends TagSupport
      */
     private String _href;
 
-    /**
-     * The id for the a tag.
-     */
-    private String _id;
     /**
      * The title for the a tag.
      */

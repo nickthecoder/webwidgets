@@ -7,13 +7,18 @@
 
   <tiles:put name="about" type="string">
     <p>
-      Places quote marks around a piece of text. This sounds pretty easy,
-      but the quote marks can be images, and I need to ensure that line
-      breaks never break up the quotation images, and the letter that
-      they touch. To do this, I place one span tag around the open quote and
-      the first word, and another around the last word and the close quote.
-      These spans use a style, with the quote image as a background image.
+      Places quote marks around a piece of text.
     </p>
+    <p>
+      This is now trivial, using css's :before and :after selectors.
+      However, this tag was written before they existed, and so had to do it the hard way,
+      using background images on the first and last words.
+    </p>
+    <p>
+      The current implementation just wraps the body in a span tag, leaving it up to the css to
+      add the quotes.
+    <p>
+  
   </tiles:put>
 
   <tiles:put name="attributes" type="string">
@@ -27,19 +32,10 @@
       </tr>
 
       <tr>
-        <td>type</td>
-        <td>no</td>
-        <td>
-          The type of quote, One of : <br/>
-            normal, fancy
-        </td>
-      </tr>
-
-      <tr>
         <td>styleClass</td>
         <td>no</td>
         <td>
-          The css class name. Defaults to 'quote'.
+          The css class for the span. Defaults to 'ww_quote'.
         </td>
       </tr>
 
@@ -50,52 +46,28 @@
 
   <tiles:put name="examples" type="string">
 
-    <table class="examples">
+<h3>Example 1</h3>
+<p>
+  A normal quote.
+</p>
+<p>
+  <ww:quote>The quick brown fox jumped over the lazy dog.</ww:quote>
+</p>
 
-      <tr>
-        <td colspan="2">
-          <a name="example1"></a>
-          <h3>Example 1</h3>
-          <p>
-            A normal quote.
-          </p>
-        </td>
-      </tr>
-
-      <tr>
-        <td align="center">
-          <ww:quote>The quick brow fox jumped over the lazy dog</ww:quote>
-        </td>
-
-        <td>
 <pre class="code"><ww:noEval>
-<ww:quote>The quick brow fox jumped over the lazy dog</ww:quote>
+<ww:quote>The quick brown fox jumped over the lazy dog.</ww:quote>
 </ww:noEval></pre>
-        </td>
-      </tr>
 
-      <tr>
-        <td colspan="2">
-          <a name="example2"></a>
-          <h3>Example 2</h3>
-          A fancy quote.
-        </td>
-      </tr>
+<h3>Example 2</h3>
+<p>
+  A fancy quote.
+</p>
 
-      <tr>
-        <td align="center">
-          <ww:quote type="fancy">The quick brow fox jumped over the lazy dog</ww:quote>
-        </td>
+<ww:quote styleClass="ww_quote2">The quick brown fox jumped over the lazy dog</ww:quote>
 
-        <td>
 <pre class="code"><ww:noEval>
-<ww:quote type="fancy">The quick brow fox jumped over the lazy dog</ww:quote>
+<ww:quote styleClass="ww_quote2">The quick brown fox jumped over the lazy dog</ww:quote>
 </ww:noEval></pre>
-        </td>
-      </tr>
-
-
-    </table>
 
   </tiles:put>
 

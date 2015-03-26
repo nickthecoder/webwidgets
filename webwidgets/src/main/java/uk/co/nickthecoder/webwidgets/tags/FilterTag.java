@@ -13,7 +13,9 @@ import javax.el.ELContext;
 import javax.el.ELException;
 import javax.el.ExpressionFactory;
 import javax.el.ValueExpression;
+import javax.servlet.ServletContext;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspApplicationContext;
 import javax.servlet.jsp.JspFactory;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.TagSupport;
@@ -23,6 +25,13 @@ import uk.co.nickthecoder.webwidgets.util.TagUtil;
 
 /**
  * Filters a collection of objects based upon an EL expression.
+ * Note. Functions are not supported as part of the test expression.
+ * If you try to use a function, it throws the following exception :
+ * 
+ * javax.el.ELException: Expression uses functions, but no FunctionMapper was provided
+ * 
+ * I have no idea why, or how to fix it, despite spending quite some time on it.
+ * I suspect it is a bug within the verion of JSP I'm using, but cannot prove it.
  */
 
 public class FilterTag extends TagSupport
@@ -43,7 +52,7 @@ public class FilterTag extends TagSupport
      * The el expression which should evaluate to true or false.
      */
     private String _test;
-
+    
     private String _itemName;
 
     private String _resultType;
@@ -142,7 +151,7 @@ public class FilterTag extends TagSupport
     public int doEndTag() throws JspException
     {
         Iterator<Object> unfiltered = TagUtil.iterator(getItems(), "items");
-        Iterator<Object> filtered = new FilterTagIterator(unfiltered, pageContext, getTest());
+        Iterator<Object> filtered = new FilterTagIterator(unfiltered);
 
         // Either place a LIST into the request scope, or an ITERATOR, depending on getResultType.
         if ("list".equals(getResultType())) {
@@ -164,35 +173,45 @@ public class FilterTag extends TagSupport
 
     private class FilterTagIterator extends FilteredIterator<Object>
     {
-        private PageContext _pageContext;
+        private ValueExpression _valueExpression;
 
-        private String _expression;
-
-        private FilterTagIterator( Iterator<Object> source, PageContext pageContext, String expression )
+        private FilterTagIterator( Iterator<Object> source )
         {
             super(source);
 
-            _pageContext = pageContext;
-            _expression = "${" + expression + "}";
+            try {
+                ServletContext servletContext = pageContext.getServletContext();
+                JspApplicationContext jspAppContext = JspFactory.getDefaultFactory().getJspApplicationContext(servletContext);
+                ExpressionFactory ef = JspFactory.getDefaultFactory().getJspApplicationContext(servletContext).getExpressionFactory();
+                ELContext elContext = pageContext.getELContext();
+                _valueExpression = jspAppContext.getExpressionFactory().createValueExpression(elContext, "${" + _test + "}",
+                    Boolean.class);
+                
+                // Why is elContext.getFunctionMapper() == null? It means that funtions cannot be used within the expression.
+                // Maybe its a bug in JSP???
+                // System.out.println( elContext.getFunctionMapper() );
+                // Is there a fix to set the function mapper to the one used within the pageContext?
+                
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         protected boolean include( Object item )
         {
-            _pageContext.setAttribute(_itemName, item);
-
             try {
-                ExpressionFactory ef = JspFactory.getDefaultFactory().getJspApplicationContext(pageContext.getServletContext())
-                    .getExpressionFactory();
-                ELContext elContext = pageContext.getELContext();
-                ValueExpression expr = ef.createValueExpression(pageContext.getELContext(), _expression, Boolean.class);
-
-                Boolean result = (Boolean) expr.getValue(elContext);
-                return result.booleanValue();
-
-            } catch (ELException e) {
-                return false;
+                if ( _valueExpression != null ) {
+                    pageContext.setAttribute(_itemName, item);
+        
+                    ELContext elContext = pageContext.getELContext();
+                    Boolean result = (Boolean) _valueExpression.getValue(elContext);
+                    return result.booleanValue();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
+            return false;
         }
 
     }

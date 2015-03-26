@@ -35,10 +35,7 @@ public class BoxIconTag extends BodyTagSupport
 
             JspWriter out = pageContext.getOut();
 
-            // This may look weird, but I'm closing the parent boxTitleTag's td.
-            // Also, I'm not closing my own td - boxTitleTag will close mine, so
-            // everything evens out.
-            out.println("</td><td class=\"ww_boxIcon\">");
+            out.println("<div class=\"ww_boxIcon\">");
             return EVAL_BODY_INCLUDE;
 
         } catch (IOException e) {
@@ -47,6 +44,22 @@ public class BoxIconTag extends BodyTagSupport
             throw new JspException("Unexpected IO Exception.");
         }
 
+    }
+    
+    public int doEndTag() throws JspException
+    {
+        try {
+
+            JspWriter out = pageContext.getOut();
+
+            out.println("</div>");
+            return EVAL_BODY_INCLUDE;
+
+        } catch (IOException e) {
+            // @MORE@
+            e.printStackTrace();
+            throw new JspException("Unexpected IO Exception.");
+        }
     }
 
 }

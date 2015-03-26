@@ -5,14 +5,16 @@
 
 <tiles:insert page="/style/plain.jsp">
 
-  <tiles:put name="title" type="string" value="Web Widgets Tag Groups" />
+  <tiles:put name="title" type="string" value="Tag Groups" />
 
   <tiles:put name="navigation" value="/documentation/groups/navigation.jsp" />
 
   <tiles:put name="content" type="string" >
 
-    Choose from the following categories :
-
+    <p>
+        Choose from the following categories :
+    <p>
+    
     <h2><a href="boxes.jsp">Boxes</a></h2>
     <p>
       Render boxes, with title bars and contexts.
@@ -39,8 +41,6 @@
     <p>
       Tabbed navigation (as shown at the top of every webwidgets page).
     </p>
-
-    <hr/>
 
     <h2><a href="misc.jsp">Misc</a></h2>
     <p>

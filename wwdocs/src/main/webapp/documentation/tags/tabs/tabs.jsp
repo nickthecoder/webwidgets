@@ -19,7 +19,7 @@
       </tr>
 
       <tr>
-        <td>className</td>
+        <td>styleClass</td>
         <td>no</td>
         <td>
           The css class name for this set of tabs.

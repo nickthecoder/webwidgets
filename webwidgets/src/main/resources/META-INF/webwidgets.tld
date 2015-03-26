@@ -685,7 +685,7 @@
     </attribute>
 
     <attribute>
-      <name>className</name>
+      <name>styleClass</name>
       <rtexprvalue>true</rtexprvalue>
     </attribute>
 
@@ -707,7 +707,7 @@
     </attribute>
 
     <attribute>
-      <name>className</name>
+      <name>styleClass</name>
       <rtexprvalue>true</rtexprvalue>
     </attribute>
     
@@ -747,7 +747,7 @@
     </info>
 
     <attribute>
-      <name>className</name>
+      <name>styleClass</name>
       <rtexprvalue>true</rtexprvalue>
     </attribute>
 
@@ -769,7 +769,7 @@
     </info>
 
     <attribute>
-      <name>className</name>
+      <name>styleClass</name>
       <rtexprvalue>true</rtexprvalue>
     </attribute>
 
@@ -827,6 +827,18 @@
 
     <attribute>
       <name>clickable</name>
+      <type>boolean</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>minMax</name>
+      <type>boolean</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>close</name>
       <type>boolean</type>
       <rtexprvalue>true</rtexprvalue>
     </attribute>

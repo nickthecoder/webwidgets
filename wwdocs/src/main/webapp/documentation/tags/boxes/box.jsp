@@ -20,7 +20,7 @@
         <th>Description</th>
       </tr>
       <tr>
-        <td>className</td>
+        <td>styleClass</td>
         <td>yes</td>
         <td>
           The css class name. The appearance is defined within css style sheets.

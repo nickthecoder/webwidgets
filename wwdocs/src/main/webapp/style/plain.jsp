@@ -1,10 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
+<html lang="en-GB">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="http://nickthecoder.co.uk/webwidgets" prefix="ww" %>
-
-<html lang="en-GB">
 
 <head>
   <title><tiles:insert attribute="title" /></title>
@@ -13,54 +10,53 @@
   <ww:styleSheet href="/style/example.css" />
   <ww:icon href="/style/icon.png"/>
 
-  <ww:script src="/ww_resources/ww_eventNotifier.js" />
-  <ww:script src="/ww_resources/ww_minimizable.js" />
-  <ww:script src="/ww_resources/ww_misc.js" />
+  <ww:script src="/ww_resources/webwidgets-min.js" />
+  <link href='http://fonts.googleapis.com/css?family=Arvo' rel='stylesheet' type='text/css' />
 </head>
 
-<body onload="ww_onLoad()">
+<body>
+  <div id="whole">
+    <div id="header">
+      <div id="logo">
+        <h1>Webwidgets</h1>
+      </div>
+      <ww:tabs id="tabs">
+        <ww:tab local="true" pattern="/index.jsp"><ww:link href="/">About</ww:link></ww:tab>
+        <ww:tab local="true" pattern="/installing.jsp"><ww:link href="/installing.jsp">Installing</ww:link></ww:tab>
+        <ww:tab local="true" pattern="/documentation/groups/.*"><ww:link href="/documentation/groups">Tag Groups</ww:link></ww:tab>
+        <ww:tab local="true" pattern="/documentation/apis/.*"><ww:link href="/documentation/apis">Tag APIs</ww:link></ww:tab>
+        <ww:tab local="true" pattern="/test/.*"><ww:link href="/test/">Alpha&nbsp;Tests</ww:link></ww:tab>	
+      </ww:tabs>
 
-  <div class="heading">
-    <h1><tiles:insert attribute="title" /></h1>
-    <%@include file="../tabs.jsp" %>
-  </div>
-
-  <table class="ww_breadcrumbs">
-    <tr>
-      <td><ww:breadcrumbs backwards="true" separator="<"/></td>
-      <th>&lt;&lt;&nbsp;History</th>
-    </tr>
-  </table>
-
-  <div class="ww_tabsContent">
-
-    <table id="pageLayout">
-      <tr>
-        <td id="navigationCell">
-          <tiles:insert attribute="navigation" ignore="true"/>
-        </td>
-
-        <td id="contentCell">
-
-          <div class="content">
-            <tiles:insert attribute="content" ignore="true"/>
-          </div>
-
-          <tiles:insert attribute="fullWidth" ignore="true"/>
-
-        </td>
-      </tr>
-    </table>
-
-    <hr/>
-
-    <div class="footer">
-      &copy; <a href="http://nickthecoder.co.uk">nickthecoder.co.uk</a>
     </div>
 
+    <div id="belowTabs">
+    </div>
+    
+    <div id="main">
+      <div id="columns">
+
+        <div id="content">
+          <h1><tiles:insert attribute="title" /></h1>
+          <tiles:insert attribute="content" ignore="true"/>
+        </div>
+
+        <div id="navigation">
+          <tiles:insert attribute="navigation" ignore="true"/>
+        </div>
+        
+      </div>
+
+      <div id="belowColumns">
+      </div>
+    </div>
+
+    <div id="footer">        
+      &copy; <a href="http://nickthecoder.co.uk">nickthecoder.co.uk</a>
+    </div>
+        
   </div>
 
 </body>
-
 </html>
 

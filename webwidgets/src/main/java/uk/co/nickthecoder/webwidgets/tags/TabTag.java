@@ -25,7 +25,7 @@ public class TabTag extends BodyTagSupport
 
     private String _id;
 
-    private String _className;
+    private String _styleClass;
 
     private String _pattern;
 
@@ -52,7 +52,7 @@ public class TabTag extends BodyTagSupport
         _test = null;
         _local = false;
         _id = null;
-        _className = null;
+        _styleClass = null;
     }
 
     public String getId()
@@ -65,14 +65,14 @@ public class TabTag extends BodyTagSupport
         _id = id;
     }
 
-    public String getClassName()
+    public String getStyleClass()
     {
-        return _className;
+        return _styleClass;
     }
 
-    public void setClassName( String className )
+    public void setStyleClass( String value )
     {
-        _className = className;
+        _styleClass = value;
     }
 
     public boolean getLocal()
@@ -145,9 +145,9 @@ public class TabTag extends BodyTagSupport
             if (isOn()) {
                 out.print(" ww_tabSelected");
             }
-            if (getClassName() != null) {
+            if (getStyleClass() != null) {
                 out.print(" ");
-                TagUtil.printSafeText(out, getClassName());
+                TagUtil.printSafeText(out, getStyleClass());
             }
             out.println("\">");
 

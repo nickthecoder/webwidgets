@@ -77,33 +77,11 @@
 
   <tiles:put name="examples" type="string">
 
-    <table class="examples">
-
-      <tr>
-        <td colspan="2">
-
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-          <ww:script src="/ww_resources/ww_eventNotifier.js"/>
-          <ww:script src="/ww_resources/ww_misc.js"/>
-          <ww:imageRollover alt="myrollover" src="/images/rolloverOff.png" rollover="/images/rolloverOn.png" />
-        </td>
-        <td>
+<ww:imageRollover alt="myrollover" src="/images/rolloverOff.png" rollover="/images/rolloverOn.png" />
 
 <pre class="code"><ww:noEval>
-<ww:script src="/ww_resources/ww_eventNotifier.js"/>
-<ww:script src="/ww_resources/ww_misc.js"/>
 <ww:imageRollover alt="myrollover" src="/images/rolloverOff.png" rollover="/images/rolloverOn.png" />
 </ww:noEval></pre>
-
-        </td>
-      </tr>
-
-
-    </table>
 
 
   </tiles:put>

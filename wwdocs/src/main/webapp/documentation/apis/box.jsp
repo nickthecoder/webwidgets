@@ -12,8 +12,6 @@
 
   <tiles:put name="about" type="string" value=""/>
 
-  <ww:breadcrumb label="box"/>
-
 </tiles:insert>
 
 

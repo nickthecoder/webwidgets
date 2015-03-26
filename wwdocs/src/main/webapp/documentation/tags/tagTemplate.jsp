@@ -3,7 +3,7 @@
 <%@ taglib uri="http://nickthecoder.co.uk/webwidgets" prefix="ww" %>
 
 <a name="<tiles:insert attribute="tag"/>"></a>
-<ww:box className="mainbox">
+<ww:box styleClass="mainbox">
   <ww:boxTitle>Tag : <tiles:insert attribute="tag"/></ww:boxTitle>
   <ww:boxContent>
 

@@ -50,6 +50,14 @@
       </tr>
 
       <tr>
+        <td>id</td>
+        <td>no</td>
+        <td>
+          The id attribute for the 'a' tag.
+        </td>
+      </tr>
+
+      <tr>
         <td>styleClass</td>
         <td>no</td>
         <td>
@@ -61,7 +69,7 @@
         <td>title</td>
         <td>no</td>
         <td>
-          The title attribute for the a tag.
+          The title attribute for the 'a' tag.
         </td>
 
       </tr>
