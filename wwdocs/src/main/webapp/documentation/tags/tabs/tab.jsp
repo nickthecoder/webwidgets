@@ -25,16 +25,18 @@
         <td>no</td>
         <td>
           A regular expression, the current page's url is matched using this pattern.
+          Note, the protocol and server name are never used as part of the match, and the context path is optionally
+          matched based on the useContextPath property.
           If it matches then the tab is turned "on".
         </td>
       </tr>
 
       <tr>
-        <td>webapp</td>
+        <td>useContextPath</td>
         <td>no</td>
         <td>
-          If true, then the pattern is only matched against the part of the url after
-          the context path, otherwise, the whole uri is matched.
+          If true, then the context path is included when matching with the pattern property above.
+          The default is true.
         </td>
       </tr>
 
@@ -42,7 +44,7 @@
         <td>test</td>
         <td>no</td>
         <td>
-          An el expression to determin if the tab is turned "on". Use either test or
+          An el expression to determine if the tab is turned "on". Use either test or
           pattern, but not both.
         </td>
       </tr>

@@ -42,23 +42,11 @@
 
   <tiles:put name="examples" type="string">
 
-    <table class="examples">
-
-      <tr>
-        <td colspan="2">
-
-        </td>
-      </tr>
-
-      <tr>
-        <td>
 <ww:noEval>
   This is inside the noEval tag, so the following jsp looking
   tag won't be evaluated :
   <ww:aFakeTag blah="hello"/>
 </ww:noEval>
-         </td>
-        <td>
 
 <pre class="code"><ww:noEval>
 <ww:noEval>
@@ -66,12 +54,6 @@
   tag won't be evaluated :
   <ww:aFakeTag blah="hello"/>
 </ww:noEval>&lt;ww:noEval&gt;</pre>
-
-        </td>
-      </tr>
-
-
-    </table>
 
   </tiles:put>
 

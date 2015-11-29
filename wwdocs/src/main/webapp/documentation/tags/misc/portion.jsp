@@ -119,33 +119,22 @@
       request.setAttribute( "emptyList", empty );
     %>
 
-    <table class="examples">
-
-      <tr>
-        <td colspan="2">
-          <h3>Example 1</h3>
-          <p>
-            Two portions (portions="2"). The number of columns is the
-            number of items in the collection / 2 (rounded up).
-          </p>
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-          <table border="1">
-          <ww:portion var="portions" items="${numbers}" portions="2">
-            <c:forEach var="portion" items="${portions}">
-            <tr>
-              <c:forEach var="number" items="${portion}">
-                <td><c:out value="${number}" /></td>
-              </c:forEach>
-            </tr>
-            </c:forEach>
-          </ww:portion>
-          </table>
-        </td>
-        <td>
+<h3>Example 1</h3>
+<p>
+  Two portions (portions="2"). The number of columns is the
+  number of items in the collection / 2 (rounded up).
+</p>
+<table>
+<ww:portion var="portions" items="${numbers}" portions="2">
+  <c:forEach var="portion" items="${portions}">
+  <tr>
+    <c:forEach var="number" items="${portion}">
+      <td><c:out value="${number}" /></td>
+    </c:forEach>
+  </tr>
+  </c:forEach>
+</table>
+</ww:portion>
 
 <pre class="code"><ww:noEval>
 <table border="1">
@@ -160,35 +149,24 @@
 </ww:portion>
 </table>
 </ww:noEval></pre>
-        </td>
-      </tr>
 
+  <h3>Example 2</h3>
+  <p>
+    Portion Size (portionSize="2"). There will always be two columns, and the
+    number of rows is the number of items in the collection / 2 (rounded up).
+  </p>
 
-      <tr>
-        <td colspan="2">
-          <h3>Example 2</h3>
-          <p>
-            Portion Size (portionSize="2"). There will always be two columns, and the
-            number of rows is the number of items in the collection / 2 (rounded up).
-          </p>
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-          <table border="1">
-          <ww:portion var="portions" items="${numbers}" portionSize="2">
-            <c:forEach var="portion" items="${portions}">
-            <tr>
-              <c:forEach var="number" items="${portion}">
-                <td><c:out value="${number}" /></td>
-              </c:forEach>
-            </tr>
-            </c:forEach>
-          </ww:portion>
-          </table>
-        </td>
-        <td>
+  <table>
+  <ww:portion var="portions" items="${numbers}" portionSize="2">
+    <c:forEach var="portion" items="${portions}">
+    <tr>
+      <c:forEach var="number" items="${portion}">
+        <td><c:out value="${number}" /></td>
+      </c:forEach>
+    </tr>
+    </c:forEach>
+  </ww:portion>
+  </table>
 
 <pre class="code"><ww:noEval>
 <table border="1">
@@ -203,34 +181,24 @@
 </ww:portion>
 </table>
 </ww:noEval></pre>
-        </td>
-      </tr>
 
 
-      <tr>
-        <td colspan="2">
-          <h3>Example 3</h3>
-          <p>
-            As above, but the rows and columns are transposed. (transpose="true")
-          </p>
-        </td>
-      </tr>
+  <h3>Example 3</h3>
+  <p>
+    As above, but the rows and columns are transposed. (transpose="true")
+  </p>
 
-      <tr>
-        <td>
-          <table border="1">
-          <ww:portion var="portions" items="${numbers}" portionSize="2" transpose="true">
-            <c:forEach var="portion" items="${portions}">
-            <tr>
-              <c:forEach var="number" items="${portion}">
-                <td><c:out value="${number}" /></td>
-              </c:forEach>
-            </tr>
-            </c:forEach>
-          </ww:portion>
-          </table>
-        </td>
-        <td>
+  <table>
+  <ww:portion var="portions" items="${numbers}" portionSize="2" transpose="true">
+    <c:forEach var="portion" items="${portions}">
+    <tr>
+      <c:forEach var="number" items="${portion}">
+        <td><c:out value="${number}" /></td>
+      </c:forEach>
+    </tr>
+    </c:forEach>
+  </ww:portion>
+  </table>
 
 <pre class="code"><ww:noEval>
 <table border="1">
@@ -245,40 +213,30 @@
 </ww:portion>
 </table>
 </ww:noEval></pre>
-        </td>
-      </tr>
 
 
-      <tr>
-        <td colspan="2">
-          <h3>Example 4</h3>
-          <p>
-            As example 2, with padding="true". Note that the bottom right cell now exists.
-            Previously, there were only 7 td's. There is a problem doing this though,
-            the body of the inner forEach loop will be evaluated, and the loop variable
-            will be null for the missing cells, so you might have to protect yourself from
-            null pointer exceptions (using a simple if statement).
-          </p>
-        </td>
-      </tr>
+<h3>Example 4</h3>
+<p>
+  As example 2, with padding="true". Note that the bottom right cell now exists.
+  Previously, there were only 7 td's. There is a problem doing this though,
+  the body of the inner forEach loop will be evaluated, and the loop variable
+  will be null for the missing cells, so you might have to protect yourself from
+  null pointer exceptions (using a simple if statement).
+</p>
 
-      <tr>
-        <td>
-          <table border="1">
-          <ww:portion var="portions" items="${numbers}" portionSize="2" pad="true">
-            <c:forEach var="portion" items="${portions}">
-            <tr>
-              <c:forEach var="number" items="${portion}">
-                <td>
-                  <c:if test="${number != null}"><c:out value="${number}" /></c:if>
-                </td>
-              </c:forEach>
-            </tr>
-            </c:forEach>
-          </ww:portion>
-          </table>
-        </td>
-        <td>
+<table>
+<ww:portion var="portions" items="${numbers}" portionSize="2" pad="true">
+  <c:forEach var="portion" items="${portions}">
+  <tr>
+    <c:forEach var="number" items="${portion}">
+      <td>
+        <c:if test="${number != null}"><c:out value="${number}" /></c:if>
+      </td>
+    </c:forEach>
+  </tr>
+  </c:forEach>
+</ww:portion>
+</table>
 
 <pre class="code"><ww:noEval>
 <table border="1">
@@ -295,37 +253,28 @@
 </ww:portion>
 </table>
 </ww:noEval></pre>
-        </td>
-      </tr>
 
 
-      <tr>
-        <td colspan="2">
-          <h3>Example 5</h3>
-          <p>
-            Similar to example 4, but this time, we can get around null pointer exceptions
-            by specifying the value to add as padding. This can be any java object, I've
-            used the String "x" for simplicity.
-        </td>
-      </tr>
+<h3>Example 5</h3>
+<p>
+  Similar to example 4, but this time, we can get around null pointer exceptions
+  by specifying the value to add as padding. This can be any java object, I've
+  used the String "x" for simplicity.
+</p>
+<table border="1">
+<ww:portion var="portions" items="${numbers}" portionSize="2" padding="${'x'}">
+  <c:forEach var="portion" items="${portions}">
+  <tr>
+    <c:forEach var="number" items="${portion}">
+      <td>
+        <c:if test="${number != null}"><c:out value="${number}" /></c:if>
+      </td>
+    </c:forEach>
+  </tr>
+  </c:forEach>
+</ww:portion>
+</table>
 
-      <tr>
-        <td>
-          <table border="1">
-          <ww:portion var="portions" items="${numbers}" portionSize="2" padding="${'x'}">
-            <c:forEach var="portion" items="${portions}">
-            <tr>
-              <c:forEach var="number" items="${portion}">
-                <td>
-                  <c:if test="${number != null}"><c:out value="${number}" /></c:if>
-                </td>
-              </c:forEach>
-            </tr>
-            </c:forEach>
-          </ww:portion>
-          </table>
-        </td>
-        <td>
 
 <pre class="code"><ww:noEval>
 <table border="1">
@@ -342,11 +291,6 @@
 </ww:portion>
 </table>
 </ww:noEval></pre>
-        </td>
-      </tr>
-
-
-    </table>
 
   </tiles:put>
 

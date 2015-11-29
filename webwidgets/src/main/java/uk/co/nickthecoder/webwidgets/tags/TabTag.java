@@ -29,7 +29,7 @@ public class TabTag extends BodyTagSupport
 
     private String _pattern;
 
-    private boolean _local;
+    private boolean _useContextPath;
 
     private Boolean _test;
 
@@ -50,7 +50,7 @@ public class TabTag extends BodyTagSupport
     {
         _pattern = null;
         _test = null;
-        _local = false;
+        _useContextPath = true;
         _id = null;
         _styleClass = null;
     }
@@ -75,14 +75,14 @@ public class TabTag extends BodyTagSupport
         _styleClass = value;
     }
 
-    public boolean getLocal()
+    public boolean getUseContextPath()
     {
-        return _local;
+        return _useContextPath;
     }
 
-    public void setLocal( boolean value )
+    public void setUseContextPath( boolean value )
     {
-        _local = value;
+        _useContextPath = value;
     }
 
     public String getPattern()
@@ -119,19 +119,20 @@ public class TabTag extends BodyTagSupport
 
         HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
         String url = TagUtil.getUrl(request);
+        
+        String toCompare = url.replaceAll( ".*?//",  "" ); // Strip the protocol
+        toCompare = toCompare.replaceAll("^.*?/",  "/"); // Strip the server name (and port if it exists)
 
-        String toCompare;
-        if (getLocal()) {
+        if (! getUseContextPath()) {
+            // Remove the context path
             if (request.getContextPath().equals("")) {
-                toCompare = url.replaceAll(".*?/", "/");
+                // Do nothing for the root context.
             } else {
-                toCompare = url.replaceAll(".*?" + request.getContextPath(), "");
+                toCompare = toCompare.replaceAll( "^" + request.getContextPath(), "");
             }
-        } else {
-            toCompare = url;
         }
 
-        // System.out.println( "comparing " + toCompare + " with " + getPattern() );
+        // System.out.println( "comparing " + toCompare + " (" + url + ") with " + getPattern() );
         return toCompare.matches(getPattern());
     }
 

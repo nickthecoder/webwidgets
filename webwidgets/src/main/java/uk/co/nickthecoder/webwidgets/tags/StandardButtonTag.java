@@ -8,7 +8,6 @@ package uk.co.nickthecoder.webwidgets.tags;
 
 import java.io.IOException;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
@@ -34,60 +33,32 @@ public class StandardButtonTag extends BodyTagSupport
 
     private String _buttonType;
 
-    private boolean _displayImage;
-
-    private static String getImagePath( PageContext pageContext )
-    {
-        return ((HttpServletRequest) pageContext.getRequest()).getContextPath() + "/ww_resources/";
-    }
-
     static String makeButton( PageContext pageContext, String buttonType )
     {
-        return makeLink(pageContext, buttonType) + makeImage(pageContext, buttonType) + "</a>";
+        if (buttonType.equals(DISABLED_BUTTON)) {
+            return "";
+        } else {
+            return makeLink(pageContext, buttonType) + "</a>";
+        }
     }
 
     static String makeLink( PageContext pageContext, String buttonType )
     {
         if (MINIMIZE_BUTTON.equals(buttonType)) {
-            return "<a class=\"ww_minButton\" href=\"#\" onclick=\"javascript: return ww_doMinimize( event )\">";
+            return "<a class=\"ww_button ww_minButton\" href=\"#\" onclick=\"javascript: return ww_doMinimize( event )\">";
         } else if (MAXIMIZE_BUTTON.equals(buttonType)) {
-            return "<a class=\"ww_maxButton\" href=\"#\" onclick=\"javascript: return ww_doMaximize( event )\">";
+            return "<a class=\"ww_button ww_maxButton\" href=\"#\" onclick=\"javascript: return ww_doMaximize( event )\">";
         } else if (CLOSE_BUTTON.equals(buttonType)) {
-            return "<a href=\"#\" onclick=\"javascript: return ww_doClose( event )\">";
+            return "<a class=\"ww_button ww_closeButton\" href=\"#\" onclick=\"javascript: return ww_doClose( event )\">";
         } else if (EXPAND_BUTTON.equals(buttonType)) {
-            return "<a class=\"ww_maxButton\" href=\"#\" onclick=\"javascript: return ww_doMaximize( event )\">";
+            return "<a class=\"ww_button ww_expandButton\" href=\"#\" onclick=\"javascript: return ww_doMaximize( event )\">";
         } else if (CONTRACT_BUTTON.equals(buttonType)) {
-            return "<a class=\"ww_minButton\" href=\"#\" onclick=\"javascript: return ww_doMinimize( event )\">";
+            return "<a class=\"ww_button ww_contractButton\" href=\"#\" onclick=\"javascript: return ww_doMinimize( event )\">";
         } else if (DISABLED_BUTTON.equals(buttonType)) {
             return "";
         } else {
-            return "Unknown Button Type : " + buttonType;
+            return "<a class=\"ww_button " + buttonType + "\" href=\"#\">";
         }
-    }
-
-    static String makeImage( PageContext pageContext, String buttonType )
-    {
-        if (MINIMIZE_BUTTON.equals(buttonType)) {
-            return "<img src=\"" + getImagePath(pageContext) + "ww_minimize.png\" alt=\"Min\" title=\"Minimize\" />";
-        } else if (MAXIMIZE_BUTTON.equals(buttonType)) {
-            return "<img src=\"" + getImagePath(pageContext) + "ww_maximize.png\" alt=\"Max\" title=\"Maximize\" />";
-        } else if (CLOSE_BUTTON.equals(buttonType)) {
-            return "<img src=\"" + getImagePath(pageContext) + "ww_close.png\" alt=\"X\" title=\"Close\" />";
-        } else if (EXPAND_BUTTON.equals(buttonType)) {
-            return "<img src=\"" + getImagePath(pageContext) + "ww_expand.png\" alt=\"+\" title=\"Expand\" />";
-        } else if (CONTRACT_BUTTON.equals(buttonType)) {
-            return "<img src=\"" + getImagePath(pageContext) + "ww_contract.png\" alt=\"-\" title=\"Contract\" />";
-        } else if (DISABLED_BUTTON.equals(buttonType)) {
-            return "<img src=\"" + getImagePath(pageContext) + "ww_disabled.png\" />";
-        } else {
-            return "";
-        }
-    }
-
-    public StandardButtonTag()
-    {
-        super();
-        _displayImage = true;
     }
 
     public String getType()
@@ -100,16 +71,6 @@ public class StandardButtonTag extends BodyTagSupport
         _buttonType = buttonType;
     }
 
-    public void setImage( boolean value )
-    {
-        _displayImage = value;
-    }
-
-    public boolean getImage()
-    {
-        return _displayImage;
-    }
-
     public int doStartTag() throws JspException
     {
         try {
@@ -117,10 +78,6 @@ public class StandardButtonTag extends BodyTagSupport
             JspWriter out = pageContext.getOut();
 
             out.print(makeLink(pageContext, _buttonType));
-
-            if (_displayImage) {
-                out.print(makeImage(pageContext, _buttonType));
-            }
 
             return EVAL_BODY_INCLUDE;
 

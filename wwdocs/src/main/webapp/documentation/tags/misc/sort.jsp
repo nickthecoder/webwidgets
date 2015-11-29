@@ -90,25 +90,14 @@
     names.add( "Peter" );
   %>
 
-  <table class="examples">
+<h3>Sort a set of names</h3>
+  <ww:sort items="${names}" var="sortedNames"/>
+  <ul>
+  <c:forEach items="${sortedNames}" var="name">
+    <li><c:out value="${name}"/></li>
+  </c:forEach>
+  </ul>
 
-      <tr>
-        <td colspan="2">
-          Sort a set of names.
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-          <ww:sort items="${names}" var="sortedNames"/>
-          <ul>
-          <c:forEach items="${sortedNames}" var="name">
-            <li><c:out value="${name}"/></li>
-          </c:forEach>
-          </ul>
-       </td>
-
-        <td>
 <pre class="code"><ww:noEval>
 <%
   java.util.LinkedList names = new java.util.LinkedList();
@@ -127,11 +116,6 @@
 </c:forEach>
 </ul>
 </ww:noEval></pre>
-        </td>
-      </tr>
-
-    </table>
-
 
 
 <%
@@ -144,16 +128,8 @@
   files.add( new java.io.File( "/usr/bar" ) );
   files.add( new java.io.File( "/tmp/a" ) );
 %>
-  <table class="examples">
 
-      <tr>
-        <td colspan="2">
-          Sort a set of files, using just their filename, not their full paths.
-        </td>
-      </tr>
-
-      <tr>
-        <td>
+<h3>Sort a set of files, using just their filename, not their full paths.</h3>
  
   <ww:sort items="${files}" var="sorted" field="name"/>
   <ww:sort items="${files}" var="sorted" field="name"/>
@@ -163,9 +139,6 @@
   </c:forEach>
   </ul>
 
-        </td>
-
-        <td>
 <pre class="code"><ww:noEval>
 <%
   java.util.LinkedList files = new java.util.LinkedList();
@@ -184,9 +157,7 @@
   </c:forEach>
   </ul>
 </ww:noEval>
-        </td>
-
-      </tr>
+</pre>
 
   </tiles:put>
 

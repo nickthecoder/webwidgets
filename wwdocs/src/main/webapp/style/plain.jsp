@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en-GB">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
@@ -21,11 +22,11 @@
         <h1>Webwidgets</h1>
       </div>
       <ww:tabs id="tabs">
-        <ww:tab local="true" pattern="/index.jsp"><ww:link href="/">About</ww:link></ww:tab>
-        <ww:tab local="true" pattern="/installing.jsp"><ww:link href="/installing.jsp">Installing</ww:link></ww:tab>
-        <ww:tab local="true" pattern="/documentation/groups/.*"><ww:link href="/documentation/groups">Tag Groups</ww:link></ww:tab>
-        <ww:tab local="true" pattern="/documentation/apis/.*"><ww:link href="/documentation/apis">Tag APIs</ww:link></ww:tab>
-        <ww:tab local="true" pattern="/test/.*"><ww:link href="/test/">Alpha&nbsp;Tests</ww:link></ww:tab>	
+        <ww:tab useContextPath="false" pattern="/index.jsp|/|"><ww:link href="/">About</ww:link></ww:tab>
+        <ww:tab useContextPath="false" pattern="/installing.jsp"><ww:link href="/installing.jsp">Installing</ww:link></ww:tab>
+        <ww:tab useContextPath="false" pattern="/documentation/groups/.*"><ww:link href="/documentation/groups">Tag Groups</ww:link></ww:tab>
+        <ww:tab useContextPath="false" pattern="/documentation/apis/.*"><ww:link href="/documentation/apis">Tag APIs</ww:link></ww:tab>
+        <ww:tab useContextPath="false" pattern="/test/.*"><ww:link href="/test/">Alpha&nbsp;Tests</ww:link></ww:tab>	
       </ww:tabs>
 
     </div>

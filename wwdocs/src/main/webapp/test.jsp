@@ -1,6 +1,6 @@
-<%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
-<%@ taglib uri="/WEB-INF/webwidgets.tld" prefix="ww" %>
 <%@ page contentType="text/html; charset=iso-8859-1" %>
+<%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
+<%@ taglib uri="http://nickthecoder.co.uk/webwidgets" prefix="ww" %>
 
 <tiles:insert page="/style/plain.jsp" flush="true">
 

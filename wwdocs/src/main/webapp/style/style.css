@@ -1,15 +1,21 @@
+/*
+  This style sheet contains the styles specific to the webwidgets documentation.
+  There is nothing in here which you need to use from your own webapp
+  (unless you want you app to look like the webwidgets documentation).
+*/
+
 /* Layout */
 
 #whole { width: 980px; margin: 0 auto; }
 #header { text-align: center; }
-#tabs {}
 #logo { margin: 2em 0; }
 #logo p { margin: 0; padding: 0; }
 
-#tabs {} 
 #tabs .ww_tab { float: left; }
 #tabs .ww_tab a { display: block; padding: 20px 2em; }
 #belowTabs { clear: both; }
+.tabs .ww_tab { float: left; }
+.tabs .ww_tab a { display: block; padding: 10px 1em; }
 
 #main { margin: 1em 0; }
 
@@ -53,6 +59,7 @@ h2 { font-size: 24px; font-weight: normal; }
 h3 { font-size: 18px; font-weight: normal; }
 #tabs { text-transform: uppercase; font-size: 12px; }
 #tabs a { text-decoration: none; }
+.tabs a { text-decoration: none; }
 
 /* Colors */
 
@@ -63,24 +70,57 @@ a { color: #e44; }
 td { color: #222;  }
 th { background: #ddd; color: #333; }
 #logo a { color: #fff; text-decoration: none; }
-#tabs .ww_tab { }
+
 #tabs .ww_tabSelected { background: url('tab.jpg'); }
 #tabs .ww_tab a { color: #eee; }
 #tabs .ww_tab a:hover { color: #fff; }
+.tabs .ww_tabSelected { background: url('tab.jpg'); }
+.tabs .ww_tab a { color: #333; }
+.tabs .ww_tab a:hover { color: #000; }
+.tabs .ww_tabSelected a, .tabs .ww_tabSelected a:hover { color: #fff; }
+
 h2 { border-bottom: 1px solid #bbb; }
 ul li:before{ color: #aaa; }
 pre { border: 1px solid #333; background: #ccc; }
 
-
 .mainBox { border: 1px solid #444; padding: 1em; background: #f8f8f8; }
 .mainBox .ww_boxTitle { font-size: 16pt; background: #888; color: #000; padding: 0.5em; border: 1px solid #eee; }
 
-.ww_quote:before { content: "“"; }
-.ww_quote:after { content: "”"; }
+.tabsContent { clear: both; border: 1px solid #333; background: #eee; padding: 1em; }
 
-.ww_quote2:before { content: url('beginQuote.png'); white-space: nowrap; }
-.ww_quote2:after { content: url('endQuote.png'); white-space: nowrap; }
+/*
+  ------------------- Examples -------------------
+  The following styles are mearly examples used by the documentation of webwidgets
+*/
 
+/*
+  Tag : box
+*/
+.purpleBox { border: 1px solid #000; color: #fff; }
+.purpleBox .ww_boxTitle{ padding: 1em; border-bottom: 1px solid #000; background: #303; }
+.purpleBox .ww_boxContent{ padding: 1em; background: #616; }
+
+
+/*
+  Tag : edges
+  Using the edges tag, you can specify a background image for :
+    top left, top center, top right, middle left, content, middle right, bottom left, bottom center and bottom right.
+  You can use images for each, to create any kind of edges you want.
+*/
+.doubleEdged {} 
+.doubleEdged .ww_top .ww_center { background: #f00; height: 4px;  }
+.doubleEdged .ww_top .ww_left { background: #ccc; padding-left: 8px; }
+.doubleEdged .ww_top .ww_right { background: #ccc; padding-right: 8px; }
+.doubleEdged .ww_content { background: #fff; padding: 1em; }
+.doubleEdged .ww_middle .ww_left { background: #d00; padding-left: 4px; }
+.doubleEdged .ww_middle .ww_right { background: #008; padding-right: 4px; }
+.doubleEdged .ww_bottom .ww_center { background: #800; height: 4px;  }
+.doubleEdged .ww_bottom .ww_left { background: #ccc; padding-left: 8px; }
+.doubleEdged .ww_bottom .ww_right { background: #ccc; padding-right: 8px; }
+
+/*
+  ------------------- End Examples -------------------
+*/
 
 @media (max-width: 1000px) {
   #whole { width: 100%; }

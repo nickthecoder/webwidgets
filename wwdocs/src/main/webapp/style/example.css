@@ -1,26 +1,39 @@
+/*
+  These styles are used  by the webwidgets tags.
+  You can choose to include this file into your project vebatim, or include the appropriate styles, modified to your requirements.
+*/
+
+.ww_closed { display: none; }
+.ww_maximized .ww_maxButton, .ww_maximized .ww_expandButton, .ww_minimized .ww_minButton, .ww_minimized .ww_contractButton { display: none }
+.ww_minimized .ww_maxButton, .ww_minimized .ww_expandButton { display: inline; }
+.ww_minimized .ww_minimizable { display :none; }
+
+.ww_boxIcon { float: right; }
 
 /*
-  Tag : box
+  Standard Buttons
 */
-.purpleBox { border: 1px solid #000; color: #fff; }
-.purpleBox .ww_boxTitle{ padding: 1em; border-bottom: 1px solid #000; background: #303; }
-.purpleBox .ww_boxContent{ padding: 1em; background: #616; }
-
+.ww_button {}
+.ww_minButton:before      { content: url('ww_minimize.png'); }
+.ww_maxButton:before      { content: url('ww_maximize.png'); }
+.ww_closeButton:before    { content: url('ww_close.png'); }
+.ww_contractButton:before { content: url('ww_contract.png'); }
+.ww_expandButton:before   { content: url('ww_expand.png'); }
 
 /*
-  Tag : edges
-  Using the edges tag, you can specify a background image for :
-    top left, top center, top right, middle left, content, middle right, bottom left, bottom center and bottom right.
-  You can use images for each, to create any kind of edges you want.
+  Quotes
 */
-.doubleEdged {} 
-.doubleEdged .ww_top .ww_center { background: #f00; height: 4px;  }
-.doubleEdged .ww_top .ww_left { background: #ccc; padding-left: 8px; }
-.doubleEdged .ww_top .ww_right { background: #ccc; padding-right: 8px; }
-.doubleEdged .ww_content { background: #fff; padding: 1em; }
-.doubleEdged .ww_middle .ww_left { background: #d00; padding-left: 4px; }
-.doubleEdged .ww_middle .ww_right { background: #008; padding-right: 4px; }
-.doubleEdged .ww_bottom .ww_center { background: #800; height: 4px;  }
-.doubleEdged .ww_bottom .ww_left { background: #ccc; padding-left: 8px; }
-.doubleEdged .ww_bottom .ww_right { background: #ccc; padding-right: 8px; }
+.ww_quote:before { content: "“"; }
+.ww_quote:after { content: "”"; }
+
+.ww_quote2:before { content: url('beginQuote.png'); white-space: nowrap; }
+.ww_quote2:after { content: url('endQuote.png'); white-space: nowrap; }
+
+/*
+  Tree
+*/
+.ww_treeNodeButton { float: left; }
+.ww_tree .ww_treeNodeLabel { font-weight: bold; margin-left: 20px; padding: 1px 0px 3px 0px; }
+.ww_tree .ww_treeNodeContent, .ww_tree .ww_treeNodeLastContent { padding: 2px 0px 4px 20px; }
+.ww_tree .ww_treeNodeContent { background: repeat-y 6px 0px url(ww_verticalDots.png); }
 

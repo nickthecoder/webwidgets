@@ -717,7 +717,7 @@
     </attribute>
 
     <attribute>
-      <name>local</name>
+      <name>useContextPath</name>
       <rtexprvalue>true</rtexprvalue>
       <type>boolean</type>
     </attribute>

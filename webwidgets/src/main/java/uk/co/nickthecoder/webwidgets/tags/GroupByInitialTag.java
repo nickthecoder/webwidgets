@@ -176,18 +176,18 @@ public class GroupByInitialTag extends TagSupport
             return item;
         }
 
-        String expression = "${item." + getExpression() + "}";
+        String expression = "${__groupByItem." + getExpression() + "}";
         try {
 
             pageContext.setAttribute("__groupByItem", item);
             ExpressionFactory ef = JspFactory.getDefaultFactory().getJspApplicationContext(pageContext.getServletContext())
                 .getExpressionFactory();
             ELContext elContext = pageContext.getELContext();
-            ValueExpression expr = ef.createValueExpression(pageContext.getELContext(), _expression, Boolean.class);
-
+            ValueExpression expr = ef.createValueExpression(pageContext.getELContext(), expression, Object.class);
             return expr.getValue(elContext);
 
         } catch (ELException e) {
+            e.printStackTrace();
             throw new JspException("Failed to evalate : " + expression);
         }
     }
