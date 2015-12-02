@@ -1,11 +1,10 @@
 *~
 #*#
-build
 .gradle
 .classpath
 .project
 .settings
-/webwidgets/bin
-/wwdocs/src/main/webapp/ww_resources/webwidgets.js
-/wwdocs/src/main/webapp/ww_resources/webwidgets-min.js
-
+build
+bin
+/webwidgets-application/src/main/webapp/ww_resources/webwidgets.js
+/webwidgets-application/src/main/webapp/ww_resources/webwidgets-min.js

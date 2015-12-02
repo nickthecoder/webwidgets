@@ -9,8 +9,6 @@ package uk.co.nickthecoder.webwidgets.util;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import org.apache.log4j.Logger;
-
 /**
  * I want to sort strings, which may contain numbers in a human like way, not just based on unicode values.
  * For example, these are sorted :
@@ -19,9 +17,6 @@ import org.apache.log4j.Logger;
  */
 public class NumberStringComparator implements Comparator<String>
 {
-
-    protected static Logger _logger = Logger.getLogger(NumberStringComparator.class);
-
     public int compare( String a, String b )
     {
         if (a == null) {
@@ -36,8 +31,6 @@ public class NumberStringComparator implements Comparator<String>
         String sb = (String) b;
 
         int minLength = sa.length() < sb.length() ? sa.length() : sb.length();
-
-        // _logger.debug( "Comparing '" + sa + "' and '" + sb + "'" );
 
         int j = 0;
         for (int i = 0; i < minLength; i++) {

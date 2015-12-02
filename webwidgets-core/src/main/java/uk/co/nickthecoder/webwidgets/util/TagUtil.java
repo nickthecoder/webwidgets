@@ -7,18 +7,20 @@
 package uk.co.nickthecoder.webwidgets.util;
 
 import java.util.*;
+import java.net.URL;
+import java.net.MalformedURLException;
 import java.io.IOException;
 import java.net.URLEncoder;
 
 import javax.servlet.jsp.*;
 import javax.servlet.http.*;
 
-import uk.co.nickthecoder.webwidgets.util.TagUtil;
+import uk.co.nickthecoder.webwidgets.util.ArrayIterator;
 
 public class TagUtil
 {
 
-    public static void printAttribute( JspWriter out, String name, String value ) throws IOException
+    public static void printAttribute(JspWriter out, String name, String value) throws IOException
     {
         if (value != null) {
             out.print(" ");
@@ -29,7 +31,7 @@ public class TagUtil
         }
     }
 
-    public static void printAttribute( JspWriter out, String name, int value ) throws IOException
+    public static void printAttribute(JspWriter out, String name, int value) throws IOException
     {
         out.print(" ");
         out.print(name);
@@ -38,14 +40,14 @@ public class TagUtil
         out.print("\"");
     }
 
-    public static void printSafeAttribute( JspWriter out, String name, String value ) throws IOException
+    public static void printSafeAttribute(JspWriter out, String name, String value) throws IOException
     {
         if (value != null) {
             printAttribute(out, name, safeText(value));
         }
     }
 
-    public static void printSafeText( JspWriter out, String value ) throws IOException
+    public static void printSafeText(JspWriter out, String value) throws IOException
     {
         if (value != null) {
             out.write(safeText(value));
@@ -53,9 +55,8 @@ public class TagUtil
     }
 
     /**
-     * Converts strings so that they can be included in a html document
-     * and appear exactly as they the original would appear in a text
-     * document. <br>
+     * Converts strings so that they can be included in a html document and
+     * appear exactly as they the original would appear in a text document. <br>
      * <br>
      * This involves changing the following character :
      * <ul>
@@ -65,13 +66,14 @@ public class TagUtil
      * <li>&quot; - &amp;quot;</li>
      * </ul>
      */
-    public static String safeText( String oldValue )
+    public static String safeText(String oldValue)
     {
         if (oldValue == null) {
             return "";
         }
 
-        // Create a string buffer, with enough room for at least a few substitutions
+        // Create a string buffer, with enough room for at least a few
+        // substitutions
         // before it will need to reallocate space.
         StringBuffer buffer = new StringBuffer(oldValue.length() + 40);
 
@@ -82,25 +84,25 @@ public class TagUtil
 
             switch (c) {
 
-                case '<':
-                    buffer.append("&lt;");
-                    break;
+            case '<':
+                buffer.append("&lt;");
+                break;
 
-                case '>':
-                    buffer.append("&gt;");
-                    break;
+            case '>':
+                buffer.append("&gt;");
+                break;
 
-                case '&':
-                    buffer.append("&amp;");
-                    break;
+            case '&':
+                buffer.append("&amp;");
+                break;
 
-                case '"':
-                    buffer.append("&quot;");
-                    break;
+            case '"':
+                buffer.append("&quot;");
+                break;
 
-                default:
-                    buffer.append(c);
-                    break;
+            default:
+                buffer.append(c);
+                break;
 
             }
         }
@@ -111,12 +113,13 @@ public class TagUtil
     /**
      * Does url rewriting and optionally appends the context path.
      */
-    public static final String resolveUrl( PageContext pageContext, String url, boolean useContextPath )
+    public static final String resolveUrl(PageContext pageContext, String url, boolean useContextPath)
     {
         return resolveUrl(pageContext, url, useContextPath, true);
     }
 
-    public static final String resolveUrl( PageContext pageContext, String url, boolean useContextPath, boolean encodeSessionId )
+    public static final String resolveUrl(PageContext pageContext, String url, boolean useContextPath,
+                    boolean encodeSessionId)
     {
         if (useContextPath && (url.startsWith("/"))) {
             url = ((HttpServletRequest) pageContext.getRequest()).getContextPath() + url;
@@ -128,7 +131,7 @@ public class TagUtil
         }
     }
 
-    public static String encodeUrl( String value )
+    public static String encodeUrl(String value)
     {
         try {
             return URLEncoder.encode(value, "UTF-8");
@@ -139,11 +142,11 @@ public class TagUtil
     }
 
     /**
-     * Encodes a string, so that it is suitable as the pathinfo portion of a url.
-     * This differs from encodeUrl in that
-     * slashes remain as slashes, and not conerted to %2F.
+     * Encodes a string, so that it is suitable as the pathinfo portion of a
+     * url. This differs from encodeUrl in that slashes remain as slashes, and
+     * not conerted to %2F.
      */
-    public static String encodePath( String value )
+    public static String encodePath(String value)
     {
         String result = encodeUrl(value);
         // result = result.replaceAll( "\\+", "%20" );
@@ -155,7 +158,7 @@ public class TagUtil
     }
 
     @SuppressWarnings("unchecked")
-    public static Iterator<Object> iterator( Object object )
+    public static Iterator<Object> iterator(Object object)
     {
         if (object instanceof Iterator) {
             return (Iterator<Object>) object;
@@ -170,7 +173,7 @@ public class TagUtil
         throw new ClassCastException("Must be a collection, an iterator or an array");
     }
 
-    public static Iterator<Object> iterator( Object object, String attributeName ) throws JspException
+    public static Iterator<Object> iterator(Object object, String attributeName) throws JspException
     {
         try {
             return iterator(object);
@@ -180,7 +183,7 @@ public class TagUtil
     }
 
     @SuppressWarnings("rawtypes")
-    public static Collection collection( Object object )
+    public static Collection collection(Object object)
     {
         if (object instanceof Collection) {
 
@@ -204,7 +207,7 @@ public class TagUtil
     }
 
     @SuppressWarnings("rawtypes")
-    public static Collection collection( Object object, String attributeName ) throws JspException
+    public static Collection collection(Object object, String attributeName) throws JspException
     {
         try {
             return collection(object);
@@ -215,7 +218,7 @@ public class TagUtil
     }
 
     @SuppressWarnings("rawtypes")
-    public static Object[] array( Object object )
+    public static Object[] array(Object object)
     {
         if (object instanceof Object[]) {
 
@@ -241,7 +244,7 @@ public class TagUtil
         throw new ClassCastException("Must be a Collection, Map or an Iterator");
     }
 
-    public static Object[] array( Object object, String attributeName ) throws JspException
+    public static Object[] array(Object object, String attributeName) throws JspException
     {
         try {
             return array(object);
@@ -251,28 +254,60 @@ public class TagUtil
 
     }
 
-    public static String getUrl( HttpServletRequest request )
+    /**
+     * Returns the URL as displayed in the browser's address bar. This is different from
+     * the methods on HttpServletRequest, because those return the url of the JSP view
+     * after a servlet redirects to the jsp.
+     * @param request
+     * @return
+     */
+    public static URL getURL(HttpServletRequest request)
+        throws MalformedURLException
     {
-        StringBuffer buffer = request.getRequestURL();
-        if (request.getPathInfo() != null) {
-            buffer.append(request.getPathInfo());
-        }
+        String uri = (String) request.getAttribute("javax.servlet.forward.request_uri");
+        String qps = (String) request.getAttribute("javax.servlet.forward.query_string");
 
-        if (request.getQueryString() != null) {
-            buffer.append("?").append(request.getQueryString());
+        String urlString =
+            request.getScheme() +
+            "://" +
+            request.getServerName() +
+            ":" +
+            request.getServerPort() +
+            ((uri == null) ? request.getRequestURI() : uri) +
+            "?" +
+            ((qps == null) ? request.getQueryString() : qps);
+        
+        return new URL( urlString );
+    }
+    
+    /**
+     * Returns the URL as displayed in the browser's address bar. This is different from
+     * the methods on HttpServletRequest, because those return the url of the JSP view
+     * after a servlet redirects to the jsp.
+     * @param request
+     * @return The url as a string, or null if the URL couldn't be built.
+     */
+    public static String getUrl(HttpServletRequest request)
+    {
+        try {
+            return getURL( request ).toString();
+        } catch (  MalformedURLException e ) {
+            return null;
         }
-        return buffer.toString();
     }
 
     /**
      * Checks if the request came from an ipv4 local address as defined here :
-     * http://en.wikipedia.org/wiki/Private_network
-     * i.e. 10.0.0.0 – 10.255.255.255 , 172.16.0.0 – 172.31.255.255 or 192.168.0.0 – 192.168.255.255
+     * http://en.wikipedia.org/wiki/Private_network i.e. 10.0.0.0 –
+     * 10.255.255.255 , 172.16.0.0 – 172.31.255.255 or 192.168.0.0 –
+     * 192.168.255.255
      */
-    public static boolean isLocal( HttpServletRequest request )
+    public static boolean isLocal(HttpServletRequest request)
     {
         String addr = request.getRemoteAddr();
-        if (addr.startsWith("192.168.")) {
+        if (addr.equals("127.0.0.1")) {
+            return true;
+        } else if (addr.startsWith("192.168.")) {
             return true;
         } else if (addr.startsWith("10.")) {
             return true;

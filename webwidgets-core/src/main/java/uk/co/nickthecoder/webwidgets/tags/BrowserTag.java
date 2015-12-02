@@ -17,12 +17,6 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import org.apache.log4j.Logger;
-
-/**
-
-*/
-
 public class BrowserTag extends TagSupport
 {
     private static final long serialVersionUID = 1125159996123483821L;
@@ -30,8 +24,6 @@ public class BrowserTag extends TagSupport
     private static final String[] _mobilePatternStrings = { "ipod", "iphone", "android" };
 
     private static List<Pattern> _mobilePatterns;
-
-    protected static Logger _logger = Logger.getLogger(BrowserTag.class);
 
     private static final String[] _versionPrefixes = { "msie", "firefox/" };
 

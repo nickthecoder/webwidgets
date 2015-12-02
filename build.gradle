@@ -9,7 +9,6 @@ buildscript {
     }
 }
 
-apply plugin: 'eclipse'
 apply plugin: "com.eriwen.gradle.js"
 
 subprojects {
@@ -19,15 +18,16 @@ subprojects {
 
     repositories {
         mavenCentral()
+	      mavenLocal()
     }
+
 }
 
-
-project(':webwidgets') {
+project(':webwidgets-core') {
 
     apply plugin: 'java'
-    apply plugin: 'eclipse'
     apply plugin: 'maven'
+    apply plugin: 'eclipse'
 
     sourceCompatibility = 1.7
     targetCompatibility = 1.7
@@ -38,18 +38,17 @@ project(':webwidgets') {
         compile 'jstl:jstl:1.2'
         compile 'taglibs:string:1.1.0'
         compile 'commons-lang:commons-lang:2.3'
-        compile 'org.apache.struts:struts-tiles:1.3.10'
-        compile 'log4j:log4j:1.2.16'
+        compile 'org.apache.logging.log4j:log4j-core:2.4.1'
     }
 }
 
 
-project(':wwdocs') {
+project(':webwidgets-application') {
 
     apply plugin: 'war'
     apply plugin: 'jetty'
-    apply plugin: 'eclipse'
     apply plugin: "com.eriwen.gradle.js"
+    apply plugin: 'eclipse'
 
     javascript.source {        
         dev {
@@ -81,7 +80,8 @@ project(':wwdocs') {
     }
     
     dependencies {
-        compile project(':webwidgets')
+        compile project(':webwidgets-core')
+        compile 'org.apache.struts:struts-tiles:1.3.10'
     }
     
     tasks.minifyJs.dependsOn tasks.combineJs

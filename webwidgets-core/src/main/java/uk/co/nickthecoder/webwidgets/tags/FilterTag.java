@@ -10,14 +10,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.el.ELContext;
-import javax.el.ELException;
-import javax.el.ExpressionFactory;
 import javax.el.ValueExpression;
 import javax.servlet.ServletContext;
-import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspApplicationContext;
+import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspFactory;
-import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import uk.co.nickthecoder.webwidgets.util.FilteredIterator;
@@ -182,16 +179,14 @@ public class FilterTag extends TagSupport
             try {
                 ServletContext servletContext = pageContext.getServletContext();
                 JspApplicationContext jspAppContext = JspFactory.getDefaultFactory().getJspApplicationContext(servletContext);
-                ExpressionFactory ef = JspFactory.getDefaultFactory().getJspApplicationContext(servletContext).getExpressionFactory();
                 ELContext elContext = pageContext.getELContext();
                 _valueExpression = jspAppContext.getExpressionFactory().createValueExpression(elContext, "${" + _test + "}",
                     Boolean.class);
                 
-                // Why is elContext.getFunctionMapper() == null? It means that funtions cannot be used within the expression.
+                // Why is elContext.getFunctionMapper() == null? It means that functions cannot be used within the expression.
                 // Maybe its a bug in JSP???
                 // System.out.println( elContext.getFunctionMapper() );
                 // Is there a fix to set the function mapper to the one used within the pageContext?
-                
 
             } catch (Exception e) {
                 e.printStackTrace();

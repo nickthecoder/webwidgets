@@ -142,7 +142,7 @@ public class TabTag extends BodyTagSupport
 
             JspWriter out = pageContext.getOut();
 
-            out.println("<div class=\"ww_tab");
+            out.print("<div class=\"ww_tab");
             if (isOn()) {
                 out.print(" ww_tabSelected");
             }

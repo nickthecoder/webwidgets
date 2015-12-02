@@ -1,2 +1,2 @@
-include 'webwidgets', 'wwdocs'
+include 'webwidgets-core', 'webwidgets-application'
 
