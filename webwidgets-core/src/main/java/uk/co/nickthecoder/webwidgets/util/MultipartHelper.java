@@ -13,7 +13,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -23,8 +22,12 @@ import java.util.Map.Entry;
 
 import javax.servlet.ServletRequest;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class MultipartHelper
 {
+    protected static Logger _logger = LogManager.getLogger(MultipartHelper.class);
 
     public static final String DEFAULT_CHARACTER_ENCODING = "ISO-8859-1";
 
@@ -36,8 +39,8 @@ public class MultipartHelper
     public static final int READline_BLOCK = 1024 * 128;
 
     /**
-     * The maximum content length, used to prevent a DOS attack filling up your hard drive,
-     * and consuming all your bandwidth.
+     * The maximum content length, used to prevent a DOS attack filling up your
+     * hard drive, and consuming all your bandwidth.
      */
     private int _maximumContentLength; // bytes
 
@@ -47,20 +50,16 @@ public class MultipartHelper
     private File _outputDirectory;
 
     /**
-     * A map of all of the files uploaded keyed on parameter name(String) value is FileInfo.
+     * A map of all of the files uploaded keyed on parameter name(String) value
+     * is FileInfo.
      */
-    private Map<String,MultipartHelper.FileInfo> _files;
+    private Map<String, MultipartHelper.FileInfo> _files;
 
     /**
-     * This is a replacement for the normal servletrequests parameters.
-     * key is the parameter name, value is a List of the values
+     * This is a replacement for the normal servletrequests parameters. key is
+     * the parameter name, value is a List of the values
      */
-    private Map<String,List<String>> _parameterMap;
-
-    /**
-     * If not null, then debugging is enabled, and goes to the print writer.
-     */
-    private PrintWriter _debug = new PrintWriter(System.out);
+    private Map<String, List<String>> _parameterMap;
 
     /**
      * The character encoding of the received data.
@@ -68,8 +67,8 @@ public class MultipartHelper
     private String _characterEncoding;
 
     /**
-     * Store a read from the input stream here.
-     * Global so we do not keep creating new arrays each read.
+     * Store a read from the input stream here. Global so we do not keep
+     * creating new arrays each read.
      */
     private byte[] _blockOfBytes = null;
 
@@ -80,14 +79,15 @@ public class MultipartHelper
     public MultipartHelper()
     {
         _characterEncoding = DEFAULT_CHARACTER_ENCODING;
-        _parameterMap = new HashMap<String,List<String>>();
-        _files = new HashMap<String,MultipartHelper.FileInfo>();
+        _parameterMap = new HashMap<String, List<String>>();
+        _files = new HashMap<String, MultipartHelper.FileInfo>();
         _maximumContentLength = DEFAULT_MAXIMUM_CONTENT_LENGTH;
     }
 
     /**
-     * Get method for attribute {@link #_maximumContentLength}.
-     * The maximum content length, used to prevent a DOS attack filling up your hard drive, and consuming all your bandwidth.
+     * Get method for attribute {@link #_maximumContentLength}. The maximum
+     * content length, used to prevent a DOS attack filling up your hard drive,
+     * and consuming all your bandwidth.
      */
     public int getMaximumContentLength()
     {
@@ -95,17 +95,18 @@ public class MultipartHelper
     }
 
     /**
-     * Set method for attribute {@link #_maximumContentLength}.
-     * The maximum content length, used to prevent a DOS attack filling up your hard drive, and consuming all your bandwidth.
+     * Set method for attribute {@link #_maximumContentLength}. The maximum
+     * content length, used to prevent a DOS attack filling up your hard drive,
+     * and consuming all your bandwidth.
      */
-    public void setMaximumContentLength( int value )
+    public void setMaximumContentLength(int value)
     {
         _maximumContentLength = value;
     }
 
     /**
-     * Get method for attribute {@link #_outputDirectory}.
-     * The direectory where the uploaded files are put
+     * Get method for attribute {@link #_outputDirectory}. The direectory where
+     * the uploaded files are put
      */
     public File getOutputDirectory()
     {
@@ -113,10 +114,10 @@ public class MultipartHelper
     }
 
     /**
-     * Set method for attribute {@link #_outputDirectory}.
-     * The directory where the uploaded files are put
+     * Set method for attribute {@link #_outputDirectory}. The directory where
+     * the uploaded files are put
      */
-    public void setOutputDirectory( File value ) throws IOException
+    public void setOutputDirectory(File value) throws IOException
     {
         if (!value.exists()) {
             throw new IOException("Directory [" + value + "] not found");
@@ -127,57 +128,39 @@ public class MultipartHelper
     }
 
     /**
-     * Get method for attribute {@link #_files}.
-     * A map of all of the files uploaded.
+     * Get method for attribute {@link #_files}. A map of all of the files
+     * uploaded.
      */
-    public Map<String,MultipartHelper.FileInfo> getFiles()
+    public Map<String, MultipartHelper.FileInfo> getFiles()
     {
         return _files;
     }
 
     /**
-     * Set method for attribute {@link #_files}.
-     * A map of all of the files uploaded.
+     * Set method for attribute {@link #_files}. A map of all of the files
+     * uploaded.
      */
-    public void setFiles( Map<String,MultipartHelper.FileInfo> value )
+    public void setFiles(Map<String, MultipartHelper.FileInfo> value)
     {
         _files = value;
     }
 
     /**
-     * Get method for attribute {@link #_parameterMap}.
-     * This is a replacement for the normal servletrequests parameters.
+     * Get method for attribute {@link #_parameterMap}. This is a replacement
+     * for the normal servletrequests parameters.
      */
-    public Map<String,List<String>> getParameterMap()
+    public Map<String, List<String>> getParameterMap()
     {
         return _parameterMap;
     }
 
     /**
-     * Set method for attribute {@link #_parameterMap}.
-     * This is a replacement for the normal servletrequests parameters.
+     * Set method for attribute {@link #_parameterMap}. This is a replacement
+     * for the normal servletrequests parameters.
      */
-    public void setParameterMap( Map<String,List<String>> value )
+    public void setParameterMap(Map<String, List<String>> value)
     {
         _parameterMap = value;
-    }
-
-    /**
-     * Get method for attribute {@link #_debug}.
-     * If not null, then debugging is enabled, and goes to the print writer.
-     */
-    public PrintWriter getDebug()
-    {
-        return _debug;
-    }
-
-    /**
-     * Set method for attribute {@link #_debug}.
-     * If not null, then debugging is enabled, and goes to the print writer.
-     */
-    public void setDebug( PrintWriter value )
-    {
-        _debug = value;
     }
 
     /**
@@ -191,26 +174,26 @@ public class MultipartHelper
     /**
      * Set method for attribute {@link #_characterEncoding}.
      */
-    public void setCharacterEncoding( String value )
+    public void setCharacterEncoding(String value)
     {
         _characterEncoding = value;
     }
 
-    public void go( ServletRequest request ) throws IOException
+    public void go(ServletRequest request) throws IOException
     {
         go(request.getInputStream(), request.getContentType(), request.getContentLength());
     }
 
-    public void go( InputStream in, String contentTypeText, int contentLength ) throws IOException
+    public void go(InputStream in, String contentTypeText, int contentLength) throws IOException
     {
-        debug("contentTypeText : " + contentTypeText);
-        if ((contentTypeText != null) && (contentTypeText.startsWith("multipart/form-data")) &&
-            (contentTypeText.indexOf("boundary=") != -1)) {
+        _logger.trace("contentTypeText : " + contentTypeText);
+        if ((contentTypeText != null) && (contentTypeText.startsWith("multipart/form-data"))
+                        && (contentTypeText.indexOf("boundary=") != -1)) {
 
             _boundary = contentTypeText.substring(contentTypeText.indexOf("boundary=") + "boundary=".length()).trim();
-            debug("Boundary = " + _boundary);
+            _logger.trace("Boundary = " + _boundary);
         } else {
-            debug("ContentType = " + contentTypeText);
+            _logger.trace("ContentType = " + contentTypeText);
             throw new IllegalArgumentException("Invalid Content Type.");
         }
 
@@ -218,8 +201,8 @@ public class MultipartHelper
         if (contentLength > _maximumContentLength) {
             throw new IOException("Content Length Error (" + contentLength + " > " + _maximumContentLength + ")");
         }
-        debug("ContentLength = " + contentLength);
-        debug("MaxReadBytes = " + _maximumContentLength);
+        _logger.trace("ContentLength = " + contentLength);
+        _logger.trace("MaxReadBytes = " + _maximumContentLength);
 
         _blockOfBytes = new byte[READline_BLOCK];
         _totalRead = 0;
@@ -234,7 +217,7 @@ public class MultipartHelper
     /**
      * This is the main parse method.
      */
-    private void parse( InputStream in ) throws IOException
+    private void parse(InputStream in) throws IOException
     {
         String contentType = null;
         String name = null;
@@ -243,17 +226,19 @@ public class MultipartHelper
         String line = null;
         int read = -1;
 
-        // First run through, check that the first line is a boundary, otherwise throw a exception as format incorrect.
+        // First run through, check that the first line is a boundary, otherwise
+        // throw a exception as format incorrect.
         read = readLine(in, _blockOfBytes);
         line = read > 0 ? new String(_blockOfBytes, 0, read, _characterEncoding) : null;
 
         // Must be boundary at top of loop, otherwise we have finished.
         if ((line == null) || (line.indexOf(_boundary) == -1)) {
-            debug("No boundary encountered");
+            _logger.trace("No boundary encountered");
             throw new IOException("Invalid Form Data, no boundary encountered.");
         }
 
-        // At the top of loop, we assume that the Content-Disposition line is next,
+        // At the top of loop, we assume that the Content-Disposition line is
+        // next,
         // otherwise we are at the end.
         while (true) {
 
@@ -264,20 +249,22 @@ public class MultipartHelper
             } else {
 
                 line = new String(_blockOfBytes, 0, read, _characterEncoding);
-                debug("line: " + line);
+                _logger.trace("line: " + line);
 
                 // Mac IE4 adds extra line after last boundary - 1.21
                 if ((line == null) || (line.length() == 0) || (line.trim().length() == 0)) {
                     break;
                 }
 
-                // TODO: Improve performance by getting both the name and filename from line in one go...
+                // TODO: Improve performance by getting both the name and
+                // filename from line in one go...
                 name = trimQuotes(getValue("name", line));
-                debug("Name: " + name);
-                // If this is not null???, it indicates that we are processing a filename.
+                _logger.trace("Name: " + name);
+                // If this is not null???, it indicates that we are processing a
+                // filename.
                 // Now if not null, strip it of any directory information.
                 filename = trimQuotes(getValue("filename", line));
-                debug("Filename: " + filename);
+                _logger.trace("Filename: " + filename);
 
                 // No filename specified at all - parameter
                 if (filename == null) {
@@ -286,21 +273,23 @@ public class MultipartHelper
                     readLine(in, _blockOfBytes);
 
                     String param = readParameter(in);
-                    debug("Parameter Value: " + param);
+                    _logger.trace("Parameter Value: " + param);
                     addParameter(name, param);
 
                 } else { // (strFilename!=null)
 
-                    // Fix: did not check whether filename was empty string indicating a FILE was
+                    // Fix: did not check whether filename was empty string
+                    // indicating a FILE was
                     // not passed.
                     if (filename.length() == 0) {
-                        debug("filename length == 0");
+                        _logger.trace("filename length == 0");
 
                         // FIX 1.14: IE problem with empty filename.
                         read = readLine(in, _blockOfBytes);
                         line = read > 0 ? new String(_blockOfBytes, 0, read, _characterEncoding) : null;
 
-                        // FIX 1.14 IE Problem still: Check for content-type and extra line even
+                        // FIX 1.14 IE Problem still: Check for content-type and
+                        // extra line even
                         // though no file specified.
                         if ((line != null) && (line.toLowerCase().startsWith("content-type:"))) {
                             readLine(in, _blockOfBytes);
@@ -314,8 +303,9 @@ public class MultipartHelper
 
                         readLine(in, _blockOfBytes);
 
-                    } else { // File uploaded, or at least a filename was specified, it could still be spurious.
-                        debug("uploading file");
+                    } else { // File uploaded, or at least a filename was
+                             // specified, it could still be spurious.
+                        _logger.trace("uploading file");
 
                         // Need to get the content type.
                         read = readLine(in, _blockOfBytes);
@@ -323,13 +313,17 @@ public class MultipartHelper
 
                         contentType = "application/octet-stream";
 
-                        // Fix 1.11: If not null AND line.length() is long enough.
-                        // Modified in 1.19, as we should be checking if it is actually a Content-Type.
+                        // Fix 1.11: If not null AND line.length() is long
+                        // enough.
+                        // Modified in 1.19, as we should be checking if it is
+                        // actually a Content-Type.
                         if ((line != null) && (line.toLowerCase().startsWith("content-type:"))) {
 
-                            contentType = line.substring("content-type:".length()).trim(); // Changed 1.13
+                            contentType = line.substring("content-type:".length()).trim(); // Changed
+                                                                                           // 1.13
 
-                            // Skip blank line, but only if a Content-Type was specified.
+                            // Skip blank line, but only if a Content-Type was
+                            // specified.
                             readLine(in, _blockOfBytes);
                         }
 
@@ -343,14 +337,15 @@ public class MultipartHelper
                         filename = getBasename(filename);
 
                         // If nowhere to write file, then we pass a null file to
-                        // readAndWriteFile, in which case the uploaded file contents
+                        // readAndWriteFile, in which case the uploaded file
+                        // contents
                         // will silently be processed and discarded.
                         if (_outputDirectory != null) {
                             outFile = TempFile.createTempFile(getClass().getName(), null, _outputDirectory);
                         }
 
                         filesize = readAndWriteFile(in, outFile);
-                        debug("filesize " + filesize);
+                        _logger.trace("filesize " + filesize);
 
                         // Fix 1.18 for multiple FILE parameter values.
                         if (filesize > 0) {
@@ -365,11 +360,12 @@ public class MultipartHelper
     }
 
     /**
-     * Read parameters, assume already passed Content-Disposition and blank line.
+     * Read parameters, assume already passed Content-Disposition and blank
+     * line.
      * 
      * @return the value read in.
      */
-    private String readParameter( InputStream in ) throws IOException
+    private String readParameter(InputStream in) throws IOException
     {
         StringBuffer buffer = new StringBuffer();
         int read = -1;
@@ -382,7 +378,8 @@ public class MultipartHelper
                 throw new IOException("Stream ended prematurely.");
             }
 
-            // Change v1.18: Only instantiate string once for performance reasons.
+            // Change v1.18: Only instantiate string once for performance
+            // reasons.
             line = new String(_blockOfBytes, 0, read, _characterEncoding);
 
             if (read < _blockOfBytes.length && line.indexOf(_boundary) != -1) {
@@ -395,10 +392,11 @@ public class MultipartHelper
         if (buffer.length() > 0) {
             buffer.setLength(getLengthMinusEnding(buffer));
         }
-        debug("readParameter(" + buffer.toString() + ")");
+        _logger.trace("readParameter(" + buffer.toString() + ")");
         String result = buffer.toString();
 
-        // NICK. I don't know what this means, but it works for requests from Apache HTTPClient.
+        // NICK. I don't know what this means, but it works for requests from
+        // Apache HTTPClient.
         if (result.startsWith("Content-Transfer-Encoding: 8bit")) {
             return result.substring(35);
         }
@@ -409,7 +407,7 @@ public class MultipartHelper
     /**
      * Read from in, write to out, minus last two line ending bytes.
      */
-    private long readAndWrite( InputStream in, OutputStream out ) throws IOException
+    private long readAndWrite(InputStream in, OutputStream out) throws IOException
     {
         long fileSize = 0;
         int read = -1;
@@ -428,10 +426,12 @@ public class MultipartHelper
             }
 
             // Found boundary.
-            if (read < _blockOfBytes.length && new String(_blockOfBytes, 0, read, _characterEncoding).indexOf(_boundary) != -1) {
+            if (read < _blockOfBytes.length
+                            && new String(_blockOfBytes, 0, read, _characterEncoding).indexOf(_boundary) != -1) {
 
                 // Write the line, minus any line ending bytes.
-                // The secondLineOfBytes will NEVER BE NON-NULL if out==null, so there is no need to included this in the test
+                // The secondLineOfBytes will NEVER BE NON-NULL if out==null, so
+                // there is no need to included this in the test
                 if (sizeOfSecondArray != 0) {
 
                     // Only used once, so declare here.
@@ -448,7 +448,8 @@ public class MultipartHelper
             } else {
 
                 // Write out previous line.
-                // The sizeOfSecondArray will NEVER BE ZERO if out==null, so there is no need to included this in the test
+                // The sizeOfSecondArray will NEVER BE ZERO if out==null, so
+                // there is no need to included this in the test
                 if (sizeOfSecondArray != 0) {
 
                     out.write(secondLineOfBytes, 0, sizeOfSecondArray);
@@ -456,7 +457,8 @@ public class MultipartHelper
                     fileSize += sizeOfSecondArray;
                 }
 
-                // out will always be null, so there is no need to reset sizeOfSecondArray to zero each time.
+                // out will always be null, so there is no need to reset
+                // sizeOfSecondArray to zero each time.
                 if (out != null) {
 
                     // Copy the read bytes into the array.
@@ -472,20 +474,23 @@ public class MultipartHelper
     }
 
     /**
-     * Read a Multipart section that is a file type. Assumes that the Content-Disposition/Content-Type and blank line
-     * have already been processed. So we read until we hit a boundary, then close file and return.
+     * Read a Multipart section that is a file type. Assumes that the
+     * Content-Disposition/Content-Type and blank line have already been
+     * processed. So we read until we hit a boundary, then close file and
+     * return.
      * 
      * @exception IOException
-     *            if an error occurs writing the file.
+     *                if an error occurs writing the file.
      * @return the number of bytes read.
      */
-    private long readAndWriteFile( InputStream in, File outFile ) throws IOException
+    private long readAndWriteFile(InputStream in, File outFile) throws IOException
     {
         BufferedOutputStream out = null;
 
         try {
 
-            // Because the outFile should be a temporary file provided by the TempFile
+            // Because the outFile should be a temporary file provided by the
+            // TempFile
             // class, it should already exist and should be writable.
             if (outFile != null && outFile.exists() && outFile.canWrite()) {
                 out = new BufferedOutputStream(new FileOutputStream(outFile));
@@ -517,11 +522,12 @@ public class MultipartHelper
      * Returns the length of the line minus line ending.
      * 
      * @param endOfArray
-     *        This is because in many cases the byteLine will have garbage data at the end, so we
-     *        act as though the actual end of the array is this parameter. If you want to process
-     *        the complete byteLine, specify byteLine.length as the endOfArray parameter.
+     *            This is because in many cases the byteLine will have garbage
+     *            data at the end, so we act as though the actual end of the
+     *            array is this parameter. If you want to process the complete
+     *            byteLine, specify byteLine.length as the endOfArray parameter.
      */
-    private static final int getLengthMinusEnding( byte byteLine[], int endOfArray )
+    private static final int getLengthMinusEnding(byte byteLine[], int endOfArray)
     {
         if (byteLine == null) {
             return 0;
@@ -540,7 +546,7 @@ public class MultipartHelper
         }
     }
 
-    private static final int getLengthMinusEnding( StringBuffer buf )
+    private static final int getLengthMinusEnding(StringBuffer buf)
     {
         if (buf.length() >= 2 && buf.charAt(buf.length() - 2) == '\r' && buf.charAt(buf.length() - 1) == '\n') {
 
@@ -556,18 +562,21 @@ public class MultipartHelper
     }
 
     /**
-     * Reads at most READ_BLOCK blocks of data, or a single line whichever is smaller.
-     * Returns -1, if nothing to read, or we have reached the specified content-length.
+     * Reads at most READ_BLOCK blocks of data, or a single line whichever is
+     * smaller. Returns -1, if nothing to read, or we have reached the specified
+     * content-length.
      * 
      * Assumes that bytToBeRead.length indicates the block size to read.
      * 
-     * @return -1 if stream has ended, before a newline encountered (should never happen) OR
-     *         we have read past the Content-Length specified. (Should also not happen). Otherwise
-     *         return the number of characters read. You can test whether the number returned is less
-     *         than bytesToBeRead.length, which indicates that we have read the last line of a file or parameter or
-     *         a border line, or some other formatting stuff.
+     * @return -1 if stream has ended, before a newline encountered (should
+     *         never happen) OR we have read past the Content-Length specified.
+     *         (Should also not happen). Otherwise return the number of
+     *         characters read. You can test whether the number returned is less
+     *         than bytesToBeRead.length, which indicates that we have read the
+     *         last line of a file or parameter or a border line, or some other
+     *         formatting stuff.
      */
-    private int readLine( InputStream in, byte[] bytesToBeRead ) throws IOException
+    private int readLine(InputStream in, byte[] bytesToBeRead) throws IOException
     {
         // Ensure that there is still stuff to read...
         if (_totalRead >= _contentLength) {
@@ -577,14 +586,17 @@ public class MultipartHelper
         // Get the length of what we are wanting to read.
         int length = bytesToBeRead.length;
 
-        // End of content, but some servers (apparently) may not realise this and end the InputStream, so
+        // End of content, but some servers (apparently) may not realise this
+        // and end the InputStream, so
         // we cover ourselves this way.
         if (length > (_contentLength - _totalRead)) {
-            length = (int) (_contentLength - _totalRead); // So we only read the data that is left.
+            length = (int) (_contentLength - _totalRead); // So we only read the
+                                                          // data that is left.
         }
 
         int result = readLine(in, bytesToBeRead, 0, length);
-        // Only if we get actually read something, otherwise something weird has happened, such as the end of stream.
+        // Only if we get actually read something, otherwise something weird has
+        // happened, such as the end of stream.
         if (result > 0) {
             _totalRead += result;
         }
@@ -598,7 +610,7 @@ public class MultipartHelper
      * Returns strFilename after removing all characters before the last
      * occurence of / or \.
      */
-    private static final String getBasename( String strFilename )
+    private static final String getBasename(String strFilename)
     {
         if (strFilename == null) {
             return strFilename;
@@ -616,9 +628,10 @@ public class MultipartHelper
     }
 
     /**
-     * trimQuotes trims any quotes from the start and end of a string and returns the trimmed string...
+     * trimQuotes trims any quotes from the start and end of a string and
+     * returns the trimmed string...
      */
-    private static final String trimQuotes( String strItem )
+    private static final String trimQuotes(String strItem)
     {
         // Saves having to go any further....
         if (strItem == null || strItem.indexOf("\"") == -1) {
@@ -644,7 +657,7 @@ public class MultipartHelper
      * 
      * If not found, will return null.
      */
-    private static final String getValue( String strName, String strToDecode )
+    private static final String getValue(String strName, String strToDecode)
     {
         strName = strName + "=";
 
@@ -656,7 +669,8 @@ public class MultipartHelper
             // Ensure either first name, or a space or ; precedes it.
             if (indexOf != -1) {
 
-                if (indexOf == 0 || Character.isWhitespace(strToDecode.charAt(indexOf - 1)) || strToDecode.charAt(indexOf - 1) == ';') {
+                if (indexOf == 0 || Character.isWhitespace(strToDecode.charAt(indexOf - 1))
+                                || strToDecode.charAt(indexOf - 1) == ';') {
 
                     int endIndexOf = strToDecode.indexOf(";", indexOf + strName.length());
 
@@ -681,38 +695,40 @@ public class MultipartHelper
     }
 
     /**
-     * <I>Tomcat's ServletInputStream.readLine(byte[],int,int) Slightly Modified to utilise in.read()</I> <BR>
-     * Reads the input stream, one line at a time. Starting at an
-     * offset, reads bytes into an array, until it reads a certain number
-     * of bytes or reaches a newline character, which it reads into the
-     * array as well.
+     * <I>Tomcat's ServletInputStream.readLine(byte[],int,int) Slightly Modified
+     * to utilise in.read()</I> <BR>
+     * Reads the input stream, one line at a time. Starting at an offset, reads
+     * bytes into an array, until it reads a certain number of bytes or reaches
+     * a newline character, which it reads into the array as well.
      * 
      * <p>
-     * This method <u><b>does not</b></u> returns -1 if it reaches the end of the input stream before reading the maximum number of bytes,
-     * it returns -1, if no bytes read.
+     * This method <u><b>does not</b></u> returns -1 if it reaches the end of
+     * the input stream before reading the maximum number of bytes, it returns
+     * -1, if no bytes read.
      * 
      * @param b
-     *        an array of bytes into which data is read
+     *            an array of bytes into which data is read
      * 
      * @param off
-     *        an integer specifying the character at which
-     *        this method begins reading
+     *            an integer specifying the character at which this method
+     *            begins reading
      * 
      * @param len
-     *        an integer specifying the maximum number of
-     *        bytes to read
+     *            an integer specifying the maximum number of bytes to read
      * 
-     * @return an integer specifying the actual number of bytes
-     *         read, or -1 if the end of the stream is reached
+     * @return an integer specifying the actual number of bytes read, or -1 if
+     *         the end of the stream is reached
      * 
      * @exception IOException
-     *            if an input or output exception has occurred
+     *                if an input or output exception has occurred
      * 
      * 
-     *            Note: We have a problem with Tomcat reporting an erroneous number of bytes, so we need to check this.
-     *            This is the method where we get an infinite loop, but only with binary files.
+     *                Note: We have a problem with Tomcat reporting an erroneous
+     *                number of bytes, so we need to check this. This is the
+     *                method where we get an infinite loop, but only with binary
+     *                files.
      */
-    private int readLine( InputStream in, byte[] b, int off, int len ) throws IOException
+    private int readLine(InputStream in, byte[] b, int off, int len) throws IOException
     {
         if (len <= 0) {
             return 0;
@@ -731,18 +747,7 @@ public class MultipartHelper
         return count > 0 ? count : -1;
     }
 
-    /**
-     * Use when debugging this object.
-     */
-    protected void debug( String x )
-    {
-        if (_debug != null) {
-            _debug.println(x);
-            _debug.flush();
-        }
-    }
-
-    protected void addParameter( String name, String value )
+    protected void addParameter(String name, String value)
     {
         List<String> values = _parameterMap.get(name);
 
@@ -753,13 +758,15 @@ public class MultipartHelper
         values.add(value);
     }
 
-    protected void addFileParameter( FileInfo fileInfo )
+    protected void addFileParameter(FileInfo fileInfo)
     {
         if (fileInfo != null) {
 
-            // If we allow one fileinfo to replace another, then it is easy for files to
+            // If we allow one fileinfo to replace another, then it is easy for
+            // files to
             // go undeleted in the output directory.
-            // The options are (1) create a hashmap of list of fileinfo, (2) delete the file
+            // The options are (1) create a hashmap of list of fileinfo, (2)
+            // delete the file
             // it is overriding, (3) bodge it by giving all unique names.
             // I've chosen option (2).
             if (getFile(fileInfo.name) != null) {
@@ -770,7 +777,7 @@ public class MultipartHelper
         }
     }
 
-    public FileInfo getFile( String name )
+    public FileInfo getFile(String name)
     {
         return (FileInfo) _files.get(name);
     }
@@ -780,12 +787,12 @@ public class MultipartHelper
         return _parameterMap.keySet().iterator();
     }
 
-    public List<String> getParameterValues( String name )
+    public List<String> getParameterValues(String name)
     {
         return _parameterMap.get(name);
     }
 
-    public String getParameter( String name )
+    public String getParameter(String name)
     {
         List<String> list = getParameterValues(name);
         if ((list == null) || (list.size() == 0)) {
@@ -796,15 +803,15 @@ public class MultipartHelper
 
     /**
      * Return a Map keyed on the parameter names, and the values are the first
-     * parameter value in the list of parameters of that name.
-     * You will most likely want to use this if one or more parameters are expected to
-     * only have one value.
+     * parameter value in the list of parameters of that name. You will most
+     * likely want to use this if one or more parameters are expected to only
+     * have one value.
      */
-    public Map<String,String> getSingleParameterMap()
+    public Map<String, String> getSingleParameterMap()
     {
-        Map<String,String> result = new HashMap<String,String>();
+        Map<String, String> result = new HashMap<String, String>();
         for (Iterator<Entry<String, List<String>>> i = _parameterMap.entrySet().iterator(); i.hasNext();) {
-            Map.Entry<String,List<String>> entry = i.next();
+            Map.Entry<String, List<String>> entry = i.next();
             List<String> values = entry.getValue();
             result.put(entry.getKey(), values.get(0));
         }
@@ -821,7 +828,7 @@ public class MultipartHelper
         File file; // the uploaded verison of the file.
         String rawFilename; // the filename as given by the browser
 
-        public FileInfo( String name, String filename, String contentType, long fileSize, File file, String rawFilename )
+        public FileInfo(String name, String filename, String contentType, long fileSize, File file, String rawFilename)
         {
             this.name = name;
             this.filename = filename;

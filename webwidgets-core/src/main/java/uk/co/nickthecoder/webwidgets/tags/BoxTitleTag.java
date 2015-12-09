@@ -97,8 +97,9 @@ public class BoxTitleTag extends BodyTagSupport
 
             JspWriter out = pageContext.getOut();
 
-            String onclick = getClickable() ? " onclick=\"javascript: return ww_doToggleMinimize( event )\"" : "";
-            out.println("<div class=\"ww_boxTitle\"" + onclick + ">");
+            String onclick = getClickable() ? " onclick=\"ww_doToggleMinimize( event )\"" : "";
+            String cssClass = getClickable() ? "ww_boxTitle ww_clickable" : "ww_boxTitle";
+            out.println("<div class=\"" + cssClass + "\"" + onclick + ">");
 
             out.print(TagUtil.safeText(getTitle()));
 

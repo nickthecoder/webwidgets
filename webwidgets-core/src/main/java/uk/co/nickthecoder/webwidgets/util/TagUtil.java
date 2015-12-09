@@ -265,7 +265,13 @@ public class TagUtil
         throws MalformedURLException
     {
         String uri = (String) request.getAttribute("javax.servlet.forward.request_uri");
+        if (uri == null) {
+            uri = request.getRequestURI();
+        }
         String qps = (String) request.getAttribute("javax.servlet.forward.query_string");
+        if (qps == null) {
+            qps = request.getQueryString();
+        }
 
         String urlString =
             request.getScheme() +
@@ -273,9 +279,8 @@ public class TagUtil
             request.getServerName() +
             ":" +
             request.getServerPort() +
-            ((uri == null) ? request.getRequestURI() : uri) +
-            "?" +
-            ((qps == null) ? request.getQueryString() : qps);
+            uri +
+            ((qps == null) ? "" : ("?" + qps));
         
         return new URL( urlString );
     }
