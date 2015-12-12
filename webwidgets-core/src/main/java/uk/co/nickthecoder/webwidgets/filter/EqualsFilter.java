@@ -20,6 +20,6 @@ public class EqualsFilter<T> extends FluentFilter<T>
             return false;
         }
         
-        return t.equals(t);
+        return t.equals(matching);
     }
 }
