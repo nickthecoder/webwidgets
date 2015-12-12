@@ -143,13 +143,13 @@ public class TagUtil
 
     /**
      * Encodes a string, so that it is suitable as the pathinfo portion of a
-     * url. This differs from encodeUrl in that slashes remain as slashes, and
-     * not conerted to %2F.
+     * url. This differs from encodeUrl in that slashes and round 
+     * brackets are left unchanged, and spaces are replaced by %20 (not "+").
      */
     public static String encodePath(String value)
     {
         String result = encodeUrl(value);
-        // result = result.replaceAll( "\\+", "%20" );
+        result = result.replaceAll( "\\+", "%20" );
         result = result.replaceAll("%28", "(");
         result = result.replaceAll("%29", ")");
         result = result.replaceAll("%2F", "/");
