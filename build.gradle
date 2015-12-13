@@ -86,7 +86,7 @@ project(':webwidgets-application') {
         compile 'org.apache.struts:struts-tiles:1.3.10'
         compile project(':webwidgets-core')
     }
-    
+
     tasks.minifyJs.dependsOn tasks.combineJs
     tasks.processResources.dependsOn tasks.minifyJs
 }
