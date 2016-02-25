@@ -51,7 +51,7 @@ public class SortTag extends TagSupport
      * When comparing objects, if field is set, then instead of thing the object itself, then the object's
      * field is compared. For example, if we are sorting File objects, and field == "name", then
      * the method "getName" will be called, and that is used to compare the. This is done using
-     * a generated el expression : ${OBJECT.FIELD}, where OBJECT is an item with the _items collection, and
+     * a generated el expression : ${OBJECT.FIELD}, where OBJECT is an item within the _items collection, and
      * FIELD is the value of _field.
      */
     private String _field;
@@ -140,7 +140,8 @@ public class SortTag extends TagSupport
             array = TagUtil.array(getItems(), "items");
         }
 
-        Arrays.sort(array, (Comparator<Object>) getOverallComparator());
+        Comparator<Object> comparator = (Comparator<Object>) getOverallComparator();
+        Arrays.sort(array, comparator);
 
         // Place the Sorted collection into the request scope
         pageContext.getRequest().setAttribute(getVar(), array);
@@ -205,7 +206,7 @@ public class SortTag extends TagSupport
         }
     }
 
-    private class FieldComparator<T extends Comparable<T>> implements Comparator<T>
+    private class FieldComparator<T> implements Comparator<T>
     {
         private String _expressionA = "${__sortItemA." + getField() + "}";
         private String _expressionB = "${__sortItemB." + getField() + "}";
@@ -218,6 +219,7 @@ public class SortTag extends TagSupport
         }
 
         @SuppressWarnings("unchecked")
+        @Override
         public int compare( T a, T b )
         {
             pageContext.setAttribute("__sortItemA", a);
